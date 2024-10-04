@@ -9,6 +9,7 @@ define kiyo = Character("Kiyo")
 define kazuo = Character("Kazuo")
 
 label start:
+    stop music
     scene solidblack
 
     MC "Who am I?"
@@ -16,7 +17,7 @@ label start:
     MC "That’s an interesting question, I suppose."
 
     MC "I’m a woman. I was born in Osaka, Japan, in 1915."
-    
+
     MC "My favorite color is red, but I rarely get to wear it."
 
     MC "But that doesn’t answer your question, does it?"
@@ -24,7 +25,7 @@ label start:
     MC "So, tell me – who am I?"
 
     scene glitch
-
+    play sound "click reverb.mp3"
     MC "Don’t be nervous. This is what I do. I am whoever you want me to be. Just tell me."
 
     show greysil
