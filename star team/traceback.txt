@@ -1,24 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 259, in script
-    producer "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
-Exception: Sayer 'producer' is not defined.
+  File "game/script.rpy", line 248, in script call
+    call movie_role_choice(movie1, movie2)
+  File "game/script.rpy", line 248, in script call
+    call movie_role_choice(movie1, movie2)
+ScriptError: could not find label 'movie_role_choice'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 259, in script
-    producer "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
-  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 2573, in execute
-    Say.execute(self)
-  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 575, in execute
-    who = eval_who(self.who, self.who_fast)
-  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 464, in eval_who
-    raise Exception("Sayer '%s' is not defined." % who)
-Exception: Sayer 'producer' is not defined.
+  File "game/script.rpy", line 248, in script call
+    call movie_role_choice(movie1, movie2)
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 1414, in execute
+    rv = renpy.game.context().call(label, return_site=self.next.name)
+  File "game/script.rpy", line 248, in script call
+    call movie_role_choice(movie1, movie2)
+  File "/Applications/renpy-8.3.2-sdk/renpy/script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'movie_role_choice'.
 
 macOS-14.0-arm64-arm-64bit arm64
 Ren'Py 8.3.2.24090902
 star team 1.0
-Fri Oct  4 13:03:09 2024
+Fri Oct 11 04:07:30 2024

@@ -1,3 +1,16 @@
+# For DB queries
+# init python:
+#     import sqlite3
+#     import random
+
+#     def pull_two_era_0_movies():
+#         conn = sqlite3.connect("star team/data/movies.db")
+#         c = conn.cursor()
+#         c.execute("SELECT * FROM movie_roles WHERE Era = 0 ORDER BY RANDOM() LIMIT 2")
+#         movies = c.fetchall()
+#         conn.close()
+#         return movies
+
 
 define mcName = "Assertive Feminine Voice"
 define MC = Character("[mcName]")
@@ -8,7 +21,106 @@ define toshiro = Character("Toshiro")
 define kiyo = Character("Kiyo")
 define kazuo = Character("Kazuo")
 
+# Define initial scores
+default modernity_score = 50
+default exoticism_score = 50
+default nationalism_score = 5
+
+screen stats_bar():
+    frame:
+        background "#333333"
+        xalign 0.5
+        yalign 0.0
+        padding (10, 10, 10, 10)
+        hbox:
+            spacing 50
+
+            vbox:
+                text "Modernity" size 20
+                text "[modernity_score]" size 20
+
+            vbox:
+                text "Exoticism" size 20
+                text "[exoticism_score]" size 20
+
+            vbox:
+                text "Nationalism" size 20
+                text "[nationalism_score]" size 20
+
+
+''' PLACEHOLDER FOR DEFAULT SELECTION IMAGES '''
+
+image movie1_poster = "images/kiyo.png"
+image movie2_poster = "images/setsuko.png"
+
+default movie1 = {
+    "name": "Echoes of Tradition",
+    "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
+    "poster": "images/kiyo.png"
+}
+
+default movie2 = {
+    "name": "Moonlit Tango",
+    "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
+    "poster": "images/kiyo.png"
+}
+
+define movie_header_font = "fonts/RialtoNF.ttf"
+
+style movie_name_text:
+    font movie_header_font
+    size 60
+    color "#FFFFFF"
+    align (0.5, 0.5)
+
+# Custom button style for the "Accept Role" button
+style role_button:
+    background "#333333"
+    size 50
+    padding (10, 10)
+    hover_background "#444444"
+    color "#FFFFFF"
+
+screen movie_role_choice(movie1, movie2):
+    hbox:
+        spacing 50
+        align (0.5, 0.5)
+
+        frame:
+            background "#2d2d2d"
+            padding (20, 20, 20, 20)
+            xsize 400
+
+            vbox:
+                spacing 20
+                text "[movie1['name']]" style "movie_name_text"
+                text "[movie1['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+
+                # Add the movie poster with fixed size and center it
+                add im.Scale(movie1['poster'], 200, 300) xalign 0.5
+
+                # Button to choose this role
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button"
+
+        frame:
+            background "#2d2d2d"
+            padding (20, 20, 20, 20)
+            xsize 400
+
+            vbox:
+                spacing 20
+                text "[movie2['name']]" style "movie_name_text"
+                text "[movie2['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+
+                # movie poster
+                add im.Scale(movie2['poster'], 200, 300) xalign 0.5
+
+                # Button to choose this role
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button"
+
+
 label start:
+    show screen stats_bar
     stop music
     scene solidblack
 
@@ -155,6 +267,23 @@ label start:
     # Film selection and script handover
     # Here you would insert the film selection logic.
     # For simplicity, we will assume it's a placeholder.
+
+
+    # First we want to query our db for the movies available in the era of the game
+    # skip for now as sql is broken in renpy
+
+    call screen movie_role_choice(movie1, movie2)
+
+    if chosen_movie == "movie1":
+        "You have chosen the role in [movie1['name']]."
+        $ modernity_score += 3
+        $ exoticism_score -= 2
+        $ nationalism_score -= 2
+    elif chosen_movie == "movie2":
+        "You have chosen the role in [movie2['name']]."
+        $ modernity_score -= 3
+        $ exoticism_score += 2
+        $ nationalism_score += 2
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
     MC "Of course."

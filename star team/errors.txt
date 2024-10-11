@@ -2,9 +2,29 @@
 errors listed below, and try again.
 
 
-File "game/screens.rpy", line 355: 'play' is not a keyword argument or valid child of the screen statement.
-    play music "夜來香 loopable, beginning screen.mp3" loop
-        ^
+File "game/script.rpy", line 279: expected statement.
+    modernity_score += 3
+                    ^
+
+File "game/script.rpy", line 280: expected statement.
+    exoticism_score -= 2
+                     ^
+
+File "game/script.rpy", line 281: expected statement.
+    nationalism_score -= 2
+                       ^
+
+File "game/script.rpy", line 284: expected statement.
+    modernity_score -= 3
+                     ^
+
+File "game/script.rpy", line 285: expected statement.
+    exoticism_score += 2
+                    ^
+
+File "game/script.rpy", line 286: expected statement.
+    nationalism_score += 2
+                      ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Oct  4 13:10:19 2024
+Fri Oct 11 04:17:14 2024
