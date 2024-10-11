@@ -11,7 +11,7 @@
 #         conn.close()
 #         return movies
 
-
+#Define characters
 define mcName = "Assertive Feminine Voice"
 define MC = Character("[mcName]")
 define prod = Character("Producer")
@@ -20,6 +20,10 @@ define setsuko = Character("Setsuko")
 define toshiro = Character("Toshiro")
 define kiyo = Character("Kiyo")
 define kazuo = Character("Kazuo")
+
+#Define character sprites
+image MC = "MC.png"
+image setsuko = "setsuko.png"
 
 # Define initial scores
 default modernity_score = 50
@@ -154,7 +158,7 @@ label start:
 
     MC "Oh, that’s what I forgot to tell you. I’m an actress, and forgive my arrogance, but quite a good one, too."
 
-    show image0
+    show MC
 
     MC "Now, as an actress, I’ve had quite a number of stories to tell. Whirlwind romances, a wrenching tragedy, a soft, sweet girl appearing only to support the glittering ingenue."
 
@@ -181,6 +185,23 @@ label start:
 
     MC "I hope my story will be an interesting enough exchange..."
 
+    scene intro 1
+
+    MC "I’m from Osaka, you already know that.My parents were a perfect sort of couple – father a hardworking government officer, mother a housewife that put all others to shame. Meals were quiet, but never uncomfortable."
+
+    scene intro 2
+
+    MC "I always loved to sing. I’d put on private performances for myself, singing the same songs I’d heard at the festivals and in school. And at nine, my mother took notice. She enrolled me in music lessons with a strict but kind tutor, Ō Shūka, though she preferred I called her by her Chinese name, Wang Qiuxia."
+
+    MC "We spent long days together – I often saw her more than my own family. She spoke to me in both Japanese and Mandarin, broken parts of the latter until I could finally hold a conversation in full. I owe much of my career to her and her guidance."
+
+    scene intro 3
+
+    MC "At the Aoi Matsuri in 1928, I was given the opportunity – no doubt with some strings pulled by Ms. Wang and my parents – to perform on a public stage. It was a night that would change my life."
+
+    MC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers.
+"
+
     show chap1
     with dissolve
 
@@ -200,13 +221,15 @@ label start:
 
     direct "(sighs, grumbles) At least let me get a look at them. These girls are here for their voices, not their faces. We don’t need some oni wasting space on the film."
 
-    show mainC
+    show MC
 
     MC "Hahaha!"
 
     direct "Where did that one come from?"
 
     prod "That would be [mcName], I believe."
+
+    hide MC
 
     direct "What school?"
 
@@ -218,10 +241,15 @@ label start:
 
     prod "[mcName]?"
 
+    show MC
+
     MC "Hm? Oh! Hello, sir."
+
+    hide MC
 
     prod "We are in a bit of an emergency situation. One of our actresses has fallen ill and we need someone to fill in her place. The director has chosen you."
 
+    show MC
     MC "What, me?"
     MC "Oh my gosh!" # Visible excitement
 
@@ -235,15 +263,22 @@ label start:
         "I’m not sure if I should…":
             MC "I’m not sure if I should…"
 
+    hide MC
+
     prod "No need for stress – it’s a walk-on role."
 
+    show MC
+
     MC "Oh… ([mcName] is slightly disappointed...)"
+
+    hide MC
 
     prod "That doesn’t mean it’s not important. The director chose you. Let me show you to the costuming room – we need you back here as soon as possible for a run-through."
 
     # Producer exits the frame
     prod "Follow me. (The producer exits the room.)"
 
+    show MC
     # MC left alone
     MC "That was how it began – a total accident. A role so small my name might not even appear in the credits. But that moment…"
     MC "The feeling of powder on my cheeks, like hot sand on my skin."
@@ -253,8 +288,11 @@ label start:
  # MC and Producer dialogue
 
     scene office bg
+
+    show MC
     MC "Thank you. It was just a bit part…"
 
+    hide MC
     menu:
         "but I’m grateful nonetheless.":
             prod "Well, you were outstanding. So much so that…"
@@ -286,29 +324,38 @@ label start:
         $ nationalism_score += 2
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
+    show MC
     MC "Of course."
 
     # Setting changes to the movie set
-    scene studio bg
+    hide MC
 
     # MC and Setsuko dialogue
+    show setsuko
     setsuko "Oh, this is just thrilling! I can’t believe we’re here, together, in our first film!"
+    hide setsuko
+    show MC
     MC "First… yes."
 
     MC "I don’t know if I should tell her it isn’t my first…"
-
+    hide MC
+    show setsuko
     setsuko "I heard that one of the actresses in 'first film name' got kicked out, and they had a random chorus girl take her place! It’s so embarrassing – I don’t know how I’d return to the company. But whoever filled in – what a lucky girl! What I wouldn’t give to have that chance."
+    hide setsuko
+    show MC
     MC "(slightly uncomfortable) Wow, that’s quite a story. Where did you hear that?"
-
+    hide MC
+    show setsuko
     setsuko "Where haven’t I heard! It’s all the talk around the academy–"
-
+    hide setsuko
     prod "Ladies, that’s enough chatting. We’re starting soon. [mcName], please save your voice unless you’re going over your lines. Wada, what on earth are you doing in your regular clothes? Go see costumes immediately."
-
+    show setsuko
     setsuko "(in a whisper) What a killjoy! Oh, but [mcName], I’ll tell you more later!"
 
     # Setsuko hurries off
     setsuko "."
-
+    hide setsuko
+    show MC
     MC "(internal) What should I do right now?"
 
     menu:
@@ -329,13 +376,16 @@ label after_film_scene:
 
 label find_setsuko_scene:
     scene studio bg # Replace with the appropriate background
-
+    show MC
     MC "Setsuko?"
-
+    hide MC
+    show setsuko
     setsuko "(jumps) MC! What are you doing? I thought you were supposed to be rehearsing!"
-
+    hide setsuko
+    show MC
     MC "I wanted to hear more about…"
-
+    hide MC
+    show setsuko
     menu:
         "the gossip around the academy.":
             setsuko "(smirks conspiratorially) Well, I heard that it was one of our girls who got selected for that fill-in role! No one knows who, exactly, but what a bold move! Imagine volunteering for something like that… I know I’d do it without a second thought, but the older tutors are always telling me I come across way too eager."
@@ -343,74 +393,99 @@ label find_setsuko_scene:
 
         "the other actors here.":
             setsuko "(smirks conspiratorially) Hm, well I haven’t really spoken to him yet, but I did see this right 'relevant hot guy' talking with the director earlier. I don’t think he’s a big star or anything, but maybe he is! He’s certainly got the looks for it! (she blushes) Not that I’m interested. I’m just saying…"
-
+    hide setsuko
+    show MC
     MC "What’s wrong with being interested?"
-
+    hide MC
+    show setsuko
     setsuko "I don’t want him to think I’m too forward!"
-
+    hide setsuko
+    show MC
     MC "I wonder if people still like shy girls these days…"
-
+    hide MC
+    show setsuko
     setsuko "You’re right! Actually, just last week I saw this magazine headline: 'He’s Your Husband, Not Your Parents’!' These trends change so fast… It feels like just a year ago we were being told to shut up and stick to our homes. But now you see all these modern girls walking around in their heels and their bold colors!"
-
+    hide setsuko
+    show MC
     MC "I don’t know how to keep up with it."
-
+    hide MC
+    show setsuko
     setsuko "I don’t really know either – but I guess you can find out a lot through the news and the things people say on the street. We should both keep our ears sharp! And I’ll let you know if I learn anything really interesting."
 
     # Transition to the next part of the game
     jump explore_scene
 
 label explore_scene:
-    scene bg street_view  # Replace with the appropriate background
+    scene street bg # Replace with the appropriate background
 
     # Exploration choices
     menu:
+        
         "Magazine Stand":
             # Description of the modern girl movement and fashion
             "You browse through the magazines, noticing a strong emphasis on the modern girl movement. Articles encourage women to make their own decisions and stand out in society."
+            menu:
+                "Continue Exploring?":
+                    jump explore_scene
+                "Stop Exploring":
+                    "You decided to leave and go to the producer's office"
 
         "Two Young Women":
             # Scandalous gossiping about a friend
             "You overhear two young women gasping and clutching their pearls. They seem to be making fun of a friend who’s stuck in a boring, traditional marriage."
-
+            menu:
+                "Continue Exploring?":
+                    jump explore_scene
+                "Stop Exploring":
+                    "You decided to leave and go to the producer's office"
         "Newspaper":
             # Discussion of exoticism and talkies
             "You glance at the newspaper, which discusses exoticism and the rise of talkies, along with mentions of importations from America and other parts of Asia."
-
+            menu:
+                "Continue Exploring?":
+                    jump explore_scene
+                "Stop Exploring":
+                    "You decided to leave and go to the producer's office"
         "Letter from Setsuko":
             # Gossip about another girl
             "You read a letter from Setsuko, gossiping about a girl from their school who was supposed to be a big star. Unfortunately, she got cast in a few traditional roles and was dunked on by the critics. Setsuko mentions that this girl starred alongside the guy from their film together – someone she’s totally not into."
-
+            menu:
+                "Continue Exploring?":
+                    jump explore_scene
+                "Stop Exploring":
+                    "You decided to leave and go to the producer's office"
     # After exploration
     MC "The world’s changing so fast… I hope I’m able to make it out here."
 
     # Scene change to MC with Producer
-    scene bg producer_office  # Replace with the appropriate background
+    scene office bg  # Replace with the appropriate background
 
-    producer "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
+    prod "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
+    show MC
+    MC "Thank you…"
 
-    mc "Thank you…"
-
+    show office bg
     menu:
         "I really didn’t expect things to take off so fast.":
-            producer "No need to be humble. You’ve got something special. Even that quack of a director could tell just from a single look."
+            prod "No need to be humble. You’ve got something special. Even that quack of a director could tell just from a single look."
 
         "But I never really doubted myself.":
-            producer "There’s that spunk again. Keep that spark – the people like a clever girl."
+            prod "There’s that spunk again. Keep that spark – the people like a clever girl."
 
-    producer "And on that note, I’ve got some exciting news."
+    prod "And on that note, I’ve got some exciting news."
 
     # Producer produces a script
-    producer "You’ve got another role!"
+    prod "You’ve got another role!"
     # He hands MC the script
-    producer "This one is called…"
+    prod "This one is called…"
 
     # Player picks between two bucket movies
     # Insert bucket movie selection logic here
 
-    producer "Shooting starts next week – start looking over your lines. Take a deep breath, you’ll be fine. The last movie did well and the stakes are low, alright? Do your best."
+    prod "Shooting starts next week – start looking over your lines. Take a deep breath, you’ll be fine. The last movie did well and the stakes are low, alright? Do your best."
 
     # Scene change to the set
-    scene bg movie_set  # Replace with the appropriate background
+    scene studio bg  # Replace with the appropriate background
 
     # Kiyo and Tōshiro conversation
     kiyo "Ohh, that was you was it? I thought you were divine, but that girl you were with… What was her name?"
@@ -420,36 +495,37 @@ label explore_scene:
     kiyo "Doesn’t matter. She was so plain. Such a shame! Things probably would’ve gone much smoother if you got someone more lively."
 
     # Kiyo notices MC
-    kiyo "Hello you! [she beckons MC over] Don’t be shy – we don’t bite."
+    kiyo "Hello you! (she beckons MC over) Don’t be shy – we don’t bite."
 
     MC "(internal) Are you sure…?"
 
-    toshiro "Hm. [he looks MC up and down] Your face… Have we met before?"
+    toshiro "Hm. (he looks MC up and down) Your face… Have we met before?"
 
-    MC "I believe so. I’m MC, I think we did [name of first bucket movie] a year or so ago? I was–"
-
-    toshiro "Impossible. I would’ve remembered a face like yours. [he smirks] But maybe I’ll give that one another watch – join me, make it a reunion?"
+    show MC
+    MC "I believe so. I’m MC, I think we did (name of first bucket movie) a year or so ago? I was–"
+    show studio bg
+    toshiro "Impossible. I would’ve remembered a face like yours. (he smirks) But maybe I’ll give that one another watch – join me, make it a reunion?"
 
     menu:
         "I wouldn’t mind reliving some moments.":
             toshiro "We’ll talk a little later, then?"
-            kiyo "[clears throat] I can’t imagine you’d have time, what with your schedule. Weren’t you just saying you have another film lined up right after this?"
+            kiyo "(clears throat) I can’t imagine you’d have time, what with your schedule. Weren’t you just saying you have another film lined up right after this?"
             toshiro "Films are easy to come by. This is a rare opportunity."
-            kiyo "[clearly disgruntled] MC, where did you get your dress?"
+            kiyo "(clearly disgruntled) MC, where did you get your dress?"
 
         "Only if I can bring my friend, Setsuko. Do you remember her too?" :
             toshiro "Um… if you want–"
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
-
+    show MC
     MC "My dress?"
-
+    show studio bg
     kiyo "It’s so quaint. Cute, I suppose – reminds me of that little rural town I visited back as a girl. Which is fine, of course, plenty of girls are still attached to that schoolgirl look. I just think it’s become a bit… outdated, don’t you think?"
 
     # A third person approaches
-    kazuo "Hey everyone. [he notices MC] I don’t think we’ve met – this is my first movie, actually. I’m Tachibana Kazuo."
-
+    kazuo "Hey everyone. (he notices MC) I don’t think we’ve met – this is my first movie, actually. I’m Tachibana Kazuo."
+    show MC
     MC "MC, it’s nice to meet you."
-
+    show studio bg
     toshiro "You need something?"
 
     kazuo "I just thought we might want to do a bit of rehearsal? Run through some lines, or something…"
@@ -464,7 +540,7 @@ label explore_scene:
 
     # The two leave, now just Kazuo and MC
     kazuo "So, do you want to do a read-through?"
-
+    show MC
     MC "Oh…"
 
     menu:
