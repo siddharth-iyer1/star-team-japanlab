@@ -1,24 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 131, in script
-    MC "Who am I?"
-Exception: Sayer 'MC' is not defined.
+  File "game/script.rpy", line 341, in script
+    $ modernity_score += (modernity_score1 - modernity_score2)
+  File "game/script.rpy", line 341, in <module>
+    $ modernity_score += (modernity_score1 - modernity_score2)
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 131, in script
-    MC "Who am I?"
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 2573, in execute
-    Say.execute(self)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 575, in execute
-    who = eval_who(self.who, self.who_fast)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 464, in eval_who
-    raise Exception("Sayer '%s' is not defined." % who)
-Exception: Sayer 'MC' is not defined.
+  File "game/script.rpy", line 341, in script
+    $ modernity_score += (modernity_score1 - modernity_score2)
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 821, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Applications/renpy-8.3.2-sdk/renpy/python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 341, in <module>
+    $ modernity_score += (modernity_score1 - modernity_score2)
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
 
-macOS-14.1-arm64-arm-64bit arm64
+macOS-14.0-arm64-arm-64bit arm64
 Ren'Py 8.3.2.24090902
 star team 1.0
-Fri Oct 11 14:05:18 2024
+Fri Oct 18 12:09:50 2024

@@ -2,9 +2,7 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 28: expected 'image_name_component' not found.
-    image 
-          ^
+File "game/script.rpy", line 116: Indentation mismatch.
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Oct 11 13:23:32 2024
+Fri Oct 18 11:40:26 2024

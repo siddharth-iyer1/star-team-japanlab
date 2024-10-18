@@ -1,16 +1,3 @@
-# For DB queries
-# init python:
-#     import sqlite3
-#     import random
-
-#     def pull_two_era_0_movies():
-#         conn = sqlite3.connect("star team/data/movies.db")
-#         c = conn.cursor()
-#         c.execute("SELECT * FROM movie_roles WHERE Era = 0 ORDER BY RANDOM() LIMIT 2")
-#         movies = c.fetchall()
-#         conn.close()
-#         return movies
-
 #Define characters
 define mcName = "Assertive Feminine Voice"
 define MC = Character("[mcName]")
@@ -26,9 +13,9 @@ image MC = "MC.png"
 image setsuko = "setsuko.png"
 
 # Define initial scores
-default modernity_score = 50
-default exoticism_score = 50
-default nationalism_score = 5
+default modernity_score = 10
+default exoticism_score = 10
+default nationalism_score = 10
 
 screen stats_bar():
     frame:
@@ -54,26 +41,11 @@ screen stats_bar():
 
 ''' PLACEHOLDER FOR DEFAULT SELECTION IMAGES '''
 
-image movie1_poster = "images/kiyo.png"
-image movie2_poster = "images/setsuko.png"
-
-default movie1 = {
-    "name": "Echoes of Tradition",
-    "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
-    "poster": "images/kiyo.png"
-}
-
-default movie2 = {
-    "name": "Moonlit Tango",
-    "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
-    "poster": "images/kiyo.png"
-}
-
 define movie_header_font = "fonts/RialtoNF.ttf"
 
 style movie_name_text:
     font movie_header_font
-    size 60
+    size 50
     color "#FFFFFF"
     align (0.5, 0.5)
 
@@ -85,43 +57,76 @@ style role_button:
     hover_background "#444444"
     color "#FFFFFF"
 
-screen movie_role_choice(movie1, movie2):
+screen movie_role_choice(title1, description1, poster1, title2, description2, poster2):
     hbox:
-        spacing 50
-        align (0.5, 0.5)
+        spacing 300
+        align (0.4, 0.5)
 
         frame:
-            background "#2d2d2d"
-            padding (20, 20, 20, 20)
-            xsize 400
+            background im.Scale("images/movie_choice/script_asset.png", 600, 800)
+            padding (80, 50, 5, 20)
+            xsize 450
+            align (0.5, 0.5)
 
             vbox:
                 spacing 20
-                text "[movie1['name']]" style "movie_name_text"
-                text "[movie1['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+                text "[title1]" style "movie_name_text"
+                text "Description: [description1]" size 25 color "#CCCCCC" align (0.5, 0.5)
 
                 # Add the movie poster with fixed size and center it
-                add im.Scale(movie1['poster'], 200, 300) xalign 0.5
+                add im.Scale(poster1, 200, 300) xalign 0.5
 
                 # Button to choose this role
                 textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button"
 
         frame:
-            background "#2d2d2d"
-            padding (20, 20, 20, 20)
-            xsize 400
+            background im.Scale("images/movie_choice/script_asset.png", 600, 800)
+            padding (80, 50, 5, 20)
+            xsize 450
+            align (0.5, 0.5)
 
             vbox:
                 spacing 20
-                text "[movie2['name']]" style "movie_name_text"
-                text "[movie2['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+                text "[title2]" style "movie_name_text"
+                text "Description: [description2]" size 25 color "#CCCCCC" align (0.5, 0.5)
 
                 # movie poster
-                add im.Scale(movie2['poster'], 200, 300) xalign 0.5
+                add im.Scale(poster2, 200, 300) xalign 0.5
 
                 # Button to choose this role
                 textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button"
 
+init python:
+    import csv
+    import random
+
+    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/Movie DB - movies.csv"
+    class Movie:
+
+        def __init__(self, id, title, description, role, image):
+            self.id = id
+            self.title = title
+            self.description = description
+            self.role = role
+            self.image = image
+
+    def get_two_movies_from_1935():
+        movies = []
+        with open(movie_data_fp, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['Era'] == '0':
+                    movies.append(Movie(row['movieRoleId'], row['title'], row['description'], row['role'], "images/movie_choice/sample movie poster.webp"))
+
+        return random.sample(movies, 2)
+
+    def get_movie_scores(movieRoleId):
+        fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/Movie DB - movie stats.csv"
+        with open(fp, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['movieRoleId'] == movieRoleId:
+                    return row['modernity'], row['exoticism'], row['nationalism']
 
 label start:
     show screen stats_bar
@@ -310,18 +315,37 @@ label start:
     # First we want to query our db for the movies available in the era of the game
     # skip for now as sql is broken in renpy
 
-    call screen movie_role_choice(movie1, movie2)
+    python:
+        movie_choices = get_two_movies_from_1935()
+
+        movie1_title = movie_choices[0].title
+        movie1_description = movie_choices[0].description
+        movie1_role = movie_choices[0].role
+        movie1_image = movie_choices[0].image
+
+        movie2_title = movie_choices[1].title
+        movie2_description = movie_choices[1].description
+        movie2_role = movie_choices[1].role
+        movie2_image = movie_choices[1].image
+
+        modernity_score1, exoticism_score1, nationalism_score1 = map(int, get_movie_scores(movie_choices[0].id))
+        modernity_score2, exoticism_score2, nationalism_score2 = map(int, get_movie_scores(movie_choices[1].id))
+
+    MC "[movie1_title] or [movie2_title]?"
+    MC "[movie1_description] or [movie2_description]?"
+
+    call screen movie_role_choice(movie1_title, movie1_description, movie1_image, movie2_title, movie2_description, movie2_image)
 
     if chosen_movie == "movie1":
-        "You have chosen the role in [movie1['name']]."
-        $ modernity_score += 3
-        $ exoticism_score -= 2
-        $ nationalism_score -= 2
+        "You have chosen the role in [movie1_title]."
+        $ modernity_score += (modernity_score1 - modernity_score2)
+        $ exoticism_score -= (exoticism_score1 - exoticism_score2)
+        $ nationalism_score -= (nationalism_score1 - nationalism_score2)
     elif chosen_movie == "movie2":
-        "You have chosen the role in [movie2['name']]."
-        $ modernity_score -= 3
-        $ exoticism_score += 2
-        $ nationalism_score += 2
+        "You have chosen the role in [movie2_title]."
+        $ modernity_score -= (modernity_score2 - modernity_score1)
+        $ exoticism_score += (exoticism_score2 - exoticism_score1)
+        $ nationalism_score += (nationalism_score2 - nationalism_score1)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
     show MC
@@ -556,9 +580,4 @@ label scene_in_blue:
 
 label scene_in_green:
     # Logic for scene in green
-    return
-
-    
-
-
     return
