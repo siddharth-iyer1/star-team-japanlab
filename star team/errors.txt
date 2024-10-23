@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 28: expected 'image_name_component' not found.
-    image 
-          ^
+File "game/gui.rpy", line 482: expected 'word' not found.
+    style.character_a_window = Style(style.window)
+         ^
+
+File "game/gui.rpy", line 483: expected 'word' not found.
+    style.character_a_window.background = "images/textbox_a.png"
+         ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Oct 11 13:23:32 2024
+Fri Oct 18 13:03:52 2024

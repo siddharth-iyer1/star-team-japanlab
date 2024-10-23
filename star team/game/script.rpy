@@ -13,18 +13,23 @@
 
 #Define characters
 define mcName = "Assertive Feminine Voice"
-define MC = Character("[mcName]")
-define prod = Character("Producer")
+define MC = Character("[mcName]", window_background=Frame("images/mc_textbox.png", 25, 25) )
+define prod = Character("Producer",image="producer")
 define direct = Character("Director")
-define setsuko = Character("Setsuko")
-define toshiro = Character("Toshiro")
-define kiyo = Character("Kiyo")
+define setsuko = Character("Setsuko",image="setsuko", window_background=Frame("images/setsuko_textbox.png", 25, 25))
+define toshiro = Character("Toshiro",image="toshiro", window_background=Frame("images/toshiro_textbox.png", 25, 25))
+define kiyo = Character("Kiyo",image="kiyo", window_background=Frame("images/kiyo_textbox.png", 25, 25))
 define kazuo = Character("Kazuo")
+
+image chap1_movie = Movie(size=(1920, 1080), channel='movie', play="images/chap1.webm")
+image intro_movie = Movie(size=(1920, 1080), channel='movie', play="images/intro_movie.webm")
 
 #Define character sprites
 image MC = "MC.png"
-image setsuko = "setsuko.png"
-
+image side setsuko = "setsuko.png"
+image side toshiro = "toshiro.png"
+image side kiyo = "kiyo.png"
+image side producer = "producer.png"
 # Define initial scores
 default modernity_score = 50
 default exoticism_score = 50
@@ -140,7 +145,6 @@ label start:
 
     MC "So, tell me – who am I?"
 
-    scene glitch
     play sound "click reverb.mp3"
     MC "Don’t be nervous. This is what I do. I am whoever you want me to be. Just tell me."
 
@@ -157,8 +161,6 @@ label start:
     MC "[mcName]. Interesting. Did you know that changing names is a common practice among actresses?"
 
     MC "Oh, that’s what I forgot to tell you. I’m an actress, and forgive my arrogance, but quite a good one, too."
-
-    show MC
 
     MC "Now, as an actress, I’ve had quite a number of stories to tell. Whirlwind romances, a wrenching tragedy, a soft, sweet girl appearing only to support the glittering ingenue."
 
@@ -184,6 +186,8 @@ label start:
             return
 
     MC "I hope my story will be an interesting enough exchange..."
+    
+    show intro_movie
 
     scene intro 1
 
@@ -199,17 +203,14 @@ label start:
 
     MC "At the Aoi Matsuri in 1928, I was given the opportunity – no doubt with some strings pulled by Ms. Wang and my parents – to perform on a public stage. It was a night that would change my life."
 
-    MC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers.
-"
+    MC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers."   
 
-    show chap1
-    with dissolve
+    hide intro 3
 
-    scene chap1
-    with Pause(5.0)
+    show chap1_movie zorder 10
+    pause
 
     show studio bg
-    with dissolve
 
     direct "What do you mean she can’t make the shot? What’s her excuse? Doesn’t she understand how big of an opportunity this is?"
 
@@ -324,38 +325,32 @@ label start:
         $ nationalism_score += 2
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
-    show MC
+
     MC "Of course."
 
     # Setting changes to the movie set
-    hide MC
+
 
     # MC and Setsuko dialogue
-    show setsuko
     setsuko "Oh, this is just thrilling! I can’t believe we’re here, together, in our first film!"
-    hide setsuko
-    show MC
+
     MC "First… yes."
 
     MC "I don’t know if I should tell her it isn’t my first…"
-    hide MC
-    show setsuko
+
     setsuko "I heard that one of the actresses in 'first film name' got kicked out, and they had a random chorus girl take her place! It’s so embarrassing – I don’t know how I’d return to the company. But whoever filled in – what a lucky girl! What I wouldn’t give to have that chance."
-    hide setsuko
-    show MC
+
     MC "(slightly uncomfortable) Wow, that’s quite a story. Where did you hear that?"
-    hide MC
-    show setsuko
+
+
     setsuko "Where haven’t I heard! It’s all the talk around the academy–"
-    hide setsuko
+
     prod "Ladies, that’s enough chatting. We’re starting soon. [mcName], please save your voice unless you’re going over your lines. Wada, what on earth are you doing in your regular clothes? Go see costumes immediately."
-    show setsuko
+
     setsuko "(in a whisper) What a killjoy! Oh, but [mcName], I’ll tell you more later!"
 
     # Setsuko hurries off
     setsuko "."
-    hide setsuko
-    show MC
     MC "(internal) What should I do right now?"
 
     menu:

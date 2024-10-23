@@ -1,24 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 131, in script
-    MC "Who am I?"
-Exception: Sayer 'MC' is not defined.
+  File "renpy/common/00start.rpy", line 279, in script
+    python:
+ScriptError: could not find label 'start'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 131, in script
-    MC "Who am I?"
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 2573, in execute
-    Say.execute(self)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 575, in execute
-    who = eval_who(self.who, self.who_fast)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 464, in eval_who
-    raise Exception("Sayer '%s' is not defined." % who)
-Exception: Sayer 'MC' is not defined.
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/bootstrap.py", line 359, in bootstrap
+    renpy.main.main()
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/main.py", line 652, in main
+    run(restart)
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/main.py", line 148, in run
+    renpy.execution.run_context(True)
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/execution.py", line 958, in run_context
+    context.run()
+  File "renpy/common/00start.rpy", line 279, in script
+    python:
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'start'.
 
 macOS-14.1-arm64-arm-64bit arm64
 Ren'Py 8.3.2.24090902
 star team 1.0
-Fri Oct 11 14:05:18 2024
+Fri Oct 18 02:48:26 2024
