@@ -326,9 +326,13 @@ label start:
     menu:
         "I know I’m only an amateur, but I’ll give it my all!":
             MC "I know I’m only an amateur, but I’ll give it my all!"
+            $ modernity_score += 1
 
         "I’m not sure if I should…":
             MC "I’m not sure if I should…"
+            $ modernity_score -= 1
+
+    show screen score_display(modernity_score, exoticism_score, nationalism_score)
 
     hide MC
 
@@ -366,6 +370,9 @@ label start:
 
         "so I’m ready to move on to bigger things.":
             prod "Quite a spark you’ve got there. You’re going to need that ambition, because…"
+            $ modernity_score += 2
+
+    show screen score_display(modernity_score, exoticism_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
 
@@ -415,7 +422,6 @@ label start:
     MC "Of course."
 
     # Setting changes to the movie set
-
 
     # MC and Setsuko dialogue
     setsuko "Oh, this is just thrilling! I can’t believe we’re here, together, in our first film!"
