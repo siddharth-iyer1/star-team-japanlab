@@ -2,9 +2,61 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 125: style property hover_text_color is not known.
-    hover_text_color "#FFFFFF"
+File "game/script.rpy", line 372: python block expects a non-empty block.
+    python:
+           ^
+
+File "game/script.rpy", line 373: expected statement.
+    movie_choices = get_two_movies_from_era_0()
+                  ^
+
+File "game/script.rpy", line 375: expected statement.
+    movie1_title = movie_choices[0].title
+                 ^
+
+File "game/script.rpy", line 376: expected statement.
+    movie1_description = movie_choices[0].description
+                       ^
+
+File "game/script.rpy", line 377: expected statement.
+    movie1_role = movie_choices[0].role
+                ^
+
+File "game/script.rpy", line 379: expected statement.
+    movie2_title = movie_choices[1].title
+                 ^
+
+File "game/script.rpy", line 380: expected statement.
+    movie2_description = movie_choices[1].description
+                       ^
+
+File "game/script.rpy", line 381: expected statement.
+    movie2_role = movie_choices[1].role
+                ^
+
+File "game/script.rpy", line 383: expected statement.
+    modernity_score1, exoticism_score1, nationalism_score1 = map(int, get_movie_scores(movie_choices[0].id))
                     ^
 
+File "game/script.rpy", line 384: expected statement.
+    modernity_score2, exoticism_score2, nationalism_score2 = map(int, get_movie_scores(movie_choices[1].id))
+                    ^
+
+File "game/script.rpy", line 386: expected statement.
+    movie1 = {
+           ^
+            "name": movie1_title,
+            "description": movie1_description,
+            "role": movie1_role,
+        }
+
+File "game/script.rpy", line 392: expected statement.
+    movie2 = {
+           ^
+            "name": movie2_title,
+            "description": movie2_description,
+            "role": movie2_role,
+        }
+
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Thu Oct 24 13:02:05 2024
+Thu Oct 24 13:43:24 2024

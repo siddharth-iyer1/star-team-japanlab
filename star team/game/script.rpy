@@ -1,15 +1,33 @@
-# For DB queries
-# init python:
-#     import sqlite3
-#     import random
+init python:
+    import csv
+    import random
 
-#     def pull_two_era_0_movies():
-#         conn = sqlite3.connect("star team/data/movies.db")
-#         c = conn.cursor()
-#         c.execute("SELECT * FROM movie_roles WHERE Era = 0 ORDER BY RANDOM() LIMIT 2")
-#         movies = c.fetchall()
-#         conn.close()
-#         return movies
+    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movies.csv"
+    class MovieMetaData:
+
+        def __init__(self, id, title, description, role):
+            self.id = id
+            self.title = title
+            self.description = description
+            self.role = role
+
+    def get_two_movies_from_era_0():
+        movies = []
+        with open(movie_data_fp, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['Era'] == '0':
+                    movies.append(MovieMetaData(row['movieRoleId'], row['title'], row['description'], row['role']))
+
+        return random.sample(movies, 2)
+
+    def get_movie_scores(movieRoleId):
+        fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
+        with open(fp, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['movieRoleId'] == movieRoleId:
+                    return row['modernity'], row['exoticism'], row['nationalism']
 
 #Define characters
 define mcName = "Assertive Feminine Voice"
@@ -95,19 +113,19 @@ screen stats_bar():
 image movie1_poster = "images/kiyo.png"
 image movie2_poster = "images/setsuko.png"
 
-default movie1 = {
-    "name": "Echoes of Tradition",
-    "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
-    "role": "Supporting Actress, Samurai's Wife",
-    "poster": "images/kiyo.png"
-}
+# default movie1 = {
+#     "name": "Echoes of Tradition",
+#     "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
+#     "role": "Supporting Actress, Samurai's Wife",
+#     "poster": "images/kiyo.png"
+# }
 
-default movie2 = {
-    "name": "Moonlit Tango",
-    "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
-    "role": "Lead Actress",
-    "poster": "images/kiyo.png"
-}
+# default movie2 = {
+#     "name": "Moonlit Tango",
+#     "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
+#     "role": "Lead Actress",
+#     "poster": "images/kiyo.png"
+# }
 
 define movie_header_font = "fonts/RialtoNF.ttf"
 
@@ -174,10 +192,8 @@ screen movie_role_choice(movie1, movie2):
                 # Button to choose this role
                 textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
 
-
-
-
 label start:
+
     show screen score_display(modernity_score, exoticism_score, nationalism_score)
 
     stop music
@@ -353,26 +369,46 @@ label start:
 
     prod "You’ve been contracted to a new role."
 
-    # Film selection and script handover
-    # Here you would insert the film selection logic.
-    # For simplicity, we will assume it's a placeholder.
+    python:
+        movie_choices = get_two_movies_from_era_0()
 
+        movie1_title = movie_choices[0].title
+        movie1_description = movie_choices[0].description
+        movie1_role = movie_choices[0].role
 
-    # First we want to query our db for the movies available in the era of the game
-    # skip for now as sql is broken in renpy
+        movie2_title = movie_choices[1].title
+        movie2_description = movie_choices[1].description
+        movie2_role = movie_choices[1].role
+
+        modernity_score1, exoticism_score1, nationalism_score1 = map(int, get_movie_scores(movie_choices[0].id))
+        modernity_score2, exoticism_score2, nationalism_score2 = map(int, get_movie_scores(movie_choices[1].id))
+
+        movie1 = {
+            "name": movie1_title,
+            "description": movie1_description,
+            "role": movie1_role,
+        }
+
+        movie2 = {
+            "name": movie2_title,
+            "description": movie2_description,
+            "role": movie2_role,
+        }
 
     call screen movie_role_choice(movie1, movie2)
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ modernity_score += 3
-        $ exoticism_score -= 2
-        $ nationalism_score -= 2
+        $ modernity_score += modernity_score1 - modernity_score2
+        $ exoticism_score += exoticism_score1 - exoticism_score2
+        $ nationalism_score += nationalism_score1 - nationalism_score2
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ modernity_score -= 3
-        $ exoticism_score += 2
-        $ nationalism_score += 2
+        $ modernity_score += modernity_score2 - modernity_score1
+        $ exoticism_score += exoticism_score2 - exoticism_score1
+        $ nationalism_score += nationalism_score2 - nationalism_score1
+
+    show screen score_display(modernity_score, exoticism_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
 
