@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/gui.rpy", line 482: expected 'word' not found.
-    style.character_a_window = Style(style.window)
-         ^
-
-File "game/gui.rpy", line 483: expected 'word' not found.
-    style.character_a_window.background = "images/textbox_a.png"
-         ^
+File "game/script.rpy", line 125: style property hover_text_color is not known.
+    hover_text_color "#FFFFFF"
+                    ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Oct 18 13:03:52 2024
+Thu Oct 24 13:02:05 2024

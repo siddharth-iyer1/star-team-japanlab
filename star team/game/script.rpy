@@ -24,6 +24,12 @@ define kazuo = Character("Kazuo")
 image chap1_movie = Movie(size=(1920, 1080), channel='movie', play="images/chap1.webm")
 image intro_movie = Movie(size=(1920, 1080), channel='movie', play="images/intro_movie.webm")
 
+# For Star Power Images
+image background_strip = "images/Star Power Background.png"
+image star_p = "images/Purple Empty Idle.png"
+image star_b = "images/Blue Empty Idle.png"
+image star_g = "images/Green Empty Idle.png"
+
 #Define character sprites
 image MC = "MC.png"
 image side setsuko = "setsuko.png"
@@ -31,9 +37,36 @@ image side toshiro = "toshiro.png"
 image side kiyo = "kiyo.png"
 image side producer = "producer.png"
 # Define initial scores
-default modernity_score = 50
-default exoticism_score = 50
-default nationalism_score = 5
+default modernity_score = 10
+default exoticism_score = 10
+default nationalism_score = 10
+
+# Screen for star and points
+screen star_with_score(star_image, score, xpos, ypos):
+
+    fixed:
+        xpos xpos
+        ypos ypos
+
+        add star_image zoom 0.2  # Adjust zoom to resize the star
+
+        text "[score]":
+            xpos 50
+            ypos 48
+            xanchor 0.5
+            yanchor 0.5
+            size 20  # Adjust text size as needed
+            color "#ffffff"  # Text color
+
+screen score_display(p_score, b_score, g_score):
+
+    # Display the background image at the left corner
+    add "background_strip" xpos 0 ypos -80 zoom 0.18
+
+    # Display the stars with scores using the helper screen
+    use star_with_score("star_p", p_score, xpos=20, ypos=10)
+    use star_with_score("star_b", b_score, xpos=120, ypos=10)
+    use star_with_score("star_g", g_score, xpos=220, ypos=10)
 
 screen stats_bar():
     frame:
@@ -65,12 +98,14 @@ image movie2_poster = "images/setsuko.png"
 default movie1 = {
     "name": "Echoes of Tradition",
     "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
+    "role": "Supporting Actress, Samurai's Wife",
     "poster": "images/kiyo.png"
 }
 
 default movie2 = {
     "name": "Moonlit Tango",
     "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
+    "role": "Lead Actress",
     "poster": "images/kiyo.png"
 }
 
@@ -78,58 +113,73 @@ define movie_header_font = "fonts/RialtoNF.ttf"
 
 style movie_name_text:
     font movie_header_font
-    size 60
+    size 48
     color "#FFFFFF"
     align (0.5, 0.5)
 
 # Custom button style for the "Accept Role" button
 style role_button:
-    background "#333333"
+    background im.FactorScale("images/Script_Button.png", 0.32)
     size 50
     padding (10, 10)
-    hover_background "#444444"
-    color "#FFFFFF"
+    xalign 0.5  # Center the text horizontally within the button
+    yalign 0.5  # Center the text vertically within the button
+
 
 screen movie_role_choice(movie1, movie2):
     hbox:
-        spacing 50
-        align (0.5, 0.5)
+        spacing 200
+        align (0.5, 0.35)
 
         frame:
-            background "#2d2d2d"
-            padding (20, 20, 20, 20)
+            background im.FactorScale("images/Movie Script Asset.png", 0.87)
             xsize 400
+            ysize 600
 
             vbox:
+                xpos 0.15
+                ypos 0.1
+                # xmaximum 300
                 spacing 20
                 text "[movie1['name']]" style "movie_name_text"
-                text "[movie1['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+                text "Description: [movie1['description']]" size 25 color "#CCCCCC"
+                text "Role: [movie1['role']]" size 25 color "#CCCCCC"
 
-                # Add the movie poster with fixed size and center it
-                add im.Scale(movie1['poster'], 200, 300) xalign 0.5
+                frame:
+                    yfill True
+                    background None
 
                 # Button to choose this role
-                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button"
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
 
         frame:
-            background "#2d2d2d"
-            padding (20, 20, 20, 20)
+            background im.FactorScale("images/Movie Script Asset.png", 0.87)
             xsize 400
+            ysize 600
 
             vbox:
+                xpos 0.15
+                ypos 0.1
+                # xmaximum 300
                 spacing 20
                 text "[movie2['name']]" style "movie_name_text"
-                text "[movie2['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+                text "Description: [movie2['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
+                text "Role: [movie1['role']]" size 25 color "#CCCCCC"
 
-                # movie poster
-                add im.Scale(movie2['poster'], 200, 300) xalign 0.5
+                frame:
+                    yfill True
+                    background None
+
 
                 # Button to choose this role
-                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button"
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
+
+
 
 
 label start:
-    show screen stats_bar
+    show screen score_display(modernity_score, exoticism_score, nationalism_score)
+
     stop music
     scene solidblack
 
