@@ -2,14 +2,18 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movies.csv"
+    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
+
+    used_movies = []
+
     class MovieMetaData:
 
-        def __init__(self, id, title, description, role):
+        def __init__(self, id, title, description, role, di):
             self.id = id
             self.title = title
             self.description = description
             self.role = role
+            self.di = di
 
     def get_two_movies_from_era_0():
         movies = []
@@ -21,13 +25,88 @@ init python:
 
         return random.sample(movies, 2)
 
+    def get_two_movies_of_type(type):
+        # Only valid types allowed
+        valid_types = {'modernity', 'exoticism', 'nationalism'}
+
+        # If the type is invalid, return an error
+        if type not in valid_types:
+            return None, None  # or handle it appropriately
+
+        movies = []
+        with open(movie_data_fp, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['type'] == type and row['movieRoleId'] not in used_movies:
+                    # Check if `di` is not empty and is either 0 or 1
+                    try:
+                        di_value = int(row['di'])  # Convert di to integer if possible
+                    except ValueError:
+                        continue  # Skip rows where di is NaN or invalid
+                    if di_value in [0, 1]:  # Only include if di is 0 or 1
+                        movies.append(MovieMetaData(row['movieRoleId'], row['title'], row['description'], row['role'], di_value))
+        
+        # Separate into two lists based on the `di` value
+        movies_with_score_0 = [movie for movie in movies if movie.di == 0]
+        movies_with_score_1 = [movie for movie in movies if movie.di == 1]
+
+        # Check if we have movies in both lists before choosing randomly
+        if not movies_with_score_0 or not movies_with_score_1:
+            return None, None  # Or handle error as needed
+        
+        # Randomly select one movie from each list
+        movie1 = random.choice(movies_with_score_0)
+        movie2 = random.choice(movies_with_score_1)
+
+        # Add selected movies to the used list
+        used_movies.extend([movie1.id, movie2.id])
+
+        return movie1, movie2
+
+
     def get_movie_scores(movieRoleId):
-        fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
+        fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
         with open(fp, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['movieRoleId'] == movieRoleId:
                     return row['modernity'], row['exoticism'], row['nationalism']
+
+    def what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score):
+        if modernity_score == 0:
+            p_star = "star_p_empty"
+        elif modernity_score <= 5:
+            p_star = "star_p_one_quarter"
+        elif modernity_score <= 10:
+            p_star = "star_p_half"
+        elif modernity_score <= 15:
+            p_star = "star_p_three_quarter"
+        else:
+            p_star = "star_p_full"
+
+        if exoticism_score == 0:
+            b_star = "star_b_empty"
+        elif exoticism_score <= 5:
+            b_star = "star_b_one_quarter"
+        elif exoticism_score <= 10:
+            b_star = "star_b_half"
+        elif exoticism_score <= 15:
+            b_star = "star_b_three_quarter"
+        else:
+            b_star = "star_b_full"
+
+        if nationalism_score == 0:
+            g_star = "star_g_empty"
+        elif nationalism_score <= 5:
+            g_star = "star_g_one_quarter"
+        elif nationalism_score <= 10:
+            g_star = "star_g_half"
+        elif nationalism_score <= 15:
+            g_star = "star_g_three_quarter"
+        else:
+            g_star = "star_g_full"
+
+        return p_star, b_star, g_star
 
 init:
     $ timer_range = 0
@@ -57,9 +136,27 @@ image intro_movie = Movie(size=(1920, 1080), channel='movie', play="images/intro
 
 # For Star Power Images
 image background_strip = "images/Star Power Background.png"
-image star_p = "images/Purple Empty Idle.png"
-image star_b = "images/Blue Empty Idle.png"
-image star_g = "images/Green Empty Idle.png"
+
+image star_p_empty = "images/Purple Empty.png"
+image star_p_one_quarter = "images/Purple One Quarter.png"
+image star_p_half = "images/Purple Half.png"
+image star_p_three_quarter = "images/Purple Three Quarter.png"
+image star_p_full = "images/Purple Full.png"
+image star_p_hover_flash = "images/Purple Hover.png"
+
+image star_b_empty = "images/Blue Empty.png"
+image star_b_one_quarter = "images/Blue One Quarter.png"
+image star_b_half = "images/Blue Half.png"
+image star_b_three_quarter = "images/Blue Three Quarter.png"
+image star_b_full = "images/Blue Full.png"
+image star_b_hover_flash = "images/Blue Hover.png"
+
+image star_g_empty = "images/Green Empty.png"
+image star_g_one_quarter = "images/Green One Quarter.png"
+image star_g_half = "images/Green Half.png"
+image star_g_three_quarter = "images/Green Three Quarter.png"
+image star_g_full = "images/Green Full.png"
+image star_g_hover_flash = "images/Green Hover.png"
 
 #Define character sprites
 image MC = "MC.png"
@@ -92,10 +189,6 @@ label QTE:
         MC "OH NO I DIDNT RESPONT TO THE QTE IN TIME"
         return
 
-
-
-
-
 screen streetView():
     zorder 5
     imagebutton:
@@ -125,13 +218,18 @@ screen streetView():
 
 
 # Screen for star and points
-screen star_with_score(star_image, score, xpos, ypos, zoom, text_size, offset):
+screen star_with_score(star_image, star_image_hover_flash, score, xpos, ypos, zoom, text_size, offset):
 
     fixed:
         xpos xpos
         ypos ypos
 
         add star_image zoom zoom  # Adjust zoom to resize the star
+
+        imagebutton:
+            idle star_image
+            hover star_image_hover_flash
+            action Show("info_screen") at zoomedin
 
         text "[score]":
             xpos 50 * text_size + offset
@@ -155,16 +253,15 @@ screen star_with_info(star_image, xpos, ypos):
             # Text overlay on top of the imagebutton
 
 
-screen score_display(p_score, b_score, g_score):
+screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
 
     # Display the background image at the left corner
-    add "background_strip" xpos 0 ypos -80 zoom 0.18
+    # add "background_strip" xpos 0 ypos -80 zoom 0.18
 
     # Display the stars with scores using the helper screen
-    use star_with_score("star_p", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
-    use star_with_score("star_b", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
-    use star_with_score("star_g", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
-    use star_with_info("star_b", xpos=320, ypos=10)
+    use star_with_score(p_star, "star_p_hover_flash", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use star_with_score(b_star, "star_b_hover_flash", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use star_with_score(g_star, "star_g_hover_flash", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
 
 screen stats_bar():
     frame:
@@ -194,18 +291,18 @@ screen info_screen:
     # Background frame with layered images
     frame:
         padding (-10, -10)
-        
+
         # Use a fixed container to layer images and components
         fixed:
             add "starpower_background.png"  # Base background image
-            
+
             # Display each star with its score in specific positions
-            use star_with_score("star_p", 10, xpos=130, ypos=100, zoom=1, text_size= 3, offset = 95)
-            use star_with_score("star_b", 10, xpos=700, ypos=100, zoom=1, text_size = 3, offset = 95)
-            use star_with_score("star_g", 10, xpos=1300, ypos=100, zoom=1, text_size = 3, offset = 95)
+            use star_with_score("star_p_empty", "star_p_hover_flash", 10, xpos=130, ypos=100, zoom=1, text_size= 3, offset = 95)
+            use star_with_score("star_b_empty", "star_b_hover_flash", 10, xpos=700, ypos=100, zoom=1, text_size = 3, offset = 95)
+            use star_with_score("star_g_empty", "star_g_hover_flash", 10, xpos=1300, ypos=100, zoom=1, text_size = 3, offset = 95)
 
             # Display the information text on top of all images
-            text "This is the information screen":
+            text "This is the information screen, Placeholder for actual descriptions.":
                 color "#ffffff"
                 size 25
                 xalign 0.5
@@ -340,8 +437,10 @@ label newspaper:
             jump officeOne
 
 label start:
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
 
-    show screen score_display(modernity_score, exoticism_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
 
     stop music
     scene solidblack
@@ -477,7 +576,14 @@ label start:
             MC "I’m not sure if I should…"
             $ modernity_score -= 1
 
-    show screen score_display(modernity_score, exoticism_score, nationalism_score)
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+
+    $ renpy.pause(1.5)
+
+    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
 
 
     prod "No need for stress – it’s a walk-on role."
@@ -510,12 +616,19 @@ label start:
             prod "Quite a spark you’ve got there. You’re going to need that ambition, because…"
             $ modernity_score += 2
 
-    show screen score_display(modernity_score, exoticism_score, nationalism_score)
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+
+    $ renpy.pause(1.5)
+
+    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
 
     python:
-        movie_choices = get_two_movies_from_era_0()
+        movie_choices = get_two_movies_of_type("modernity")
 
         movie1_title = movie_choices[0].title
         movie1_description = movie_choices[0].description
@@ -553,7 +666,14 @@ label start:
         $ exoticism_score += exoticism_score2 - exoticism_score1
         $ nationalism_score += nationalism_score2 - nationalism_score1
 
-    show screen score_display(modernity_score, exoticism_score, nationalism_score)
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+
+    $ renpy.pause(1.5)
+
+    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
 
@@ -629,7 +749,7 @@ label explore_scene:
 
     # Exploration choices
     menu:
-        
+
         "Magazine Stand":
             # Description of the modern girl movement and fashion
             "You browse through the magazines, noticing a strong emphasis on the modern girl movement. Articles encourage women to make their own decisions and stand out in society."
@@ -764,8 +884,5 @@ label scene_in_blue:
 label scene_in_green:
     # Logic for scene in green
     return
-
-    
-
 
     return

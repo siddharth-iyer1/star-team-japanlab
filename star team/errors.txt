@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 142: 'zoom' is not a keyword argument or valid child of the text statement.
-    zoom zoom
+File "game/script.rpy", line 138: The text statement is not a valid child of the imagebutton statement.
+    text "[score]":
         ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Nov  8 10:41:00 2024
+Fri Nov  8 12:24:31 2024
