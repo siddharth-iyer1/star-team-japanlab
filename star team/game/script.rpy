@@ -2,7 +2,7 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movies.csv"
+    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movies.csv"
     class MovieMetaData:
 
         def __init__(self, id, title, description, role):
@@ -22,16 +22,29 @@ init python:
         return random.sample(movies, 2)
 
     def get_movie_scores(movieRoleId):
-        fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
+        fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
         with open(fp, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['movieRoleId'] == movieRoleId:
                     return row['modernity'], row['exoticism'], row['nationalism']
 
+init:
+    $ timer_range = 0
+    $ timer_jump = 0
+    $ time = 0
+    transform zoomedin:
+        zoom 0.2
+    transform alpha_dissolve:
+        alpha 0.0
+        linear 0.5 alpha 1.0
+        on hide:
+            linear 0.5 alpha 0
+
 #Define characters
 define mcName = "Assertive Feminine Voice"
 define MC = Character("[mcName]", window_background=Frame("images/mc_textbox.png", 25, 25) )
+define darkMC = Character("[mcName]")
 define prod = Character("Producer",image="producer")
 define direct = Character("Director")
 define setsuko = Character("Setsuko",image="setsuko", window_background=Frame("images/setsuko_textbox.png", 25, 25))
@@ -59,22 +72,88 @@ default modernity_score = 10
 default exoticism_score = 10
 default nationalism_score = 10
 
+screen countdown:
+    timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Hide('countdown'), Jump(timer_jump)])
+
+    bar value time range timer_range xalign 0.5 yalign 0.5 xmaximum 300 at alpha_dissolve
+
+label QTE:
+    label QTEmenu:
+        $ time = 5
+        $ timer_range = 3
+        $ timer_jump = 'QTEmenu_slow'
+        show screen countdown
+
+        menu:
+            "AHHH I HAVE TO PRESS THIS BUTTON IN 5 SECONDS":
+                hide screen countdown
+                jump start
+    label QTEmenu_slow:
+        MC "OH NO I DIDNT RESPONT TO THE QTE IN TIME"
+        return
+
+
+
+
+
+screen streetView():
+    zorder 5
+    imagebutton:
+        idle "setsuko_dot.png"  # Use a simple test image
+        hover "setsuko_dot.png"
+        xalign 0.5
+        yalign 0.8
+        action [ToggleScreen("streetView"), Jump("setsuko_letter")]
+    imagebutton:
+        idle "movie_dot.png"  # Use a simple test image
+        hover "movie_dot.png"
+        xalign 0.25
+        yalign 0.55
+        action [ToggleScreen("streetView"), Jump("two_woman")]
+    imagebutton:
+        idle "news_dot.png"  # Use a simple test image
+        hover "news_dot.png"
+        xalign 0.95
+        yalign 0.3
+        action [ToggleScreen("streetView"), Jump("newspaper")]
+    imagebutton:
+        idle "radio_dot.png"  # Use a simple test image
+        hover "radio_dot.png"
+        xalign 0.775
+        yalign 0.25
+        action [ToggleScreen("streetView"), Jump("magazine")]
+
+
 # Screen for star and points
-screen star_with_score(star_image, score, xpos, ypos):
+screen star_with_score(star_image, score, xpos, ypos, zoom, text_size, offset):
 
     fixed:
         xpos xpos
         ypos ypos
 
-        add star_image zoom 0.2  # Adjust zoom to resize the star
+        add star_image zoom zoom  # Adjust zoom to resize the star
 
         text "[score]":
-            xpos 50
-            ypos 48
+            xpos 50 * text_size + offset
+            ypos 48 * text_size + offset
             xanchor 0.5
             yanchor 0.5
-            size 20  # Adjust text size as needed
+            size (20 * text_size) # Adjust text size as needed
             color "#ffffff"  # Text color
+
+screen star_with_info(star_image, xpos, ypos):
+    fixed:
+        xpos xpos
+        ypos ypos
+
+        # Define the imagebutton with the star image as its idle and hover state
+        imagebutton:
+            idle star_image
+            hover star_image
+            action Show("info_screen") at zoomedin  # Replace with desired action
+
+            # Text overlay on top of the imagebutton
+
 
 screen score_display(p_score, b_score, g_score):
 
@@ -82,9 +161,10 @@ screen score_display(p_score, b_score, g_score):
     add "background_strip" xpos 0 ypos -80 zoom 0.18
 
     # Display the stars with scores using the helper screen
-    use star_with_score("star_p", p_score, xpos=20, ypos=10)
-    use star_with_score("star_b", b_score, xpos=120, ypos=10)
-    use star_with_score("star_g", g_score, xpos=220, ypos=10)
+    use star_with_score("star_p", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use star_with_score("star_b", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use star_with_score("star_g", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use star_with_info("star_b", xpos=320, ypos=10)
 
 screen stats_bar():
     frame:
@@ -107,6 +187,37 @@ screen stats_bar():
                 text "Nationalism" size 20
                 text "[nationalism_score]" size 20
 
+screen info_screen:
+    modal True
+    tag info_screen
+
+    # Background frame with layered images
+    frame:
+        padding (-10, -10)
+        
+        # Use a fixed container to layer images and components
+        fixed:
+            add "starpower_background.png"  # Base background image
+            
+            # Display each star with its score in specific positions
+            use star_with_score("star_p", 10, xpos=130, ypos=100, zoom=1, text_size= 3, offset = 95)
+            use star_with_score("star_b", 10, xpos=700, ypos=100, zoom=1, text_size = 3, offset = 95)
+            use star_with_score("star_g", 10, xpos=1300, ypos=100, zoom=1, text_size = 3, offset = 95)
+
+            # Display the information text on top of all images
+            text "This is the information screen":
+                color "#ffffff"
+                size 25
+                xalign 0.5
+                yalign 0.7
+
+    # Button to close the screen
+    textbutton "Close":
+        action Hide("info_screen")
+        xpos 0.5
+        ypos 0.95
+        xanchor 0.5
+        yanchor 0.5
 
 ''' PLACEHOLDER FOR DEFAULT SELECTION IMAGES '''
 
@@ -192,6 +303,42 @@ screen movie_role_choice(movie1, movie2):
                 # Button to choose this role
                 textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
 
+label setsuko_letter:
+    MC "You read a letter from Setsuko, gossiping about a girl from their school who was supposed to be a big star. Unfortunately, she got cast in a few traditional roles and was dunked on by the critics. Setsuko mentions that this girl starred alongside the guy from their film together – someone she’s totally not into."
+    menu:
+        "Keep Exploring?":
+            call screen streetView
+        "Done Exploring.":
+            MC "The world’s changing so fast… I hope I’m able to make it out here."
+            jump officeOne
+            return
+label magazine:
+    MC "You browse through the magazines, noticing a strong emphasis on the modern girl movement. Articles encourage women to make their own decisions and stand out in society."
+    menu:
+        "Keep Exploring?":
+            call screen streetView
+        "Done Exploring.":
+            MC "The world’s changing so fast… I hope I’m able to make it out here."
+            jump officeOne
+            return
+label two_woman:
+    MC "You overhear two young women gasping and clutching their pearls. They seem to be making fun of a friend who’s stuck in a boring, traditional marriage."
+    menu:
+        "Keep Exploring?":
+            call screen streetView
+        "Done Exploring.":
+            MC "The world’s changing so fast… I hope I’m able to make it out here."
+            jump officeOne
+            return
+label newspaper:
+    MC "You glance at the newspaper, which discusses exoticism and the rise of talkies, along with mentions of importations from America and other parts of Asia."
+    menu:
+        "Keep Exploring?":
+            call screen streetView
+        "Done Exploring.":
+            MC "The world’s changing so fast… I hope I’m able to make it out here."
+            jump officeOne
+
 label start:
 
     show screen score_display(modernity_score, exoticism_score, nationalism_score)
@@ -199,20 +346,20 @@ label start:
     stop music
     scene solidblack
 
-    MC "Who am I?"
+    darkMC "Who am I?"
 
-    MC "That’s an interesting question, I suppose."
+    darkMC "That’s an interesting question, I suppose."
 
-    MC "I’m a woman. I was born in Osaka, Japan, in 1915."
+    darkMC "I’m a woman. I was born in Osaka, Japan, in 1915."
 
-    MC "My favorite color is red, but I rarely get to wear it."
+    darkMC "My favorite color is red, but I rarely get to wear it."
 
-    MC "But that doesn’t answer your question, does it?"
+    darkMC "But that doesn’t answer your question, does it?"
 
-    MC "So, tell me – who am I?"
+    darkMC "So, tell me – who am I?"
 
     play sound "click reverb.mp3"
-    MC "Don’t be nervous. This is what I do. I am whoever you want me to be. Just tell me."
+    darkMC "Don’t be nervous. This is what I do. I am whoever you want me to be. Just tell me."
 
     show greysil
 
@@ -220,66 +367,70 @@ label start:
         mcName = renpy.input("Name:", length=16)
         mcName = mcName.strip()
         if not mcName:
-            mcName = "Main Character"
+            mcName = "Yoshiko"
 
     scene solidblack
 
-    MC "[mcName]. Interesting. Did you know that changing names is a common practice among actresses?"
+    darkMC "[mcName]. Interesting. Did you know that changing names is a common practice among actresses?"
 
-    MC "Oh, that’s what I forgot to tell you. I’m an actress, and forgive my arrogance, but quite a good one, too."
+    darkMC "Oh, that’s what I forgot to tell you. I’m an actress, and forgive my arrogance, but quite a good one, too."
 
-    MC "Now, as an actress, I’ve had quite a number of stories to tell. Whirlwind romances, a wrenching tragedy, a soft, sweet girl appearing only to support the glittering ingenue."
+    darkMC "Now, as an actress, I’ve had quite a number of stories to tell. Whirlwind romances, a wrenching tragedy, a soft, sweet girl appearing only to support the glittering ingenue."
 
-    MC "There is a glamor to the screen – it all glows in that dark room, the only light amid a backdrop of silence. It is stunning. Captivating."
+    darkMC "There is a glamor to the screen – it all glows in that dark room, the only light amid a backdrop of silence. It is stunning. Captivating."
 
-    MC "The voices you could picture from the radio suddenly belong to people – to women and men with faces and expressions that seize you by the heart and force it to beat to a rhythm of their own design."
+    darkMC "The voices you could picture from the radio suddenly belong to people – to women and men with faces and expressions that seize you by the heart and force it to beat to a rhythm of their own design."
 
-    MC "Oh yes, it’s a spectacle. All the audience weeps and laughs together. Well, all together in attendance."
+    darkMC "Oh yes, it’s a spectacle. All the audience weeps and laughs together. Well, all together in attendance."
 
-    MC "In that moment, perhaps there is unity. But once the lights return and the world is no longer scripted, what becomes of the characters?"
+    darkMC "In that moment, perhaps there is unity. But once the lights return and the world is no longer scripted, what becomes of the characters?"
 
-    MC "They disappear. They melt back into their original forms – the actors. But even then, the show never stops. For in the day, in the night, between each bite at each meal, the performance goes on. That is what it means to be a star."
+    darkMC "They disappear. They melt back into their original forms – the actors. But even then, the show never stops. For in the day, in the night, between each bite at each meal, the performance goes on. That is what it means to be a star."
 
-    MC "You cannot rely on the lights of the set to carry you through to the next role. No, you must shine of your own accord. You must never go out. And you must reach far beyond your own space."
+    darkMC "You cannot rely on the lights of the set to carry you through to the next role. No, you must shine of your own accord. You must never go out. And you must reach far beyond your own space."
 
-    MC "Would you like to hear how I did it?"
+    darkMC "Would you like to hear how I did it?"
 
     menu:
         "Yes":
-            MC "Thank you for indulging me."
+            darkMC "Thank you for indulging me."
         "No":
-            MC "Hm, perhaps another time then."
+            darkMC "Hm, perhaps another time then."
             return
+        "QTE":
+            jump QTE
 
-    MC "I hope my story will be an interesting enough exchange..."
+    darkMC "I hope my story will be an interesting enough exchange..."
     
     show intro_movie
 
     scene intro 1
 
-    MC "I’m from Osaka, you already know that.My parents were a perfect sort of couple – father a hardworking government officer, mother a housewife that put all others to shame. Meals were quiet, but never uncomfortable."
+    darkMC "I’m from Osaka, you already know that.My parents were a perfect sort of couple – father a hardworking government officer, mother a housewife that put all others to shame. Meals were quiet, but never uncomfortable."
 
     scene intro 2
 
-    MC "I always loved to sing. I’d put on private performances for myself, singing the same songs I’d heard at the festivals and in school. And at nine, my mother took notice. She enrolled me in music lessons with a strict but kind tutor, Ō Shūka, though she preferred I called her by her Chinese name, Wang Qiuxia."
+    darkMC "I always loved to sing. I’d put on private performances for myself, singing the same songs I’d heard at the festivals and in school. And at nine, my mother took notice. She enrolled me in music lessons with a strict but kind tutor, Ō Shūka, though she preferred I called her by her Chinese name, Wang Qiuxia."
 
-    MC "We spent long days together – I often saw her more than my own family. She spoke to me in both Japanese and Mandarin, broken parts of the latter until I could finally hold a conversation in full. I owe much of my career to her and her guidance."
+    darkMC "We spent long days together – I often saw her more than my own family. She spoke to me in both Japanese and Mandarin, broken parts of the latter until I could finally hold a conversation in full. I owe much of my career to her and her guidance."
 
     scene intro 3
 
-    MC "At the Aoi Matsuri in 1928, I was given the opportunity – no doubt with some strings pulled by Ms. Wang and my parents – to perform on a public stage. It was a night that would change my life."
+    darkMC "At the Aoi Matsuri in 1928, I was given the opportunity – no doubt with some strings pulled by Ms. Wang and my parents – to perform on a public stage. It was a night that would change my life."
 
-    MC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers."   
+    darkMC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers."   
 
     hide intro 3
 
+    window hide
+
     show chap1_movie zorder 10
     pause
-
     show studio bg
+    hide chap1_movie
+    window auto
 
     direct "What do you mean she can’t make the shot? What’s her excuse? Doesn’t she understand how big of an opportunity this is?"
-
     prod "Her family sends their regrets, sir, but her doctor doesn’t recommend she leave the hospital until her lungs have cleared."
 
     direct "This is a disaster – we don’t have this space forever. Should we just cut the character?"
@@ -288,15 +439,12 @@ label start:
 
     direct "(sighs, grumbles) At least let me get a look at them. These girls are here for their voices, not their faces. We don’t need some oni wasting space on the film."
 
-    show MC
-
     MC "Hahaha!"
 
     direct "Where did that one come from?"
 
     prod "That would be [mcName], I believe."
 
-    hide MC
 
     direct "What school?"
 
@@ -308,15 +456,12 @@ label start:
 
     prod "[mcName]?"
 
-    show MC
 
     MC "Hm? Oh! Hello, sir."
 
-    hide MC
 
     prod "We are in a bit of an emergency situation. One of our actresses has fallen ill and we need someone to fill in her place. The director has chosen you."
 
-    show MC
     MC "What, me?"
     MC "Oh my gosh!" # Visible excitement
 
@@ -334,22 +479,17 @@ label start:
 
     show screen score_display(modernity_score, exoticism_score, nationalism_score)
 
-    hide MC
 
     prod "No need for stress – it’s a walk-on role."
 
-    show MC
 
     MC "Oh… ([mcName] is slightly disappointed...)"
-
-    hide MC
 
     prod "That doesn’t mean it’s not important. The director chose you. Let me show you to the costuming room – we need you back here as soon as possible for a run-through."
 
     # Producer exits the frame
     prod "Follow me. (The producer exits the room.)"
 
-    show MC
     # MC left alone
     MC "That was how it began – a total accident. A role so small my name might not even appear in the credits. But that moment…"
     MC "The feeling of powder on my cheeks, like hot sand on my skin."
@@ -360,10 +500,8 @@ label start:
 
     scene office bg
 
-    show MC
     MC "Thank you. It was just a bit part…"
 
-    hide MC
     menu:
         "but I’m grateful nonetheless.":
             prod "Well, you were outstanding. So much so that…"
@@ -463,16 +601,9 @@ label after_film_scene:
 
 label find_setsuko_scene:
     scene studio bg # Replace with the appropriate background
-    show MC
     MC "Setsuko?"
-    hide MC
-    show setsuko
-    setsuko "(jumps) MC! What are you doing? I thought you were supposed to be rehearsing!"
-    hide setsuko
-    show MC
+    setsuko "(jumps) [mcName]! What are you doing? I thought you were supposed to be rehearsing!"
     MC "I wanted to hear more about…"
-    hide MC
-    show setsuko
     menu:
         "the gossip around the academy.":
             setsuko "(smirks conspiratorially) Well, I heard that it was one of our girls who got selected for that fill-in role! No one knows who, exactly, but what a bold move! Imagine volunteering for something like that… I know I’d do it without a second thought, but the older tutors are always telling me I come across way too eager."
@@ -480,28 +611,19 @@ label find_setsuko_scene:
 
         "the other actors here.":
             setsuko "(smirks conspiratorially) Hm, well I haven’t really spoken to him yet, but I did see this right 'relevant hot guy' talking with the director earlier. I don’t think he’s a big star or anything, but maybe he is! He’s certainly got the looks for it! (she blushes) Not that I’m interested. I’m just saying…"
-    hide setsuko
-    show MC
     MC "What’s wrong with being interested?"
-    hide MC
-    show setsuko
     setsuko "I don’t want him to think I’m too forward!"
-    hide setsuko
-    show MC
     MC "I wonder if people still like shy girls these days…"
-    hide MC
-    show setsuko
     setsuko "You’re right! Actually, just last week I saw this magazine headline: 'He’s Your Husband, Not Your Parents’!' These trends change so fast… It feels like just a year ago we were being told to shut up and stick to our homes. But now you see all these modern girls walking around in their heels and their bold colors!"
-    hide setsuko
-    show MC
     MC "I don’t know how to keep up with it."
-    hide MC
-    show setsuko
     setsuko "I don’t really know either – but I guess you can find out a lot through the news and the things people say on the street. We should both keep our ears sharp! And I’ll let you know if I learn anything really interesting."
 
     # Transition to the next part of the game
     jump explore_scene
-
+label explore_scene:
+    scene street bg
+    call screen streetView
+    """
 label explore_scene:
     scene street bg # Replace with the appropriate background
 
@@ -541,14 +663,12 @@ label explore_scene:
                     jump explore_scene
                 "Stop Exploring":
                     "You decided to leave and go to the producer's office"
-    # After exploration
-    MC "The world’s changing so fast… I hope I’m able to make it out here."
-
+    """
+label officeOne:
     # Scene change to MC with Producer
     scene office bg  # Replace with the appropriate background
 
     prod "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
-    show MC
     MC "Thank you…"
 
     show office bg
@@ -582,14 +702,14 @@ label explore_scene:
     kiyo "Doesn’t matter. She was so plain. Such a shame! Things probably would’ve gone much smoother if you got someone more lively."
 
     # Kiyo notices MC
-    kiyo "Hello you! (she beckons MC over) Don’t be shy – we don’t bite."
+    kiyo "Hello you! (she beckons [mcName] over) Don’t be shy – we don’t bite."
 
     MC "(internal) Are you sure…?"
 
-    toshiro "Hm. (he looks MC up and down) Your face… Have we met before?"
+    toshiro "Hm. (he looks [mcName] up and down) Your face… Have we met before?"
 
-    show MC
-    MC "I believe so. I’m MC, I think we did (name of first bucket movie) a year or so ago? I was–"
+
+    MC "I believe so. I’m [mcName], I think we did (name of first bucket movie) a year or so ago? I was–"
     show studio bg
     toshiro "Impossible. I would’ve remembered a face like yours. (he smirks) But maybe I’ll give that one another watch – join me, make it a reunion?"
 
@@ -598,20 +718,20 @@ label explore_scene:
             toshiro "We’ll talk a little later, then?"
             kiyo "(clears throat) I can’t imagine you’d have time, what with your schedule. Weren’t you just saying you have another film lined up right after this?"
             toshiro "Films are easy to come by. This is a rare opportunity."
-            kiyo "(clearly disgruntled) MC, where did you get your dress?"
+            kiyo "(clearly disgruntled) [mcName], where did you get your dress?"
 
         "Only if I can bring my friend, Setsuko. Do you remember her too?" :
             toshiro "Um… if you want–"
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
-    show MC
+
     MC "My dress?"
     show studio bg
     kiyo "It’s so quaint. Cute, I suppose – reminds me of that little rural town I visited back as a girl. Which is fine, of course, plenty of girls are still attached to that schoolgirl look. I just think it’s become a bit… outdated, don’t you think?"
 
     # A third person approaches
-    kazuo "Hey everyone. (he notices MC) I don’t think we’ve met – this is my first movie, actually. I’m Tachibana Kazuo."
-    show MC
-    MC "MC, it’s nice to meet you."
+    kazuo "Hey everyone. (he notices [mcName]) I don’t think we’ve met – this is my first movie, actually. I’m Tachibana Kazuo."
+
+    MC "[mcName], it’s nice to meet you."
     show studio bg
     toshiro "You need something?"
 
@@ -627,7 +747,7 @@ label explore_scene:
 
     # The two leave, now just Kazuo and MC
     kazuo "So, do you want to do a read-through?"
-    show MC
+
     MC "Oh…"
 
     menu:
