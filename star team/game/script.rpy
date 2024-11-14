@@ -27,7 +27,7 @@ init python:
 
     def get_two_movies_of_type(type):
         # Only valid types allowed
-        valid_types = {'modernity', 'exoticism', 'nationalism'}
+        valid_types = {'trendiness', 'westernization', 'nationalism'}
 
         # If the type is invalid, return an error
         if type not in valid_types:
@@ -45,7 +45,7 @@ init python:
                         continue  # Skip rows where di is NaN or invalid
                     if di_value in [0, 1]:  # Only include if di is 0 or 1
                         movies.append(MovieMetaData(row['movieRoleId'], row['title'], row['description'], row['role'], di_value))
-        
+
         # Separate into two lists based on the `di` value
         movies_with_score_0 = [movie for movie in movies if movie.di == 0]
         movies_with_score_1 = [movie for movie in movies if movie.di == 1]
@@ -53,10 +53,10 @@ init python:
         # Check if we have movies in both lists before choosing randomly
         if not movies_with_score_0 or not movies_with_score_1:
             return None, None  # Or handle error as needed
-        
+
         # Randomly select one movie from each list
-        movie1 = random.choice(movies_with_score_0)
-        movie2 = random.choice(movies_with_score_1)
+        movie1 = random.choice(movies_with_score_0) #decrease
+        movie2 = random.choice(movies_with_score_1) #increase
 
         # Add selected movies to the used list
         used_movies.extend([movie1.id, movie2.id])
@@ -70,41 +70,47 @@ init python:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['movieRoleId'] == movieRoleId:
-                    return row['modernity'], row['exoticism'], row['nationalism']
+                    return row['trendiness'], row['westernization'], row['nationalism']
 
-    def what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score):
-        if modernity_score == 0:
+    def what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score):
+        if trendiness_score <= 1:
             p_star = "star_p_empty"
-        elif modernity_score <= 5:
+        elif 1 <= trendiness_score <= 3:
             p_star = "star_p_one_quarter"
-        elif modernity_score <= 10:
+        elif 4 <= trendiness_score <= 7:
             p_star = "star_p_half"
-        elif modernity_score <= 15:
+        elif 8 <= trendiness_score <= 12:
+            p_star = "star_p_three_quarter"
+        elif 13 <= trendiness_score <= 15:
             p_star = "star_p_three_quarter"
         else:
-            p_star = "star_p_full"
+            p_star = "star_p_overflow"
 
-        if exoticism_score == 0:
+        if westernization_score == 0:
             b_star = "star_b_empty"
-        elif exoticism_score <= 5:
+        elif 1 <= westernization_score <= 2:
             b_star = "star_b_one_quarter"
-        elif exoticism_score <= 10:
+        elif westernization_score == 3:
             b_star = "star_b_half"
-        elif exoticism_score <= 15:
+        elif 4 <= westernization_score <= 7:
             b_star = "star_b_three_quarter"
-        else:
+        elif westernization_score == 8:
             b_star = "star_b_full"
+        else:
+            b_star = "star_b_overflow"
 
         if nationalism_score == 0:
             g_star = "star_g_empty"
-        elif nationalism_score <= 5:
-            g_star = "star_g_one_quarter"
-        elif nationalism_score <= 10:
+        # elif nationalism_score <=:
+        #     g_star = "star_g_one_quarter"
+        elif 1 <= nationalism_score <= 2:
             g_star = "star_g_half"
-        elif nationalism_score <= 15:
+        elif 2 <= nationalism_score <= 4:
             g_star = "star_g_three_quarter"
-        else:
+        elif nationalism_score == 5:
             g_star = "star_g_full"
+        else:
+            g_star = "star_g_overflow"
 
         return p_star, b_star, g_star
 
@@ -143,6 +149,7 @@ image star_p_half = "images/Purple Half.png"
 image star_p_three_quarter = "images/Purple Three Quarter.png"
 image star_p_full = "images/Purple Full.png"
 image star_p_hover_flash = "images/Purple Hover.png"
+image star_p_overflow = "images/Purple Overflow.png"
 
 image star_b_empty = "images/Blue Empty.png"
 image star_b_one_quarter = "images/Blue One Quarter.png"
@@ -150,6 +157,7 @@ image star_b_half = "images/Blue Half.png"
 image star_b_three_quarter = "images/Blue Three Quarter.png"
 image star_b_full = "images/Blue Full.png"
 image star_b_hover_flash = "images/Blue Hover.png"
+image star_b_overflow = "images/Blue Overflow.png"
 
 image star_g_empty = "images/Green Empty.png"
 image star_g_one_quarter = "images/Green One Quarter.png"
@@ -157,6 +165,7 @@ image star_g_half = "images/Green Half.png"
 image star_g_three_quarter = "images/Green Three Quarter.png"
 image star_g_full = "images/Green Full.png"
 image star_g_hover_flash = "images/Green Hover.png"
+image star_g_overflow = "images/Green Overflow.png"
 
 #Define character sprites
 image MC = "MC.png"
@@ -165,9 +174,9 @@ image side toshiro = "toshiro.png"
 image side kiyo = "kiyo.png"
 image side producer = "producer.png"
 # Define initial scores
-default modernity_score = 10
-default exoticism_score = 10
-default nationalism_score = 10
+default trendiness_score = 0
+default westernization_score = 0
+default nationalism_score = 0
 
 screen countdown:
     timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Hide('countdown'), Jump(timer_jump)])
@@ -273,12 +282,12 @@ screen stats_bar():
             spacing 50
 
             vbox:
-                text "Modernity" size 20
-                text "[modernity_score]" size 20
+                text "trendiness" size 20
+                text "[trendiness_score]" size 20
 
             vbox:
-                text "Exoticism" size 20
-                text "[exoticism_score]" size 20
+                text "westernization" size 20
+                text "[westernization_score]" size 20
 
             vbox:
                 text "Nationalism" size 20
@@ -428,7 +437,7 @@ label two_woman:
             jump officeOne
             return
 label newspaper:
-    MC "You glance at the newspaper, which discusses exoticism and the rise of talkies, along with mentions of importations from America and other parts of Asia."
+    MC "You glance at the newspaper, which discusses westernization and the rise of talkies, along with mentions of importations from America and other parts of Asia."
     menu:
         "Keep Exploring?":
             call screen streetView
@@ -438,9 +447,9 @@ label newspaper:
 
 label start:
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
     stop music
     scene solidblack
@@ -570,20 +579,20 @@ label start:
     menu:
         "I know I’m only an amateur, but I’ll give it my all!":
             MC "I know I’m only an amateur, but I’ll give it my all!"
-            $ modernity_score += 1
+            $ trendiness_score += 1
 
         "I’m not sure if I should…":
             MC "I’m not sure if I should…"
-            $ modernity_score -= 1
+            $ trendiness_score -= 1
 
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(1.5)
 
-    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
 
     prod "No need for stress – it’s a walk-on role."
@@ -614,21 +623,21 @@ label start:
 
         "so I’m ready to move on to bigger things.":
             prod "Quite a spark you’ve got there. You’re going to need that ambition, because…"
-            $ modernity_score += 2
+            $ trendiness_score += 2
 
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(1.5)
 
-    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
 
     python:
-        movie_choices = get_two_movies_of_type("modernity")
+        movie_choices = get_two_movies_of_type("trendiness")
 
         movie1_title = movie_choices[0].title
         movie1_description = movie_choices[0].description
@@ -637,9 +646,6 @@ label start:
         movie2_title = movie_choices[1].title
         movie2_description = movie_choices[1].description
         movie2_role = movie_choices[1].role
-
-        modernity_score1, exoticism_score1, nationalism_score1 = map(int, get_movie_scores(movie_choices[0].id))
-        modernity_score2, exoticism_score2, nationalism_score2 = map(int, get_movie_scores(movie_choices[1].id))
 
         movie1 = {
             "name": movie1_title,
@@ -657,23 +663,19 @@ label start:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ modernity_score += modernity_score1 - modernity_score2
-        $ exoticism_score += exoticism_score1 - exoticism_score2
-        $ nationalism_score += nationalism_score1 - nationalism_score2
+        $ trendiness_score += 100
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ modernity_score += modernity_score2 - modernity_score1
-        $ exoticism_score += exoticism_score2 - exoticism_score1
-        $ nationalism_score += nationalism_score2 - nationalism_score1
+        $ trendiness_score -= 1
 
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(modernity_score, exoticism_score, nationalism_score)
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", modernity_score, exoticism_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(1.5)
 
-    show screen score_display(p_star, b_star, g_star, modernity_score, exoticism_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
 
@@ -768,8 +770,8 @@ label explore_scene:
                 "Stop Exploring":
                     "You decided to leave and go to the producer's office"
         "Newspaper":
-            # Discussion of exoticism and talkies
-            "You glance at the newspaper, which discusses exoticism and the rise of talkies, along with mentions of importations from America and other parts of Asia."
+            # Discussion of westernization and talkies
+            "You glance at the newspaper, which discusses westernization and the rise of talkies, along with mentions of importations from America and other parts of Asia."
             menu:
                 "Continue Exploring?":
                     jump explore_scene

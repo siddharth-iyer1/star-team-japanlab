@@ -1,7 +1,7 @@
 movieRoleId,title,description,country,language,genre,role,type,di
 10,Blossoms in the Snow,solid examples of militaristic mother,Japan,Japanese,Melodrama,Lead Actress,nationalism,1
 11,Ashes in the Desert,something related to manchuria in a very colonial sense,Japan,Japanese,,Supporting Role,nationalism,1
-12,East of the Sunset,"general samurai film, popular for the traditional japan aspect",Japan,Japanese,"Period Film, Jidaigeki",Lead Actress,exoticism,1
+12,East of the Sunset,"general samurai film, popular for the traditional japan aspect",Japan,Japanese,"Period Film, Jidaigeki",Lead Actress,westernization,1
 13,Song of the Pacific,negative representation departing from militaristic mother,Japan,Japanese,Melodrama,Lead Actress,nationalism,0
 14,Letters from Tokyo,"a movie with some western component thats not treated fully negative, maybe jazz or smth (jazz might be good since it was referenced in prewar so its already on players mind. would be a big show of contrast in the eras)",Japan,Japanese,,Lead Actress,nationalism,0
-15,The White Sands,a movie encouraging individualism rather than this 'subjective nothingness' and collectivism advocated for during the war,Japan,Japanese,,Supporting Role,modernity,1
+15,The White Sands,a movie encouraging individualism rather than this 'subjective nothingness' and collectivism advocated for during the war,Japan,Japanese,,Supporting Role,trendiness,1
