@@ -63,7 +63,6 @@ init python:
 
         return movie1, movie2
 
-
     def get_movie_scores(movieRoleId):
         fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
         with open(fp, "r") as file:
@@ -113,6 +112,44 @@ init python:
             g_star = "star_g_overflow"
 
         return p_star, b_star, g_star
+
+    def what_relationship_bar_to_use(relationship_score):
+        if relationship_score == 0:
+            relationship_bar = "relationship_0"
+        elif relationship_score == 1:
+            relationship_bar = "relationship_1"
+        elif relationship_score == 2:
+            relationship_bar = "relationship_2"
+        elif relationship_score == 3:
+            relationship_bar = "relationship_3"
+        elif relationship_score == 4:
+            relationship_bar = "relationship_4"
+        elif relationship_score == 5:
+            relationship_bar = "relationship_5"
+        elif relationship_score == 6:
+            relationship_bar = "relationship_6"
+        elif relationship_score == 7:
+            relationship_bar = "relationship_7"
+        elif relationship_score == 8:
+            relationship_bar = "relationship_8"
+        elif relationship_score == 9:
+            relationship_bar = "relationship_9"
+        elif relationship_score == 10:
+            relationship_bar = "relationship_10"
+        elif relationship_score == 11:
+            relationship_bar = "relationship_11"
+        elif relationship_score == 12:
+            relationship_bar = "relationship_12"
+        elif relationship_score == 13:
+            relationship_bar = "relationship_13"
+        elif relationship_score == 14:
+            relationship_bar = "relationship_14"
+        elif relationship_score == 15:
+            relationship_bar = "relationship_15"
+        else:
+            relationship_bar = "unknown_relationship"
+
+        return relationship_bar
 
 init:
     $ timer_range = 0
@@ -167,6 +204,23 @@ image star_g_full = "images/Green Full.png"
 image star_g_hover_flash = "images/Green Hover.png"
 image star_g_overflow = "images/Green Overflow.png"
 
+image relationship_0 = "images/0.png"
+image relationship_1 = "images/1.png"
+image relationship_2 = "images/2.png"
+image relationship_3 = "images/3.png"
+image relationship_4 = "images/4.png"
+image relationship_5 = "images/5.png"
+image relationship_6 = "images/6.png"
+image relationship_7 = "images/7.png"
+image relationship_8 = "images/8.png"
+image relationship_9 = "images/9.png"
+image relationship_10 = "images/10.png"
+image relationship_11 = "images/11.png"
+image relationship_12 = "images/12.png"
+image relationship_13 = "images/13.png"
+image relationship_14 = "images/14.png"
+image relationship_15 = "images/15.png"
+
 #Define character sprites
 image MC = "MC.png"
 image side setsuko = "setsuko.png"
@@ -177,6 +231,7 @@ image side producer = "producer.png"
 default trendiness_score = 0
 default westernization_score = 0
 default nationalism_score = 0
+default relationship_score = 0
 
 screen countdown:
     timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Hide('countdown'), Jump(timer_jump)])
@@ -325,25 +380,6 @@ screen info_screen:
         xanchor 0.5
         yanchor 0.5
 
-''' PLACEHOLDER FOR DEFAULT SELECTION IMAGES '''
-
-image movie1_poster = "images/kiyo.png"
-image movie2_poster = "images/setsuko.png"
-
-# default movie1 = {
-#     "name": "Echoes of Tradition",
-#     "description": "This silent film portrays the life a once-beloved samurai whose notorious bad luck taints his and his wife's reputation. After being deemed unfit to serve his lord, the samurai must then endure a series of trials that prove his loyalty and deference.",
-#     "role": "Supporting Actress, Samurai's Wife",
-#     "poster": "images/kiyo.png"
-# }
-
-# default movie2 = {
-#     "name": "Moonlit Tango",
-#     "description": "A man's job promotion sends him from Kyoto to the bustling city of Tokyo. It's there that he meets a lively woman, one who captivates his attention with her extravagant clothing, and her affinity for listening to jazz with a cigarette between her lips.",
-#     "role": "Lead Actress",
-#     "poster": "images/kiyo.png"
-# }
-
 define movie_header_font = "fonts/RialtoNF.ttf"
 
 style movie_name_text:
@@ -409,6 +445,17 @@ screen movie_role_choice(movie1, movie2):
                 # Button to choose this role
                 textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
 
+screen relationship_bar(relationship_image):
+    # Display the relationship bar at the top center
+    frame:
+        xpos 0.85
+        ypos 0.05
+        xanchor 0.5
+        yanchor 0
+        background None
+
+        add relationship_image zoom 0.3
+
 label setsuko_letter:
     MC "You read a letter from Setsuko, gossiping about a girl from their school who was supposed to be a big star. Unfortunately, she got cast in a few traditional roles and was dunked on by the critics. Setsuko mentions that this girl starred alongside the guy from their film together – someone she’s totally not into."
     menu:
@@ -450,6 +497,10 @@ label start:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
     show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+    python:
+        relationship_bar = what_relationship_bar_to_use(relationship_score)
+
+    show screen relationship_bar("relationship_15")
 
     stop music
     scene solidblack

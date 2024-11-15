@@ -1,26 +1,71 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 639, in script
-    python:
-  File "game/script.rpy", line 642, in <module>
-    movie1_title = movie_choices[0].title
-AttributeError: 'NoneType' object has no attribute 'title'
+  File "game/script.rpy", line 475, in script
+    darkMC "Who am I?"
+  File "renpy/common/000window.rpy", line 132, in _window_auto_callback
+    _window_show(auto=True)
+  File "renpy/common/000window.rpy", line 75, in _window_show
+    renpy.with_statement(trans)
+  File "game/script.rpy", line 295, in execute
+    screen relationship_bar_display(relationship_image):
+  File "game/script.rpy", line 295, in execute
+    screen relationship_bar_display(relationship_image):
+  File "game/script.rpy", line 296, in execute
+    add star_image zoom zoom
+  File "game/script.rpy", line 296, in <module>
+    add star_image zoom zoom
+NameError: name 'star_image' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 639, in script
-    python:
-  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 821, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "/Applications/renpy-8.3.2-sdk/renpy/python.py", line 1178, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 642, in <module>
-    movie1_title = movie_choices[0].title
-AttributeError: 'NoneType' object has no attribute 'title'
+  File "game/script.rpy", line 475, in script
+    darkMC "Who am I?"
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 2573, in execute
+    Say.execute(self)
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 583, in execute
+    statement_name(stmt_name)
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 52, in statement_name
+    i(name)
+  File "renpy/common/000window.rpy", line 132, in _window_auto_callback
+    _window_show(auto=True)
+  File "renpy/common/000window.rpy", line 75, in _window_show
+    renpy.with_statement(trans)
+  File "/Applications/renpy-8.3.2-sdk/renpy/exports/statementexports.py", line 257, in with_statement
+    return renpy.game.interface.do_with(trans, paired, clear=clear)
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/core.py", line 1578, in do_with
+    return self.interact(trans_pause=True,
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/screen.py", line 480, in visit_all
+    callback(self)
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/screen.py", line 491, in per_interact
+    self.update()
+  File "/Applications/renpy-8.3.2-sdk/renpy/display/screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/script.rpy", line 295, in execute
+    screen relationship_bar_display(relationship_image):
+  File "game/script.rpy", line 295, in execute
+    screen relationship_bar_display(relationship_image):
+  File "game/script.rpy", line 296, in execute
+    add star_image zoom zoom
+  File "game/script.rpy", line 296, in <module>
+    add star_image zoom zoom
+NameError: name 'star_image' is not defined
 
 macOS-14.0-arm64-arm-64bit arm64
 Ren'Py 8.3.2.24090902
 star team 1.0
-Wed Nov 13 17:29:03 2024
+Fri Nov 15 02:16:41 2024
