@@ -63,7 +63,7 @@ define config.has_voice = True
 ## game, until it is stopped or another file is played.
 
 # define config.main_menu_music = "main-menu-theme.ogg"
-define config.main_menu_music = "夜來香 loopable, beginning screen.mp3"
+define config.main_menu_music = "tokyo nights.mp3"
 
 ## Transitions #################################################################
 ##

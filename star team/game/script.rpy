@@ -500,22 +500,28 @@ label start:
     python:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
-    show screen relationship_bar("relationship_15")
+    show screen relationship_bar(relationship_bar)
 
     stop music
     scene solidblack
 
     darkMC "Who am I?"
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "That’s an interesting question, I suppose."
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "I’m a woman. I was born in Osaka, Japan, in 1915."
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "My favorite color is red, but I rarely get to wear it."
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "But that doesn’t answer your question, does it?"
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "So, tell me – who am I?"
+    play sound "page turn.mp3" volume 0.5
 
     play sound "click reverb.mp3"
     darkMC "Don’t be nervous. This is what I do. I am whoever you want me to be. Just tell me."
@@ -531,23 +537,23 @@ label start:
     scene solidblack
 
     darkMC "[mcName]. Interesting. Did you know that changing names is a common practice among actresses?"
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "Oh, that’s what I forgot to tell you. I’m an actress, and forgive my arrogance, but quite a good one, too."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "Now, as an actress, I’ve had quite a number of stories to tell. Whirlwind romances, a wrenching tragedy, a soft, sweet girl appearing only to support the glittering ingenue."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "There is a glamor to the screen – it all glows in that dark room, the only light amid a backdrop of silence. It is stunning. Captivating."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "The voices you could picture from the radio suddenly belong to people – to women and men with faces and expressions that seize you by the heart and force it to beat to a rhythm of their own design."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "Oh yes, it’s a spectacle. All the audience weeps and laughs together. Well, all together in attendance."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "In that moment, perhaps there is unity. But once the lights return and the world is no longer scripted, what becomes of the characters?"
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "They disappear. They melt back into their original forms – the actors. But even then, the show never stops. For in the day, in the night, between each bite at each meal, the performance goes on. That is what it means to be a star."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "You cannot rely on the lights of the set to carry you through to the next role. No, you must shine of your own accord. You must never go out. And you must reach far beyond your own space."
-
+    play sound "page turn.mp3" volume 0.5
     darkMC "Would you like to hear how I did it?"
 
     menu:
@@ -565,19 +571,28 @@ label start:
 
     scene intro 1
 
+    play music "onna keizu no uta.mp3" loop
+
     darkMC "I’m from Osaka, you already know that.My parents were a perfect sort of couple – father a hardworking government officer, mother a housewife that put all others to shame. Meals were quiet, but never uncomfortable."
+    play sound "page turn.mp3" volume 0.5
 
     scene intro 2
 
     darkMC "I always loved to sing. I’d put on private performances for myself, singing the same songs I’d heard at the festivals and in school. And at nine, my mother took notice. She enrolled me in music lessons with a strict but kind tutor, Ō Shūka, though she preferred I called her by her Chinese name, Wang Qiuxia."
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "We spent long days together – I often saw her more than my own family. She spoke to me in both Japanese and Mandarin, broken parts of the latter until I could finally hold a conversation in full. I owe much of my career to her and her guidance."
+    play sound "page turn.mp3" volume 0.5
 
     scene intro 3
 
     darkMC "At the Aoi Matsuri in 1928, I was given the opportunity – no doubt with some strings pulled by Ms. Wang and my parents – to perform on a public stage. It was a night that would change my life."
+    play sound "page turn.mp3" volume 0.5
 
     darkMC "A man in the audience, whether or not his presence was a coincidence, treated my song as an audition and offered me a spot in the Naniwa Conservatoire, a top acting school. Though I kept an air of quiet humility as I accepted, as I signed my first contract, there was not a drop of reservation between my trembling fingers."   
+    play sound "page turn.mp3" volume 0.5
+
+    stop music
 
     hide intro 3
 
@@ -589,46 +604,65 @@ label start:
     hide chap1_movie
     window auto
 
+    play music "crowd-ambience.mp3" loop volume 0.5
     direct "What do you mean she can’t make the shot? What’s her excuse? Doesn’t she understand how big of an opportunity this is?"
+    play sound "page turn.mp3" volume 0.5
+
     prod "Her family sends their regrets, sir, but her doctor doesn’t recommend she leave the hospital until her lungs have cleared."
+    play sound "page turn.mp3" volume 0.5
 
     direct "This is a disaster – we don’t have this space forever. Should we just cut the character?"
+    play sound "page turn.mp3" volume 0.5
 
     prod "It may be too late for that. Why don’t we get one of the younger girls to stand in? She just has to look nice, right?"
+    play sound "page turn.mp3" volume 0.5
 
     direct "(sighs, grumbles) At least let me get a look at them. These girls are here for their voices, not their faces. We don’t need some oni wasting space on the film."
+    play sound "page turn.mp3" volume 0.5
 
+    play sound "mc laughing.mp3" volume 1.5
     MC "Hahaha!"
+    play sound "page turn.mp3" volume 0.5
 
     direct "Where did that one come from?"
+    play sound "page turn.mp3" volume 0.5
 
     prod "That would be [mcName], I believe."
-
+    play sound "page turn.mp3" volume 0.5
 
     direct "What school?"
+    play sound "page turn.mp3" volume 0.5
 
     prod "The Naniwa Conservatoire. Her family is quite well-to-do – I believe she’s been taking lessons since childhood. Would you–"
+    play sound "page turn.mp3" volume 0.5
 
     direct "Get her in costume. I want her back here in five minutes."
+    play sound "page turn.mp3" volume 0.5
 
     prod "Yes, sir."
+    play sound "page turn.mp3" volume 0.5
 
     prod "[mcName]?"
-
+    play sound "page turn.mp3" volume 0.5
 
     MC "Hm? Oh! Hello, sir."
-
+    play sound "page turn.mp3" volume 0.5
 
     prod "We are in a bit of an emergency situation. One of our actresses has fallen ill and we need someone to fill in her place. The director has chosen you."
+    play sound "page turn.mp3" volume 0.5
 
+    play sound "woman startled gasp.mp3" volume 0.8
     MC "What, me?"
+    play sound "page turn.mp3" volume 0.5
     MC "Oh my gosh!" # Visible excitement
+    play sound "page turn.mp3" volume 0.5
 
     # MC's thoughts
     MC "My first role! At sixteen! But that poor actress, I almost feel guilty…"
 
     menu:
         "I know I’m only an amateur, but I’ll give it my all!":
+            play sound "mc laughing.mp3" volume 1.5
             MC "I know I’m only an amateur, but I’ll give it my all!"
             $ trendiness_score += 1
 
@@ -645,22 +679,33 @@ label start:
 
     show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
-
     prod "No need for stress – it’s a walk-on role."
-
+    play sound "page turn.mp3" volume 0.5
 
     MC "Oh… ([mcName] is slightly disappointed...)"
+    play sound "page turn.mp3" volume 0.5
 
     prod "That doesn’t mean it’s not important. The director chose you. Let me show you to the costuming room – we need you back here as soon as possible for a run-through."
+    play sound "page turn.mp3" volume 0.5
 
     # Producer exits the frame
     prod "Follow me. (The producer exits the room.)"
+    play sound "page turn.mp3" volume 0.5
 
     # MC left alone
     MC "That was how it began – a total accident. A role so small my name might not even appear in the credits. But that moment…"
+    play sound "page turn.mp3" volume 0.5
+
     MC "The feeling of powder on my cheeks, like hot sand on my skin."
+    play sound "page turn.mp3" volume 0.5
+
     MC "Whether warm from the lights or from the mixture of pride and sheer terror that coursed my body."
+    play sound "page turn.mp3" volume 0.5
+
     MC "I was stiff as a board, I’m sure. Yet that was the first time I felt so alive. So very real."
+    play sound "page turn.mp3" volume 0.5
+
+    stop music
 
  # MC and Producer dialogue
 
@@ -671,17 +716,22 @@ label start:
     menu:
         "but I’m grateful nonetheless.":
             prod "Well, you were outstanding. So much so that…"
+            $ trendiness_score -= 1
+            $ relationship_score += 1
 
         "so I’m ready to move on to bigger things.":
             prod "Quite a spark you’ve got there. You’re going to need that ambition, because…"
             $ trendiness_score += 2
+            $ relationship_score -= 1
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+        relationship_bar = what_relationship_bar_to_use(relationship_score)
 
     show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+    show screen relationship_bar(relationship_bar)
 
-    $ renpy.pause(1.5)
+    $ renpy.pause(0.5)
 
     show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
 
@@ -763,6 +813,10 @@ label start:
             jump after_film_scene
 
         "Find Setsuko.":
+            $ relationship_score += 1
+            python:
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen relationship_bar(relationship_bar)
             # Leads to the scene in blue
             jump find_setsuko_scene
 
@@ -847,10 +901,26 @@ label officeOne:
     show office bg
     menu:
         "I really didn’t expect things to take off so fast.":
+            $ trendiness_score -= 1
+            $ relationship_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+            show screen relationship_bar(relationship_bar)
             prod "No need to be humble. You’ve got something special. Even that quack of a director could tell just from a single look."
 
+
         "But I never really doubted myself.":
+            $ trendiness_score += 1
+            $ relationship_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+            show screen relationship_bar(relationship_bar)
             prod "There’s that spunk again. Keep that spark – the people like a clever girl."
+
 
     prod "And on that note, I’ve got some exciting news."
 
@@ -861,6 +931,64 @@ label officeOne:
 
     # Player picks between two bucket movies
     # Insert bucket movie selection logic here
+    
+    
+    
+    python:
+        movie_choices = get_two_movies_of_type("trendiness")
+
+        movie1_title = movie_choices[0].title
+        movie1_description = movie_choices[0].description
+        movie1_role = movie_choices[0].role
+
+        movie2_title = movie_choices[1].title
+        movie2_description = movie_choices[1].description
+        movie2_role = movie_choices[1].role
+
+        movie1 = {
+            "name": movie1_title,
+            "description": movie1_description,
+            "role": movie1_role,
+        }
+
+        movie2 = {
+            "name": movie2_title,
+            "description": movie2_description,
+            "role": movie2_role,
+        }
+
+    call screen movie_role_choice(movie1, movie2)
+
+    if chosen_movie == "movie1":
+        "You have chosen the role in [movie1['name']]."
+        $ trendiness_score += 1
+    elif chosen_movie == "movie2":
+        "You have chosen the role in [movie2['name']]."
+        $ trendiness_score -= 1
+
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+
+    $ renpy.pause(1.5)
+
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     prod "Shooting starts next week – start looking over your lines. Take a deep breath, you’ll be fine. The last movie did well and the stakes are low, alright? Do your best."
 
@@ -894,6 +1022,10 @@ label officeOne:
             kiyo "(clearly disgruntled) [mcName], where did you get your dress?"
 
         "Only if I can bring my friend, Setsuko. Do you remember her too?" :
+            relationship_score += 1
+            python:
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen relationship_bar(relationship_bar)
             toshiro "Um… if you want–"
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
 
