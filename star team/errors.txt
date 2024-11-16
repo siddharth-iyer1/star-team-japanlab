@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 470: expected statement.
-    log(relationship_bar)
-                         ^
+File "game/script.rpy", line 1025: expected statement.
+    relationship_score += 1
+                       ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Fri Nov 15 02:16:23 2024
+Sat Nov 16 16:54:32 2024

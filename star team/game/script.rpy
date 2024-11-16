@@ -2,7 +2,7 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
+    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
 
     used_movies = []
 
@@ -64,7 +64,7 @@ init python:
         return movie1, movie2
 
     def get_movie_scores(movieRoleId):
-        fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
+        fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - movie stats.csv"
         with open(fp, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
@@ -165,14 +165,19 @@ init:
 
 #Define characters
 define mcName = "Assertive Feminine Voice"
-define MC = Character("[mcName]", window_background=Frame("images/mc_textbox.png", 25, 25) )
+define MC = Character("[mcName]", window_background=Frame("images/mc_textbox.png", 25, 25))
+define MCWar = Character("[mcName]", window_background=Frame("images/mc_textbox_war.png", 25, 25))
 define darkMC = Character("[mcName]")
 define prod = Character("Producer",image="producer")
 define direct = Character("Director")
 define setsuko = Character("Setsuko",image="setsuko", window_background=Frame("images/setsuko_textbox.png", 25, 25))
 define toshiro = Character("Toshiro",image="toshiro", window_background=Frame("images/toshiro_textbox.png", 25, 25))
 define kiyo = Character("Kiyo",image="kiyo", window_background=Frame("images/kiyo_textbox.png", 25, 25))
-define kazuo = Character("Kazuo")
+define kazuo = Character("Kazuo", image="kazuo", window_background=Frame("images/kazuo_textbox.png", 25, 25))
+define setsukoWar = Character("Setsuko",image="setsukoWar", window_background=Frame("images/setsuko_textbox.png", 25, 25))
+define toshiroWar = Character("Toshiro",image="toshiroWar", window_background=Frame("images/toshiro_textbox.png", 25, 25))
+define kiyoWar = Character("Kiyo",image="kiyoWar", window_background=Frame("images/kiyo_textbox.png", 25, 25))
+define kazuoWar = Character("Kazuo", image="kazuoWar", window_background=Frame("images/kazuo_textbox.png", 25, 25))
 
 image chap1_movie = Movie(size=(1920, 1080), channel='movie', play="images/chap1.webm")
 image intro_movie = Movie(size=(1920, 1080), channel='movie', play="images/intro_movie.webm")
@@ -226,7 +231,12 @@ image MC = "MC.png"
 image side setsuko = "setsuko.png"
 image side toshiro = "toshiro.png"
 image side kiyo = "kiyo.png"
+image side kazuo = "kazuo.png"
 image side producer = "producer.png"
+image side setsukoWar = "setsukoWar.png"
+image side toshiroWar = "toshiroWar.png"
+image side kiyoWar = "kiyoWar.png"
+image side kazuoWar = "kazuoWar.png"
 # Define initial scores
 default trendiness_score = 0
 default westernization_score = 0
@@ -1022,8 +1032,8 @@ label officeOne:
             kiyo "(clearly disgruntled) [mcName], where did you get your dress?"
 
         "Only if I can bring my friend, Setsuko. Do you remember her too?" :
-            relationship_score += 1
             python:
+                relationship_score += 1
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen relationship_bar(relationship_bar)
             toshiro "Um… if you want–"
@@ -1068,6 +1078,4 @@ label scene_in_blue:
 
 label scene_in_green:
     # Logic for scene in green
-    return
-
     return
