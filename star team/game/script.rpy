@@ -313,6 +313,19 @@ screen star_with_score(star_image, star_image_hover_flash, score, xpos, ypos, zo
             size (20 * text_size) # Adjust text size as needed
             color "#ffffff"  # Text color
 
+screen industry_relations(image, xpos, ypos, zoom, offset):
+
+    fixed:
+        xpos xpos
+        ypos ypos
+
+        add image zoom zoom  # Adjust zoom to resize the star
+
+        imagebutton:
+            idle image
+            hover image
+            action Show("relationship_screen") at zoomedin
+
 screen star_with_info(star_image, xpos, ypos):
     fixed:
         xpos xpos
@@ -326,7 +339,6 @@ screen star_with_info(star_image, xpos, ypos):
 
             # Text overlay on top of the imagebutton
 
-
 screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
 
     # Display the background image at the left corner
@@ -336,6 +348,7 @@ screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
     use star_with_score(p_star, "star_p_hover_flash", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(b_star, "star_b_hover_flash", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(g_star, "star_g_hover_flash", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
+    use industry_relations("industry_relations", xpos=1800, ypos=10, zoom=0.2, offset=0)
 
 screen stats_bar():
     frame:
@@ -385,6 +398,25 @@ screen info_screen:
     # Button to close the screen
     textbutton "Close":
         action Hide("info_screen")
+        xpos 0.5
+        ypos 0.95
+        xanchor 0.5
+        yanchor 0.5
+
+screen relationship_screen:
+    modal True
+    tag info_screen
+
+    # Background frame with layered images
+    # Display the relationship bar at the top center
+    frame:
+        background None
+        add relationship_bar
+
+
+    # Button to close the screen
+    textbutton "Close":
+        action Hide("relationship_screen")
         xpos 0.5
         ypos 0.95
         xanchor 0.5
@@ -507,8 +539,6 @@ label start:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)    
     python:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
-
-    show screen relationship_bar(relationship_bar)
 
     stop music
     scene solidblack
