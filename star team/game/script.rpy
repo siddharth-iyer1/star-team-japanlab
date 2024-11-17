@@ -423,15 +423,15 @@ screen movie_role_choice(movie1, movie2):
                 # xmaximum 300
                 spacing 20
                 text "[movie1['name']]" style "movie_name_text"
-                text "Description: [movie1['description']]" size 25 color "#CCCCCC"
-                text "Role: [movie1['role']]" size 25 color "#CCCCCC"
+                text "Description: [movie1['description']]" size 25 color "#000000"
+                text "Role: [movie1['role']]" size 25 color "#000000"
 
                 frame:
                     yfill True
                     background None
 
                 # Button to choose this role
-                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie1"), Return()] style "role_button" text_color "#000000" align (0.4, 0.5)
 
         frame:
             background im.FactorScale("images/Movie Script Asset.png", 0.87)
@@ -444,8 +444,8 @@ screen movie_role_choice(movie1, movie2):
                 # xmaximum 300
                 spacing 20
                 text "[movie2['name']]" style "movie_name_text"
-                text "Description: [movie2['description']]" size 25 color "#CCCCCC" align (0.5, 0.5)
-                text "Role: [movie1['role']]" size 25 color "#CCCCCC"
+                text "Description: [movie2['description']]" size 25 color "#000000" align (0.5, 0.5)
+                text "Role: [movie1['role']]" size 25 color "#000000"
 
                 frame:
                     yfill True
@@ -504,9 +504,7 @@ label newspaper:
 
 label start:
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
-
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)    
     python:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
@@ -613,6 +611,8 @@ label start:
     show studio bg
     hide chap1_movie
     window auto
+    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+
 
     play music "crowd-ambience.mp3" loop volume 0.5
     direct "What do you mean she can’t make the shot? What’s her excuse? Doesn’t she understand how big of an opportunity this is?"
