@@ -2,7 +2,7 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
+    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
 
     used_movies = []
 
@@ -319,7 +319,7 @@ screen star_with_score(star_image, star_image_hover_flash, score, xpos, ypos, zo
             size (20 * text_size) # Adjust text size as needed
             color "#ffffff"  # Text color
 
-screen industry_relations(image, xpos, ypos, zoom, offset):
+screen industry_relations(image, hover_image, xpos, ypos, zoom, offset):
 
     fixed:
         xpos xpos
@@ -329,7 +329,7 @@ screen industry_relations(image, xpos, ypos, zoom, offset):
 
         imagebutton:
             idle image
-            hover image
+            hover hover_image
             action Show("relationship_screen") at zoomedin
 
 screen star_with_info(star_image, xpos, ypos):
@@ -354,7 +354,7 @@ screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
     use star_with_score(p_star, "star_p_hover_flash", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(b_star, "star_b_hover_flash", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(g_star, "star_g_hover_flash", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
-    use industry_relations("industry_relations", xpos=1800, ypos=10, zoom=0.2, offset=0)
+    use industry_relations("industry_relations_idle", "industry_relations" xpos=1800, ypos=10, zoom=0.2, offset=0)
 
 screen stats_bar():
     frame:
@@ -542,7 +542,7 @@ label newspaper:
 
 label start:
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)    
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
     python:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
@@ -610,7 +610,7 @@ label start:
             jump QTE
 
     darkMC "I hope my story will be an interesting enough exchange..."
-    
+
     show intro_movie
 
     scene intro 1
