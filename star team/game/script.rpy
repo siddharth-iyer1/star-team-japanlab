@@ -156,7 +156,7 @@ init:
     $ timer_jump = 0
     $ time = 0
     transform zoomedin:
-        zoom 0.2
+        zoom 0.20
     transform alpha_dissolve:
         alpha 0.0
         linear 0.5 alpha 1.0
@@ -491,7 +491,7 @@ screen movie_role_choice(movie1, movie2):
 
 
                 # Button to choose this role
-                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#000000" align (0.4, 0.5)
 
 screen relationship_bar(relationship_image):
     # Display the relationship bar at the top center
@@ -807,10 +807,10 @@ label start:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ trendiness_score += 1
+        $ trendiness_score -= 1
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ trendiness_score -= 1
+        $ trendiness_score += 1
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
@@ -859,7 +859,6 @@ label start:
             $ relationship_score += 1
             python:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen relationship_bar(relationship_bar)
             # Leads to the scene in blue
             jump find_setsuko_scene
 
@@ -1000,10 +999,10 @@ label officeOne:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ trendiness_score += 1
+        $ trendiness_score -= 1
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ trendiness_score -= 1
+        $ trendiness_score += 1
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
@@ -1049,7 +1048,6 @@ label officeOne:
             python:
                 relationship_score += 1
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen relationship_bar(relationship_bar)
             toshiro "Um… if you want–"
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
 
