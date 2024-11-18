@@ -1,18 +1,18 @@
-2024-11-18 03:01:40 UTC
-macOS-14.1-arm64-arm-64bit
+2024-11-18 06:58:37 UTC
+macOS-14.0-arm64-arm-64bit
 Ren'Py 8.3.2.24090902
 
-Early init took 0.04s
-Loading error handling took 0.11s
-Loading script took 0.97s
-Loading save slot metadata took 0.06s
+Early init took 0.03s
+Loading error handling took 0.02s
+Loading script took 0.21s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.20s
+Running init code took 0.02s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.02s
 Index archives took 0.00s
-Backing up script files to '/Users/justinbanh/Library/RenPy/backups/star team':
+Backing up script files to '/Users/siddharthiyer/Library/RenPy/backups/star team':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -24,58 +24,22 @@ Init translation took 0.02s
 Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.04s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.03s
+Save screen analysis took 0.01s
+Prepare screens took 0.03s
+Save pyanalysis. took 0.01s
+Save bytecode. took 0.02s
 Running _start took 0.00s
-Interface start took 0.32s
+Interface start took 0.51s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1512, 982)
+primary display bounds: (0, 0, 1920, 1080)
 swap interval: 1 frames
 Windowed mode.
 Vendor: "b'Apple'"
-Renderer: b'Apple M1 Pro'
-Version: b'2.1 Metal - 88'
+Renderer: b'Apple M1'
+Version: b'2.1 Metal - 86'
 Display Info: None
-Screen sizes: virtual=(1920, 1080) physical=(1458, 916) drawable=(2916, 1832)
+Screen sizes: virtual=(1920, 1080) physical=(1920, 1027) drawable=(1920, 1027)
 Maximum texture size: 4096x4096
-Screen sizes: virtual=(1920, 1080) physical=(1458, 916) drawable=(2916, 1832)
+Screen sizes: virtual=(1920, 1080) physical=(1920, 1027) drawable=(1920, 1027)
 Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/script.rpy", line 1275, in script
-    prod "(a rustling sound) [He produces a script.]"
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 2573, in execute
-    Say.execute(self)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 615, in execute
-    renpy.exports.say(who, what, *args, **kwargs)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/exports/sayexports.py", line 132, in say
-    who(what, *args, **kwargs)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/character.py", line 1440, in __call__
-    what = self.prefix_suffix("what", self.what_prefix, what, self.what_suffix)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/character.py", line 1354, in prefix_suffix
-    return (sub(prefix) + sub(body) + sub(suffix))
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/character.py", line 1334, in sub
-    return renpy.substitutions.substitute(s, scope=scope, force=force, translate=translate)[0]
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/substitutions.py", line 373, in substitute
-    s = interpolate(s, variables) # type: ignore
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/substitutions.py", line 86, in interpolate
-    raise e
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/substitutions.py", line 78, in interpolate
-    value = renpy.python.py_eval(code, {}, scope)
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/python.py", line 1207, in py_eval
-    code = py_compile(code, 'eval')
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/python.py", line 1144, in py_compile
-    raise e
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/python.py", line 1081, in py_compile
-    raise orig_e
-  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/python.py", line 1073, in py_compile
-    tree = compile(source, filename, py_mode, ast.PyCF_ONLY_AST | flags, 1)
-SyntaxError: invalid syntax (<none>, line 1)
-
-While running game code:
-  File "game/script.rpy", line 1275, in script
-    prod "(a rustling sound) [He produces a script.]"
-SyntaxError: invalid syntax (<none>, line 1)

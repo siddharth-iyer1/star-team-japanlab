@@ -2,7 +2,7 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
+    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
 
     used_movies = []
 
@@ -156,7 +156,7 @@ init:
     $ timer_jump = 0
     $ time = 0
     transform zoomedin:
-        zoom 0.2
+        zoom 0.20
     transform alpha_dissolve:
         alpha 0.0
         linear 0.5 alpha 1.0
@@ -319,7 +319,7 @@ screen star_with_score(star_image, star_image_hover_flash, score, xpos, ypos, zo
             size (20 * text_size) # Adjust text size as needed
             color "#ffffff"  # Text color
 
-screen industry_relations(image, xpos, ypos, zoom, offset):
+screen industry_relations(image, hover_image, xpos, ypos, zoom, offset):
 
     fixed:
         xpos xpos
@@ -329,7 +329,7 @@ screen industry_relations(image, xpos, ypos, zoom, offset):
 
         imagebutton:
             idle image
-            hover image
+            hover hover_image
             action Show("relationship_screen") at zoomedin
 
 screen star_with_info(star_image, xpos, ypos):
@@ -345,7 +345,7 @@ screen star_with_info(star_image, xpos, ypos):
 
             # Text overlay on top of the imagebutton
 
-screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
+screen score_display(p_star, b_star, g_star, ir, p_score, b_score, g_score):
 
     # Display the background image at the left corner
     # add "background_strip" xpos 0 ypos -80 zoom 0.18
@@ -354,7 +354,7 @@ screen score_display(p_star, b_star, g_star, p_score, b_score, g_score):
     use star_with_score(p_star, "star_p_hover_flash", p_score, xpos=20, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(b_star, "star_b_hover_flash", b_score, xpos=120, ypos=10, zoom=0.2, text_size=1, offset=0)
     use star_with_score(g_star, "star_g_hover_flash", g_score, xpos=220, ypos=10, zoom=0.2, text_size=1, offset=0)
-    use industry_relations("industry_relations", xpos=1800, ypos=10, zoom=0.2, offset=0)
+    use industry_relations(ir, "industry_relations", xpos=1800, ypos=10, zoom=0.2, offset=0)
 
 screen stats_bar():
     frame:
@@ -491,7 +491,7 @@ screen movie_role_choice(movie1, movie2):
 
 
                 # Button to choose this role
-                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#CCCCCC" align (0.4, 0.5)
+                textbutton "Accept Role" action [SetVariable("chosen_movie", "movie2"), Return()] style "role_button" text_color "#000000" align (0.4, 0.5)
 
 screen relationship_bar(relationship_image):
     # Display the relationship bar at the top center
@@ -542,7 +542,7 @@ label newspaper:
 
 label start:
     python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)    
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
     python:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
@@ -610,7 +610,7 @@ label start:
             jump QTE
 
     darkMC "I hope my story will be an interesting enough exchange..."
-    
+
     show intro_movie
 
     scene intro 1
@@ -647,7 +647,7 @@ label start:
     show studio bg
     hide chap1_movie
     window auto
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
 
     play music "crowd-ambience.mp3" loop volume 0.5
@@ -719,11 +719,9 @@ label start:
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
-
-    $ renpy.pause(1.5)
-
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+    $ renpy.pause(0.5)
+    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "No need for stress – it’s a walk-on role."
     play sound "page turn.mp3" volume 0.5
@@ -774,12 +772,11 @@ label start:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
-    show screen relationship_bar(relationship_bar)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
 
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
 
@@ -810,19 +807,19 @@ label start:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ trendiness_score += 100
+        $ trendiness_score -= 1
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ trendiness_score -= 1
+        $ trendiness_score += 1
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(1.5)
 
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
+    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
 
@@ -862,7 +859,6 @@ label start:
             $ relationship_score += 1
             python:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen relationship_bar(relationship_bar)
             # Leads to the scene in blue
             jump find_setsuko_scene
 
@@ -952,8 +948,7 @@ label officeOne:
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
-            show screen relationship_bar(relationship_bar)
+            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
             prod "No need to be humble. You’ve got something special. Even that quack of a director could tell just from a single look."
 
 
@@ -963,8 +958,7 @@ label officeOne:
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
-            show screen relationship_bar(relationship_bar)
+            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
             prod "There’s that spunk again. Keep that spark – the people like a clever girl."
 
 
@@ -977,9 +971,7 @@ label officeOne:
 
     # Player picks between two bucket movies
     # Insert bucket movie selection logic here
-    
-    
-    
+
     python:
         movie_choices = get_two_movies_of_type("trendiness")
 
@@ -1007,34 +999,19 @@ label officeOne:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ trendiness_score += 1
+        $ trendiness_score -= 1
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ trendiness_score -= 1
+        $ trendiness_score += 1
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(1.5)
 
-    show screen score_display(p_star, b_star, g_star, trendiness_score, westernization_score, nationalism_score)
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "Shooting starts next week – start looking over your lines. Take a deep breath, you’ll be fine. The last movie did well and the stakes are low, alright? Do your best."
 
@@ -1071,7 +1048,6 @@ label officeOne:
             python:
                 relationship_score += 1
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen relationship_bar(relationship_bar)
             toshiro "Um… if you want–"
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
 
