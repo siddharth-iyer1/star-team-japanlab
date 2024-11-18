@@ -390,16 +390,34 @@ screen info_screen:
             add "starpower_background.png"  # Base background image
 
             # Display each star with its score in specific positions
-            use star_with_score("star_p_empty", "star_p_hover_flash", 10, xpos=130, ypos=100, zoom=1, text_size= 3, offset = 95)
-            use star_with_score("star_b_empty", "star_b_hover_flash", 10, xpos=700, ypos=100, zoom=1, text_size = 3, offset = 95)
-            use star_with_score("star_g_empty", "star_g_hover_flash", 10, xpos=1300, ypos=100, zoom=1, text_size = 3, offset = 95)
+            use star_with_score("star_p_empty", "star_p_hover_flash", "Trendy", xpos=130, ypos=100, zoom=1, text_size=3, offset=95)
+            use star_with_score("star_b_empty", "star_b_hover_flash", "Westernized", xpos=700, ypos=100, zoom=1, text_size=3, offset=95)
+            use star_with_score("star_g_empty", "star_g_hover_flash", "Nationalistic", xpos=1300, ypos=100, zoom=1, text_size=3, offset=105)
 
-            # Display the information text on top of all images
-            text "This is the information screen, Placeholder for actual descriptions.":
+            # Text descriptions under each star
+            text "This trait reflects how you challenge social norms and embrace progressive ideas and behaviors – primarily appearing modern and fashionable. Trendiness is influenced by boldness in dialogue, consciousness of popular film genres, and showcasing her willingness to push boundaries and adopt modern perspectives.":
                 color "#ffffff"
-                size 25
-                xalign 0.5
-                yalign 0.7
+                size 32
+                xpos 400
+                ypos 600
+                xanchor 0.5
+                xmaximum 425  # Limit the width to fit below the star
+
+            text "This trait highlights how you adopt behaviors and attitudes that align more closely with Western styles and values. Through defying traditional standards of speech and behavior, embracing Western cultural influences, and more, you can showcase your departure from typically Japanese values in both thought and behavior.":
+                color "#ffffff"
+                size 32
+                xpos 980
+                ypos 600
+                xanchor 0.5
+                xmaximum 425  # Limit the width to fit below the star
+
+            text "This trait represents your alignment with traditional Japanese values, culture, and governmental ideals. It manifests through adherence to social expectations, pride in the national memory, and awareness of the national sentiment, emphasizing an unifying, Japanese identity and support for your heritage.":
+                color "#ffffff"
+                size 32
+                xpos 1580
+                ypos 600
+                xanchor 0.5
+                xmaximum 425  # Limit the width to fit below the star
 
     # Button to close the screen
     textbutton "Close":
@@ -408,6 +426,9 @@ screen info_screen:
         ypos 0.95
         xanchor 0.5
         yanchor 0.5
+
+
+
 
 screen relationship_screen:
     modal True

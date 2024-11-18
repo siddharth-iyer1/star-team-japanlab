@@ -2,9 +2,17 @@
 errors listed below, and try again.
 
 
-File "game/chapter2.rpy", line 427: is not terminated with a newline. (Check strings and parenthesis.)
-(Perhaps you left out a " at the end of the first line.)
-            "Setsuko i
+File "game/script.rpy", line 404: keyword argument 'yalign' is incompatible with 'ypos'.
+    yalign 0.0
+          ^
+
+File "game/script.rpy", line 412: keyword argument 'yalign' is incompatible with 'ypos'.
+    yalign 0.0
+          ^
+
+File "game/script.rpy", line 420: keyword argument 'yalign' is incompatible with 'ypos'.
+    yalign 0.0
+          ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Mon Nov 18 13:11:50 2024
+Mon Nov 18 14:23:50 2024
