@@ -1,18 +1,18 @@
-2024-11-18 06:58:37 UTC
-macOS-14.0-arm64-arm-64bit
+2024-11-18 19:13:38 UTC
+macOS-14.1-arm64-arm-64bit
 Ren'Py 8.3.2.24090902
 
-Early init took 0.03s
-Loading error handling took 0.02s
-Loading script took 0.21s
-Loading save slot metadata took 0.02s
+Early init took 0.04s
+Loading error handling took 0.13s
+Loading script took 1.74s
+Loading save slot metadata took 0.05s
 Loading persistent took 0.00s
-Running init code took 0.02s
+Running init code took 0.19s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Backing up script files to '/Users/siddharthiyer/Library/RenPy/backups/star team':
+Backing up script files to '/Users/justinbanh/Library/RenPy/backups/star team':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -24,22 +24,44 @@ Init translation took 0.02s
 Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
-Save screen analysis took 0.01s
-Prepare screens took 0.03s
-Save pyanalysis. took 0.01s
-Save bytecode. took 0.02s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
 Running _start took 0.00s
-Interface start took 0.51s
+Interface start took 0.35s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
+primary display bounds: (0, 0, 1512, 982)
 swap interval: 1 frames
 Windowed mode.
 Vendor: "b'Apple'"
-Renderer: b'Apple M1'
-Version: b'2.1 Metal - 86'
+Renderer: b'Apple M1 Pro'
+Version: b'2.1 Metal - 88'
 Display Info: None
-Screen sizes: virtual=(1920, 1080) physical=(1920, 1027) drawable=(1920, 1027)
+Screen sizes: virtual=(1920, 1080) physical=(1458, 916) drawable=(2916, 1832)
 Maximum texture size: 4096x4096
-Screen sizes: virtual=(1920, 1080) physical=(1920, 1027) drawable=(1920, 1027)
+Screen sizes: virtual=(1920, 1080) physical=(1458, 916) drawable=(2916, 1832)
 Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 783, in script
+    python:
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/ast.py", line 821, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Volumes/renpy-8.3.2-sdk/renpy-8.3.2-sdk/renpy/python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 784, in <module>
+    movie_choices = get_two_movies_of_type("trendiness")
+  File "game/script.rpy", line 37, in get_two_movies_of_type
+    with open(movie_data_fp, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv'
+
+While running game code:
+  File "game/script.rpy", line 783, in script
+    python:
+  File "game/script.rpy", line 784, in <module>
+    movie_choices = get_two_movies_of_type("trendiness")
+  File "game/script.rpy", line 37, in get_two_movies_of_type
+    with open(movie_data_fp, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv'

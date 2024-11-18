@@ -415,8 +415,9 @@ label producer_discussion:
 
     setsuko "Everyone here is just doing their best, aren’t they? We’re just doing what we’ve been told."
 
+    MC "..."
     menu:
-        "And you’re satisfied with that? (immunity-).":
+        "And you’re satisfied with that? (immunity-)":
             MC "And you’re satisfied with that?"
             setsuko "What else do you want me to do?"
             MC "Say something. Do something."
@@ -424,5 +425,28 @@ label producer_discussion:
             MC "What about this is worth saving?"
             setsuko "It won’t always be this way. The war will end and then–"
             kiyo "And then we’ll all be happy. With our thousands dead and mouths taped shut and–"
-        "Setsuko i
+        "Setsuko is right. We shouldn’t fight.":
+            MC "Setsuko is right. We shouldn’t fight."
+            kiyo "Duty, duty, duty. I’m so sick of that word. It’s my duty to wear some silly smock. It’s my duty to be a perfect wife. It’s my duty to watch my friends be shipped out overseas and applaud them for dying–"
+            toshiro "It’s a necessary sacrifice."
+            kiyo "None of this is necessary."
+            setsuko "You can’t just think of yourself. We’re not just individuals, we’re a whole. All of us together, our Emperor, we make up the soul of the nation."
+            kiyo "I’m starting to doubt this nation ever had a soul."
 
+    toshiro "Oi, watch it, all of you."
+
+    toshiro "You keep those kinds of opinions to yourself, alright? I don’t wanna see another friend go missing. Just toe the line – don’t make things more complicated than they have to be."
+
+    toshiro "Kinuya-san! Fantastic timing. I wanted to ask you about a line in scene four…"
+
+    kiyo "He’s right. I’ve made my peace."
+
+    setsuko "Let’s just… make this the best film yet."
+
+    kiyo "You two better not forget me when I’m gone."
+
+    MC "We could never."
+
+    MC "(internal) And just like that, our little group had changed forever. And maybe I had, too. Maybe I really needed to decide who I was. Or maybe I needed to keep it hidden, and hope the world changed instead."
+
+    return

@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1818: expected statement.
-    MC:
-      ^
-
-File "game/script.rpy", line 1964: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    menu:
-    ^
+File "game/chapter2.rpy", line 427: is not terminated with a newline. (Check strings and parenthesis.)
+(Perhaps you left out a " at the end of the first line.)
+            "Setsuko i
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Sun Nov 17 20:53:51 2024
+Mon Nov 18 13:11:50 2024
