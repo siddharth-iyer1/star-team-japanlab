@@ -2,17 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 404: keyword argument 'yalign' is incompatible with 'ypos'.
-    yalign 0.0
-          ^
-
-File "game/script.rpy", line 412: keyword argument 'yalign' is incompatible with 'ypos'.
-    yalign 0.0
-          ^
-
-File "game/script.rpy", line 420: keyword argument 'yalign' is incompatible with 'ypos'.
-    yalign 0.0
-          ^
+File "game/script.rpy", line 799: choice menuitem expects a non-empty block.
+    "so I’m ready to move on to bigger things.":
+                                                ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Mon Nov 18 14:23:50 2024
+Mon Nov 18 16:12:59 2024

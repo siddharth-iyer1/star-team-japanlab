@@ -624,6 +624,7 @@ label start:
     menu:
         "Yes":
             darkMC "Thank you for indulging me."
+            play sound "page turn.mp3" volume 0.5
         "No":
             darkMC "Hm, perhaps another time then."
             return
@@ -631,6 +632,7 @@ label start:
             jump QTE
 
     darkMC "I hope my story will be an interesting enough exchange..."
+    play sound "page turn.mp3" volume 0.5
 
     show intro_movie
 
@@ -658,6 +660,7 @@ label start:
     play sound "page turn.mp3" volume 0.5
 
     stop music
+    play music "typewriter.mp3" loop
 
     hide intro 3
 
@@ -670,7 +673,7 @@ label start:
     window auto
     show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
-
+    stop music
     play music "crowd-ambience.mp3" loop volume 0.5
     direct "What do you mean she can’t make the shot? What’s her excuse? Doesn’t she understand how big of an opportunity this is?"
     play sound "page turn.mp3" volume 0.5
@@ -731,10 +734,12 @@ label start:
         "I know I’m only an amateur, but I’ll give it my all!":
             play sound "MC laughing.mp3" volume 1.5
             MC "I know I’m only an amateur, but I’ll give it my all!"
+            play sound "page turn.mp3" volume 0.5
             $ trendiness_score += 1
 
         "I’m not sure if I should…":
             MC "I’m not sure if I should…"
+            play sound "page turn.mp3" volume 0.5
             $ trendiness_score -= 1
 
     python:
@@ -775,17 +780,27 @@ label start:
  # MC and Producer dialogue
 
     scene office bg
+    play music "tokyo kenbutsu.mp3" loop
 
     MC "Thank you. It was just a bit part…"
+    play sound "page turn.mp3" volume 0.5
+
 
     menu:
         "but I’m grateful nonetheless.":
+            play sound "page turn.mp3" volume 0.5
+
             prod "Well, you were outstanding. So much so that…"
+            play sound "page turn.mp3" volume 0.5
+
             $ trendiness_score -= 1
             $ relationship_score += 1
 
         "so I’m ready to move on to bigger things.":
+            play sound "page turn.mp3" volume 0.5
+
             prod "Quite a spark you’ve got there. You’re going to need that ambition, because…"
+            play sound "page turn.mp3" volume 0.5
             $ trendiness_score += 2
             $ relationship_score -= 1
 
@@ -800,6 +815,8 @@ label start:
     show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
+    play sound "page turn.mp3" volume 0.5
+
 
     python:
         movie_choices = get_two_movies_of_type("trendiness")
@@ -827,29 +844,41 @@ label start:
     call screen movie_role_choice(movie1, movie2)
 
     if chosen_movie == "movie1":
+        play sound "click.mp3" volume 1.5
         "You have chosen the role in [movie1['name']]."
         $ trendiness_score -= 1
     elif chosen_movie == "movie2":
+        play sound "click.mp3" volume 1.5
         "You have chosen the role in [movie2['name']]."
         $ trendiness_score += 1
+
+    play sound "page turn.mp3" volume 0.5
 
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
 
     show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
-    $ renpy.pause(1.5)
+    $ renpy.pause(0.5)
 
     show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
+    play sound "page turn.mp3" volume 0.5
 
     MC "Of course."
+    play sound "page turn.mp3" volume 0.5
+
+    stop music
 
     # Setting changes to the movie set
+    show studio bg
+
+    play music "crowd-ambience.mp3" loop volume 0.5
 
     # MC and Setsuko dialogue
     setsuko "Oh, this is just thrilling! I can’t believe we’re here, together, in our first film!"
+    play sound "page turn.mp3" volume 0.5
 
     MC "First… yes."
 
@@ -886,11 +915,14 @@ label start:
 label after_film_scene:
     # Insert after film scene logic here
     MC "I rehearsed by myself..."
+    stop music
+    play music "minato chanson.mp3" loop
 
     jump explore_scene
 
 label find_setsuko_scene:
     scene studio bg # Replace with the appropriate background
+    play music "crowd-ambience.mp3" loop volume 0.5
     MC "Setsuko?"
     setsuko "(jumps) [mcName]! What are you doing? I thought you were supposed to be rehearsing!"
     MC "I wanted to hear more about…"
@@ -908,14 +940,20 @@ label find_setsuko_scene:
     MC "I don’t know how to keep up with it."
     setsuko "I don’t really know either – but I guess you can find out a lot through the news and the things people say on the street. We should both keep our ears sharp! And I’ll let you know if I learn anything really interesting."
 
+    stop music
+    play music "minato chanson.mp3" loop
+
     # Transition to the next part of the game
     jump explore_scene
+
 label explore_scene:
     scene street bg
     call screen streetView
     """
 label explore_scene:
     scene street bg # Replace with the appropriate background
+    stop music
+    play music "minato chanson.mp3" loop
 
     # Exploration choices
     menu:
