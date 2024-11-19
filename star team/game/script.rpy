@@ -390,30 +390,30 @@ screen info_screen:
             add "starpower_background.png"  # Base background image
 
             # Display each star with its score in specific positions
-            use star_with_score("star_p_empty", "star_p_hover_flash", "Trendy", xpos=130, ypos=100, zoom=1, text_size=3, offset=95)
-            use star_with_score("star_b_empty", "star_b_hover_flash", "Westernized", xpos=700, ypos=100, zoom=1, text_size=3, offset=95)
-            use star_with_score("star_g_empty", "star_g_hover_flash", "Nationalistic", xpos=1300, ypos=100, zoom=1, text_size=3, offset=105)
+            use star_with_score(p_star, "star_p_hover_flash", "Trendy", xpos=130, ypos=100, zoom=1, text_size=3, offset=95)
+            use star_with_score(b_star, "star_b_hover_flash", "Westernized", xpos=700, ypos=100, zoom=1, text_size=3, offset=95)
+            use star_with_score(g_star, "star_g_hover_flash", "Nationalistic", xpos=1300, ypos=100, zoom=1, text_size=3, offset=105)
 
             # Text descriptions under each star
-            text "This trait reflects how you challenge social norms and embrace progressive ideas and behaviors – primarily appearing modern and fashionable. Trendiness is influenced by boldness in dialogue, consciousness of popular film genres, and showcasing her willingness to push boundaries and adopt modern perspectives.":
-                color "#ffffff"
-                size 32
+            text "This trait reflects how well you adapt to changing social norms, industrial trends, and progressive ideas -– primarily appearing modern and fashionable. Trendiness can be influenced by boldness in dialogue, a consciousness of new film techniques, and an understanding of shifting gender ideas.":
+                color "#000000"
+                size 28
                 xpos 400
                 ypos 600
                 xanchor 0.5
                 xmaximum 425  # Limit the width to fit below the star
 
-            text "This trait highlights how you adopt behaviors and attitudes that align more closely with Western styles and values. Through defying traditional standards of speech and behavior, embracing Western cultural influences, and more, you can showcase your departure from typically Japanese values in both thought and behavior.":
-                color "#ffffff"
-                size 32
+            text "This trait highlights how you adapt to the introduction of Western trends and attitudes. In an increasingly interconnected world, you will need to be aware of foreign influences -- whether that be new music trends, clothing styles, or popular makeup. Through either adhering to or defying local standards, responding to Western cultural influences, and more, your choices will define whether you stay true to a traditional Japanese style or dive into a more foreign, Westernized look.":
+                color "#000000"
+                size 28
                 xpos 980
                 ypos 600
                 xanchor 0.5
                 xmaximum 425  # Limit the width to fit below the star
 
             text "This trait represents your alignment with traditional Japanese values, culture, and governmental ideals. It manifests through adherence to social expectations, pride in the national memory, and awareness of the national sentiment, emphasizing an unifying, Japanese identity and support for your heritage.":
-                color "#ffffff"
-                size 32
+                color "#000000"
+                size 28
                 xpos 1580
                 ypos 600
                 xanchor 0.5
@@ -426,9 +426,6 @@ screen info_screen:
         ypos 0.95
         xanchor 0.5
         yanchor 0.5
-
-
-
 
 screen relationship_screen:
     modal True
@@ -526,40 +523,59 @@ screen relationship_bar(relationship_image):
         add relationship_image zoom 0.3
 
 label setsuko_letter:
+    play sound "page turn.mp3" volume 0.5
     MC "You read a letter from Setsuko, gossiping about a girl from their school who was supposed to be a big star. Unfortunately, she got cast in a few traditional roles and was dunked on by the critics. Setsuko mentions that this girl starred alongside the guy from their film together – someone she’s totally not into."
+    play sound "page turn.mp3" volume 0.5
     menu:
         "Keep Exploring?":
+            play sound "page turn.mp3" volume 0.5
             call screen streetView
         "Done Exploring.":
+            play sound "page turn.mp3" volume 0.5
             MC "The world’s changing so fast… I hope I’m able to make it out here."
+            play sound "page turn.mp3" volume 0.5
             jump officeOne
             return
 label magazine:
+    play sound "page turn.mp3" volume 0.5
     MC "You browse through the magazines, noticing a strong emphasis on the modern girl movement. Articles encourage women to make their own decisions and stand out in society."
+    play sound "page turn.mp3" volume 0.5
     menu:
         "Keep Exploring?":
+            play sound "page turn.mp3" volume 0.5
             call screen streetView
         "Done Exploring.":
+            play sound "page turn.mp3" volume 0.5
             MC "The world’s changing so fast… I hope I’m able to make it out here."
+            play sound "page turn.mp3" volume 0.5
             jump officeOne
             return
 label two_woman:
+    play sound "page turn.mp3" volume 0.5
     MC "You overhear two young women gasping and clutching their pearls. They seem to be making fun of a friend who’s stuck in a boring, traditional marriage."
     menu:
         "Keep Exploring?":
+            play sound "page turn.mp3" volume 0.5
             call screen streetView
         "Done Exploring.":
+            play sound "page turn.mp3" volume 0.5
             MC "The world’s changing so fast… I hope I’m able to make it out here."
+            play sound "page turn.mp3" volume 0.5
             jump officeOne
             return
 label newspaper:
+    play sound "page turn.mp3" volume 0.5
     MC "You glance at the newspaper, which discusses westernization and the rise of talkies, along with mentions of importations from America and other parts of Asia."
     menu:
         "Keep Exploring?":
+            play sound "page turn.mp3" volume 0.5
             call screen streetView
         "Done Exploring.":
+            play sound "page turn.mp3" volume 0.5
             MC "The world’s changing so fast… I hope I’m able to make it out here."
+            play sound "page turn.mp3" volume 0.5
             jump officeOne
+            return
 
 label start:
     python:
@@ -736,18 +752,20 @@ label start:
             MC "I know I’m only an amateur, but I’ll give it my all!"
             play sound "page turn.mp3" volume 0.5
             $ trendiness_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
         "I’m not sure if I should…":
             MC "I’m not sure if I should…"
             play sound "page turn.mp3" volume 0.5
             $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
-    python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
-
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
     $ renpy.pause(0.5)
-    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "No need for stress – it’s a walk-on role."
     play sound "page turn.mp3" volume 0.5
@@ -795,6 +813,11 @@ label start:
 
             $ trendiness_score -= 1
             $ relationship_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
 
         "so I’m ready to move on to bigger things.":
             play sound "page turn.mp3" volume 0.5
@@ -803,16 +826,14 @@ label start:
             play sound "page turn.mp3" volume 0.5
             $ trendiness_score += 2
             $ relationship_score -= 1
-
-    python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
-        relationship_bar = what_relationship_bar_to_use(relationship_score)
-
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
 
-    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "You’ve been contracted to a new role."
     play sound "page turn.mp3" volume 0.5
@@ -847,21 +868,26 @@ label start:
         play sound "click.mp3" volume 1.5
         "You have chosen the role in [movie1['name']]."
         $ trendiness_score -= 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            relationship_bar = what_relationship_bar_to_use(relationship_score)
+        show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
     elif chosen_movie == "movie2":
         play sound "click.mp3" volume 1.5
         "You have chosen the role in [movie2['name']]."
         $ trendiness_score += 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            relationship_bar = what_relationship_bar_to_use(relationship_score)
+        show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
 
     play sound "page turn.mp3" volume 0.5
 
-    python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
-
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-
     $ renpy.pause(0.5)
 
-    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "Here is your script. Rehearsals will start promptly next Tuesday. I’m obligated to tell you to represent us well, though I doubt you’ll have any trouble with that."
     play sound "page turn.mp3" volume 0.5
@@ -881,31 +907,42 @@ label start:
     play sound "page turn.mp3" volume 0.5
 
     MC "First… yes."
+    play sound "page turn.mp3" volume 0.5
+
 
     MC "I don’t know if I should tell her it isn’t my first…"
+    play sound "page turn.mp3" volume 0.5
 
     setsuko "I heard that one of the actresses in 'first film name' got kicked out, and they had a random chorus girl take her place! It’s so embarrassing – I don’t know how I’d return to the company. But whoever filled in – what a lucky girl! What I wouldn’t give to have that chance."
+    play sound "page turn.mp3" volume 0.5
 
     MC "(slightly uncomfortable) Wow, that’s quite a story. Where did you hear that?"
-
+    play sound "page turn.mp3" volume 0.5
 
     setsuko "Where haven’t I heard! It’s all the talk around the academy–"
+    play sound "page turn.mp3" volume 0.5
 
     prod "Ladies, that’s enough chatting. We’re starting soon. [mcName], please save your voice unless you’re going over your lines. Wada, what on earth are you doing in your regular clothes? Go see costumes immediately."
+    play sound "page turn.mp3" volume 0.5
 
     setsuko "(in a whisper) What a killjoy! Oh, but [mcName], I’ll tell you more later!"
+    play sound "page turn.mp3" volume 0.5
 
     # Setsuko hurries off
-    setsuko "."
     MC "(internal) What should I do right now?"
+    play sound "page turn.mp3" volume 0.5
+
 
     menu:
         "Rehearse alone.":
+            play sound "page turn.mp3" volume 0.5
             MC "I’ll just go over my lines quietly."
+            play sound "page turn.mp3" volume 0.5
             # End the scene and transition to next part
             jump after_film_scene
 
         "Find Setsuko.":
+            play sound "page turn.mp3" volume 0.5
             $ relationship_score += 1
             python:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
@@ -924,21 +961,34 @@ label find_setsuko_scene:
     scene studio bg # Replace with the appropriate background
     play music "crowd-ambience.mp3" loop volume 0.5
     MC "Setsuko?"
+    play sound "page turn.mp3" volume 0.5
     setsuko "(jumps) [mcName]! What are you doing? I thought you were supposed to be rehearsing!"
+    play sound "page turn.mp3" volume 0.5
     MC "I wanted to hear more about…"
+    play sound "page turn.mp3" volume 0.5
     menu:
         "the gossip around the academy.":
+            play sound "page turn.mp3" volume 0.5
             setsuko "(smirks conspiratorially) Well, I heard that it was one of our girls who got selected for that fill-in role! No one knows who, exactly, but what a bold move! Imagine volunteering for something like that… I know I’d do it without a second thought, but the older tutors are always telling me I come across way too eager."
+            play sound "page turn.mp3" volume 0.5
             setsuko "It’s too ‘modern’ or ‘not ladylike’ or something. But what’s wrong with that? I think that’s what the people like nowadays, anyway!"
-
+            play sound "page turn.mp3" volume 0.5
         "the other actors here.":
+            play sound "page turn.mp3" volume 0.5
             setsuko "(smirks conspiratorially) Hm, well I haven’t really spoken to him yet, but I did see this right 'relevant hot guy' talking with the director earlier. I don’t think he’s a big star or anything, but maybe he is! He’s certainly got the looks for it! (she blushes) Not that I’m interested. I’m just saying…"
+            play sound "page turn.mp3" volume 0.5
     MC "What’s wrong with being interested?"
+    play sound "page turn.mp3" volume 0.5
     setsuko "I don’t want him to think I’m too forward!"
+    play sound "page turn.mp3" volume 0.5
     MC "I wonder if people still like shy girls these days…"
+    play sound "page turn.mp3" volume 0.5
     setsuko "You’re right! Actually, just last week I saw this magazine headline: 'He’s Your Husband, Not Your Parents’!' These trends change so fast… It feels like just a year ago we were being told to shut up and stick to our homes. But now you see all these modern girls walking around in their heels and their bold colors!"
+    play sound "page turn.mp3" volume 0.5
     MC "I don’t know how to keep up with it."
+    play sound "page turn.mp3" volume 0.5
     setsuko "I don’t really know either – but I guess you can find out a lot through the news and the things people say on the street. We should both keep our ears sharp! And I’ll let you know if I learn anything really interesting."
+    play sound "page turn.mp3" volume 0.5
 
     stop music
     play music "minato chanson.mp3" loop
@@ -949,90 +999,59 @@ label find_setsuko_scene:
 label explore_scene:
     scene street bg
     call screen streetView
-    """
-label explore_scene:
-    scene street bg # Replace with the appropriate background
-    stop music
-    play music "minato chanson.mp3" loop
 
-    # Exploration choices
-    menu:
-
-        "Magazine Stand":
-            # Description of the modern girl movement and fashion
-            "You browse through the magazines, noticing a strong emphasis on the modern girl movement. Articles encourage women to make their own decisions and stand out in society."
-            menu:
-                "Continue Exploring?":
-                    jump explore_scene
-                "Stop Exploring":
-                    "You decided to leave and go to the producer's office"
-
-        "Two Young Women":
-            # Scandalous gossiping about a friend
-            "You overhear two young women gasping and clutching their pearls. They seem to be making fun of a friend who’s stuck in a boring, traditional marriage."
-            menu:
-                "Continue Exploring?":
-                    jump explore_scene
-                "Stop Exploring":
-                    "You decided to leave and go to the producer's office"
-        "Newspaper":
-            # Discussion of westernization and talkies
-            "You glance at the newspaper, which discusses westernization and the rise of talkies, along with mentions of importations from America and other parts of Asia."
-            menu:
-                "Continue Exploring?":
-                    jump explore_scene
-                "Stop Exploring":
-                    "You decided to leave and go to the producer's office"
-        "Letter from Setsuko":
-            # Gossip about another girl
-            "You read a letter from Setsuko, gossiping about a girl from their school who was supposed to be a big star. Unfortunately, she got cast in a few traditional roles and was dunked on by the critics. Setsuko mentions that this girl starred alongside the guy from their film together – someone she’s totally not into."
-            menu:
-                "Continue Exploring?":
-                    jump explore_scene
-                "Stop Exploring":
-                    "You decided to leave and go to the producer's office"
-    """
 label officeOne:
+    stop music
+    play music "tokyo kenbutsu.mp3" loop
     # Scene change to MC with Producer
     scene office bg  # Replace with the appropriate background
 
     prod "Five years ago I never would’ve thought I’d be seeing one of my actresses in a talkie. I didn’t even think we’d have talkies by now! I’m proud of you, MC."
+    play sound "page turn.mp3" volume 0.5
     MC "Thank you…"
+    play sound "page turn.mp3" volume 0.5
 
     show office bg
     menu:
         "I really didn’t expect things to take off so fast.":
+            play sound "page turn.mp3" volume 0.5
             $ trendiness_score -= 1
             $ relationship_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             prod "No need to be humble. You’ve got something special. Even that quack of a director could tell just from a single look."
+            play sound "page turn.mp3" volume 0.5
 
 
         "But I never really doubted myself.":
+            play sound "page turn.mp3" volume 0.5
             $ trendiness_score += 1
             $ relationship_score -= 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_hover", trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             prod "There’s that spunk again. Keep that spark – the people like a clever girl."
-
+            play sound "page turn.mp3" volume 0.5
 
     prod "And on that note, I’ve got some exciting news."
+    play sound "page turn.mp3" volume 0.5
 
     # Producer produces a script
     prod "You’ve got another role!"
+    play sound "page turn.mp3" volume 0.5
     # He hands MC the script
     prod "This one is called…"
-
-    # Player picks between two bucket movies
-    # Insert bucket movie selection logic here
+    play sound "page turn.mp3" volume 0.5
 
     python:
-        movie_choices = get_two_movies_of_type("trendiness")
+        movie_choices = get_two_movies_of_type("westernization")
 
         movie1_title = movie_choices[0].title
         movie1_description = movie_choices[0].description
@@ -1058,257 +1077,565 @@ label officeOne:
 
     if chosen_movie == "movie1":
         "You have chosen the role in [movie1['name']]."
-        $ trendiness_score -= 1
+        play sound "page turn.mp3" volume 0.5
+        $ westernization_score -= 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+        show screen score_display("Purple Empty Idle.png", "Red Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
     elif chosen_movie == "movie2":
         "You have chosen the role in [movie2['name']]."
-        $ trendiness_score += 1
+        play sound "page turn.mp3" volume 0.5
+        $ westernization_score += 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+        show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
-    python:
-        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+    $ renpy.pause(0.5)
 
-    show screen score_display("star_p_hover_flash", "star_b_hover_flash", "star_g_hover_flash", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-
-    $ renpy.pause(1.5)
-
-    show screen score_display(p_star, b_star, g_star, "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     prod "Shooting starts next week – start looking over your lines. Take a deep breath, you’ll be fine. The last movie did well and the stakes are low, alright? Do your best."
+    play sound "page turn.mp3" volume 0.5
+    stop music
 
     # Scene change to the set
     scene studio bg  # Replace with the appropriate background
+    play music "crowd-ambience.mp3" loop volume 0.5
 
     # Kiyo and Tōshiro conversation
     kiyo "Ohh, that was you was it? I thought you were divine, but that girl you were with… What was her name?"
+    play sound "page turn.mp3" volume 0.5
 
     toshiro "Suga… something?"
+    play sound "page turn.mp3" volume 0.5
 
     kiyo "Doesn’t matter. She was so plain. Such a shame! Things probably would’ve gone much smoother if you got someone more lively."
+    play sound "page turn.mp3" volume 0.5
 
     # Kiyo notices MC
     kiyo "Hello you! (she beckons [mcName] over) Don’t be shy – we don’t bite."
+    play sound "page turn.mp3" volume 0.5
 
     MC "(internal) Are you sure…?"
+    play sound "page turn.mp3" volume 0.5
 
     toshiro "Hm. (he looks [mcName] up and down) Your face… Have we met before?"
-
+    play sound "page turn.mp3" volume 0.5
 
     MC "I believe so. I’m [mcName], I think we did (name of first bucket movie) a year or so ago? I was–"
+    play sound "page turn.mp3" volume 0.5
     show studio bg
     toshiro "Impossible. I would’ve remembered a face like yours. (he smirks) But maybe I’ll give that one another watch – join me, make it a reunion?"
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "I wouldn’t mind reliving some moments.":
+            play sound "page turn.mp3" volume 0.5
             toshiro "We’ll talk a little later, then?"
+            play sound "page turn.mp3" volume 0.5
             kiyo "(clears throat) I can’t imagine you’d have time, what with your schedule. Weren’t you just saying you have another film lined up right after this?"
+            play sound "page turn.mp3" volume 0.5
             toshiro "Films are easy to come by. This is a rare opportunity."
+            play sound "page turn.mp3" volume 0.5
             kiyo "(clearly disgruntled) [mcName], where did you get your dress?"
+            play sound "page turn.mp3" volume 0.5
 
         "Only if I can bring my friend, Setsuko. Do you remember her too?" :
+            play sound "page turn.mp3" volume 0.5
             python:
                 relationship_score += 1
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             toshiro "Um… if you want–"
+            play sound "page turn.mp3" volume 0.5
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
+            play sound "page turn.mp3" volume 0.5
 
     MC "My dress?"
+    play sound "page turn.mp3" volume 0.5
     show studio bg
     kiyo "It’s so quaint. Cute, I suppose – reminds me of that little rural town I visited back as a girl. Which is fine, of course, plenty of girls are still attached to that schoolgirl look. I just think it’s become a bit… outdated, don’t you think?"
+    play sound "page turn.mp3" volume 0.5
 
     # A third person approaches
     kazuo "Hey everyone. (he notices [mcName]) I don’t think we’ve met – this is my first movie, actually. I’m Tachibana Kazuo."
+    play sound "page turn.mp3" volume 0.5
 
     MC "[mcName], it’s nice to meet you."
+    play sound "page turn.mp3" volume 0.5
     show studio bg
     toshiro "You need something?"
+    play sound "page turn.mp3" volume 0.5
 
     kazuo "I just thought we might want to do a bit of rehearsal? Run through some lines, or something…"
+    play sound "page turn.mp3" volume 0.5
 
     kiyo "Fantastic idea, Tachibana."
+    play sound "page turn.mp3" volume 0.5
 
     kazuo "Tachibana."
+    play sound "page turn.mp3" volume 0.5
 
     kiyo "Okay. Watanabe-san, do you want to go into the hallway? We can work on that second scene together."
+    play sound "page turn.mp3" volume 0.5
 
     toshiro "Sure. (towards [mcName]) See you later?"
+    play sound "page turn.mp3" volume 0.5
 
     # The two leave, now just Kazuo and MC
     kazuo "So, do you want to do a read-through?"
+    play sound "page turn.mp3" volume 0.5
 
     MC "Oh…"
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "Actually, I think I’m in that second scene as well.":
+            $ relationship_score += 2
+            python:
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             jump blue1  # leads to scene in blue
 
         "That sounds nice.":
+            $ relationship_score += 1
+            python:
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             jump green1  # leads to scene in green
 
 label blue1:
     kiyo "(in character) Sasuke-san, you can’t possibly be asking me to marry you? Why, I’m only finishing school!"
+    play sound "page turn.mp3" volume 0.5
     toshiro "Is it later already?"
+    play sound "page turn.mp3" volume 0.5
     kiyo "I don’t think we need another person right now."
+    play sound "page turn.mp3" volume 0.5
     toshiro "Relax, it’s not like we were doing anything serious."
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "You don’t take your work seriously?":
+            $ relationship_score -= 1
+            $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             $ toshiro_path = "a"
         "Why don’t you show me something serious, then?":
+            $ relationship_score += 1
+            $ trendiness_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             $ toshiro_path = "b"
 
     if toshiro_path == "a":
+        play sound "page turn.mp3" volume 0.5
         toshiro "I take things seriously when they’re worth it. You’re new here, right?"
+        play sound "page turn.mp3" volume 0.5
         MC "No, not particularly..."
+        play sound "page turn.mp3" volume 0.5
         toshiro "A decent actor is an easy find, these days. Everyone wants to be on screen..."
+        play sound "page turn.mp3" volume 0.5
         menu:
             "We’re actors. We’re here to act, isn’t that most important?":
+                play sound "page turn.mp3" volume 0.5
                 pass
             "...What do you mean? (internal) What am I missing?":
+                play sound "page turn.mp3" volume 0.5
                 pass
 
     elif toshiro_path == "b":
         toshiro "(smirks) Sure, next time. Give me a call and we’ll make it a date, alright?"
+        play sound "page turn.mp3" volume 0.5
         MC "(rolls eyes)"
+        play sound "page turn.mp3" volume 0.5
         kiyo "Oh, please, get a room..."
+        play sound "page turn.mp3" volume 0.5
         menu:
             "Finally, something we can agree on.":
+                play sound "page turn.mp3" volume 0.5
                 pass
             "I wasn’t really interested, anyway...":
+                play sound "page turn.mp3" volume 0.5
                 pass
 
     toshiro "There’s more to being an actor than just a script. Anyone can perform lines and call it a day..."
+    play sound "page turn.mp3" volume 0.5
     kiyo "We’re special. We have a certain... presence..."
+    play sound "page turn.mp3" volume 0.5
     MC "That’s right... At least, I hope I won’t."
+    play sound "page turn.mp3" volume 0.5
     jump CH1QTE1
 
 label green1:
     kazuo "(in character) That will be ten sen, please."
+    play sound "page turn.mp3" volume 0.5
     MC "(in character) Couldn’t you spare a discount? For a hungry young girl?"
+    play sound "page turn.mp3" volume 0.5
     kazuo "No can do, miss. Sorry, but business has to run somehow. (he breaks character and sighs)"
+    play sound "page turn.mp3" volume 0.5
     kazuo "I don’t know why he’s being so stingy. It’s just a piece of bread."
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "Would you?":
+            play sound "page turn.mp3" volume 0.5
             $ kazuo_path = "a"
         "Would you for me?":
+            play sound "page turn.mp3" volume 0.5
             $ kazuo_path = "b"
 
     if kazuo_path == "a":
         kazuo "I might… It would depend on whether or not my boss would notice the missing money, I guess..."
+        play sound "page turn.mp3" volume 0.5
     elif kazuo_path == "b":
         kazuo "(coughs) I mean, uh. Well, you know–"
+        play sound "page turn.mp3" volume 0.5
         MC "It was just a joke."
+        play sound "page turn.mp3" volume 0.5
 
     kazuo "Do you ever think about what you would do if you weren’t an actress?"
+    play sound "page turn.mp3" volume 0.5
     menu:
         "Sometimes. Do you?":
+            $ relationship_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             pass
         "No. Why, do you?":
+            $ relationship_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
             pass
 
     kazuo "I guess I do. I’d really love to be a big star one day..."
+    play sound "page turn.mp3" volume 0.5
     menu:
         "You need to fix your attitude or you’ll be in trouble.":
+            play sound "page turn.mp3" volume 0.5
+            $ trendiness_score += 1
+            $ relationship_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
             pass
         "You never know! What would you do if you weren’t an actor?":
+            $ relationship_score += 1
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
             pass
 
     kazuo "Is it time already? I got so carried away; we barely did any rehearsing..."
+    play sound "page turn.mp3" volume 0.5
     kazuo "But it was nice talking to you. I’ll see you around here, then!"
+    play sound "page turn.mp3" volume 0.5
     jump CH1QTE1
 
 label CH1QTE1:
     prod "Alright, everybody, get on set! Filming starts in five minutes!"
+    play sound "page turn.mp3" volume 0.5
     direct "I expect everyone to bring their best performances today! We have no room for error, and I won’t tolerate any mistakes."
+    play sound "page turn.mp3" volume 0.5
     setsuko "Well, this is my scene. After all the countless times I’ve done this, I still can’t help but feel a little nervous."
+    play sound "page turn.mp3" volume 0.5
 
     MC "Is there anything I can do to help?"
+    play sound "page turn.mp3" volume 0.5
 
     setsuko "I’m not sure… I’m still not used to talkies. I can never tell if I’m speaking too quiet or too loud, or if my voice is too high pitched. You don’t think my voice sounds strange, do you? You’re the expert, after all."
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "(ENCOURAGE) You need to project your voice! Your character will need to be heard over the background noise – the audience won’t only be hearing you.":
+            play sound "page turn.mp3" volume 0.5
             $ setsuko_path = "encourage"
+            $ relationship_score += 1
+            $ trendiness_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         "(REASSURE) You’ll be alright, don’t worry about it. You don’t want the scene to be too overwhelming.":
+            play sound "page turn.mp3" volume 0.5
             $ setsuko_path = "reassure"
+            $ relationship_score -= 1
+            $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     if setsuko_path == "encourage":
         setsuko "You’re right. It might be a bit difficult for me, but I’ll try my best!"
+        play sound "page turn.mp3" volume 0.5
         direct "Action!"
+        play sound "page turn.mp3" volume 0.5
         setsuko "(shouting) Darling, I made dinner an hour ago, and you still haven’t eaten yet! I work so hard for this family..."
+        play sound "page turn.mp3" volume 0.5
         direct "Cut! Splendid job, Wada-san! All that noise gave me a splitting headache… which is exactly what I wanted! Good work today."
+        play sound "page turn.mp3" volume 0.5
         setsuko "(bows) Thank you. I will continue to do my best."
+        play sound "page turn.mp3" volume 0.5
     else:
         setsuko "Are you sure? Okay, I’ll follow your advice."
+        play sound "page turn.mp3" volume 0.5
         direct "Action!"
+        play sound "page turn.mp3" volume 0.5
         setsuko "(softly) Darling, I made dinner an hour ago, and you still haven’t eaten yet! I work so hard for this family..."
+        play sound "page turn.mp3" volume 0.5
         direct "Cut! Wada-san, I said nagging wife, not passive wife! I could barely even hear you over the rest of the noise. We’ll have to dub over your audio in post-production."
+        play sound "page turn.mp3" volume 0.5
         setsuko "(bows deeply) I apologize. I’ll try harder next time."
+        play sound "page turn.mp3" volume 0.5
         direct "We don’t have any room for trying, Wada-san. You will do better."
+        play sound "page turn.mp3" volume 0.5
 
     MC "(thinking) Setsuko’s work is done, but mine is just starting. It’s time for me to prepare for my scene."
+    play sound "page turn.mp3" volume 0.5
 
     # Transition to MC’s scene
     direct "Action!"
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "(ACT COY) I’ll keep my expressions understated. It wouldn’t be proper to overshadow the main character – I don’t want to be too flamboyant.":
+            play sound "page turn.mp3" volume 0.5
             $ mc_scene_path = "coy"
+            $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
         "(ACT EXPRESSIVE) I’ll make my emotions very clear on my face! Even though I don’t say a lot, I can still show a lot.":
+            play sound "page turn.mp3" volume 0.5
             $ mc_scene_path = "expressive"
+            $ trendiness_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
 
     if mc_scene_path == "coy":
         MC "(in character) Shinjiro, I… I don’t know if I can tell you how I feel…"
+        play sound "page turn.mp3" volume 0.5
         direct "Very demure, MC-san… maybe not quite what I expected with your character, but I think it can work. Let’s work on getting our next scene filmed now, okay?"
+        play sound "page turn.mp3" volume 0.5
         toshiro "(whispers) Gee, MC… it was hard to tell if you were even in love with me. Really sell it to me next time, alright?"
+        play sound "page turn.mp3" volume 0.5
         MC "(rolls eyes)"
+        play sound "page turn.mp3" volume 0.5
     else:
         MC "(in character) Shinjiro, I… I don’t know if I can tell you how I feel…"
+        play sound "page turn.mp3" volume 0.5
         direct "Well done, MC-san! I almost shed a tear watching you – I’m sure the audiences will, too. I’ll ask the producer about marketing this movie with a warning about needing handkerchiefs."
+        play sound "page turn.mp3" volume 0.5
         MC "You flatter me, sir. I’m just doing my job – you’re doing the real hard work."
+        play sound "page turn.mp3" volume 0.5
         toshiro "(whispers) Nice one, MC… You really sold your feelings for me. Are you sure they weren’t real?"
+        play sound "page turn.mp3" volume 0.5
         MC "(rolls eyes)"
+        play sound "page turn.mp3" volume 0.5
 
     # Transition to the jazz club scene
     MC "Ugh, I really can’t stand the stink of all this smoke."
+    play sound "page turn.mp3" volume 0.5
     kiyo "(exhales smoke from her cigarette) That’s too bad, MC-chan, you’ll have to get used to it soon if you want to pull this scene off."
+    play sound "page turn.mp3" volume 0.5
     MC "You mean I have to smoke? I never signed up for that!"
+    play sound "page turn.mp3" volume 0.5
     toshiro "(laughs) You’re such a little girl, MC-chan! But you’re not supposed to be playing that – you’re a woman now, and a rebellious one at that."
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "(SWANKY) I need to live it up! The only way I can keep the scene going is by contributing to the lively energy.":
+            play sound "page turn.mp3" volume 0.5
+            $ westernization_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             $ dance_path = "swanky"
         "(CASUAL) I’ll lay low and keep it cool. I’m not a major character in this scene, anyway.":
+            play sound "page turn.mp3" volume 0.5
+            $ westernization_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Purple Empty Idle.png", "Red Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             $ dance_path = "casual"
 
     if dance_path == "swanky":
         MC "(snaps fingers and sways with the beat, taking a long draw from the cigarette) (thinking) I can feel the energy of the room!"
+        play sound "page turn.mp3" volume 0.5
         direct "Well done, everyone! If the music were any louder, I’m afraid the police wouldn’t be so convinced we were filming a movie!"
+        play sound "page turn.mp3" volume 0.5
         direct "Wonderful performance, MC-san! I can see your training in the performing arts serves you well… although I wasn’t aware they taught that kind of dancing!"
+        play sound "page turn.mp3" volume 0.5
         MC "(laughs) Thank you, sir!"
+        play sound "page turn.mp3" volume 0.5
     else:
         MC "(sways subtly to the beat, keeping in the background) (thinking) I’m just part of the scenery for this one..."
+        play sound "page turn.mp3" volume 0.5
         direct "I was expecting to see a little more energy from you, given your dancing background… but I’m sure your performance will suffice."
+        play sound "page turn.mp3" volume 0.5
         MC "I understand, sir. I’ll try harder next time."
+        play sound "page turn.mp3" volume 0.5
 
     jump CH1QTE2
 
 label CH1QTE2:
     prod "Your reputation is growing, MC. I’ve even heard your name on the streets and in town – you’ve attracted some dedicated fans."
+    play sound "page turn.mp3" volume 0.5
 
     menu:
         "Oh, how wonderful! I do owe much of it to you and the studio…":
             $ prod_path = "encourage"
+            $ relationship_score += 1
+            $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         "I’m finally getting some deserved recognition.":
             $ prod_path = "assertive"
+            $ relationship_score -= 1
+            $ trendiness_score += 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     if prod_path == "encourage":
         prod "Don’t sell yourself short, kid. You’re special, you’ve worked hard to get here. Any other producer would be lucky to have you."
+        play sound "page turn.mp3" volume 0.5
     else:
         prod "Don’t be too rash. You got very lucky. Your first role was the gift of that poor girl’s tuberculosis – otherwise you might still be singing in the background at your school."
+        play sound "page turn.mp3" volume 0.5
 
     prod "With that being said, I’ve got something to share."
+    play sound "page turn.mp3" volume 0.5
     prod "*a rustling sound* (He produces a script.)"
+    play sound "page turn.mp3" volume 0.5
     prod "You’ve got another role! (He hands MC the script) This one is called…"
+    play sound "page turn.mp3" volume 0.5
+
+    python:
+        movie_choices = get_two_movies_of_type("nationalism")
+
+        movie1_title = movie_choices[0].title
+        movie1_description = movie_choices[0].description
+        movie1_role = movie_choices[0].role
+
+        movie2_title = movie_choices[1].title
+        movie2_description = movie_choices[1].description
+        movie2_role = movie_choices[1].role
+
+        movie1 = {
+            "name": movie1_title,
+            "description": movie1_description,
+            "role": movie1_role,
+        }
+
+        movie2 = {
+            "name": movie2_title,
+            "description": movie2_description,
+            "role": movie2_role,
+        }
+
+    call screen movie_role_choice(movie1, movie2)
+
+    if chosen_movie == "movie1":
+        play sound "click.mp3" volume 1.5
+        "You have chosen the role in [movie1['name']]."
+        $ trendiness_score -= 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            relationship_bar = what_relationship_bar_to_use(relationship_score)
+        show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Red Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+    elif chosen_movie == "movie2":
+        play sound "click.mp3" volume 1.5
+        "You have chosen the role in [movie2['name']]."
+        $ trendiness_score += 1
+        python:
+            p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+            relationship_bar = what_relationship_bar_to_use(relationship_score)
+        show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     menu:
         "Bucket Movie A":

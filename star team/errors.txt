@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 799: choice menuitem expects a non-empty block.
-    "so I’m ready to move on to bigger things.":
-                                                ^
+File "game/script.rpy", line 1345: is not terminated with a newline. (Check strings and parenthesis.)
+                show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Mon Nov 18 16:12:59 2024
+Tue Nov 19 16:56:03 2024
