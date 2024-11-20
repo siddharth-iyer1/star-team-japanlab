@@ -909,7 +909,7 @@ label start:
     MC "First… yes."
     play sound "page turn.mp3" volume 0.5
 
-
+    play sound "hmm.mp3" volume 0.5
     MC "I don’t know if I should tell her it isn’t my first…"
     play sound "page turn.mp3" volume 0.5
 
@@ -929,6 +929,7 @@ label start:
     play sound "page turn.mp3" volume 0.5
 
     # Setsuko hurries off
+    play sound "woman startled gasp.mp3" volume 0.8
     MC "(internal) What should I do right now?"
     play sound "page turn.mp3" volume 0.5
 
@@ -969,6 +970,7 @@ label find_setsuko_scene:
     menu:
         "the gossip around the academy.":
             play sound "page turn.mp3" volume 0.5
+            play sound "mc laughing.mp3" volume 1.5
             setsuko "(smirks conspiratorially) Well, I heard that it was one of our girls who got selected for that fill-in role! No one knows who, exactly, but what a bold move! Imagine volunteering for something like that… I know I’d do it without a second thought, but the older tutors are always telling me I come across way too eager."
             play sound "page turn.mp3" volume 0.5
             setsuko "It’s too ‘modern’ or ‘not ladylike’ or something. But what’s wrong with that? I think that’s what the people like nowadays, anyway!"
@@ -1657,9 +1659,9 @@ label CH1QTE2:
     play sound "page turn.mp3" volume 0.5
     kiyo "Ha! Love? Do you even know this boy’s name?"
     play sound "page turn.mp3" volume 0.5
-    setsuko "He’s not a boy! And yes, his name is… [she scrunches her nose] I don’t know how he pronounces the kanji."
+    setsuko "He’s not a boy! And yes, his name is… I don’t know how he pronounces the kanji."
     play sound "page turn.mp3" volume 0.5
-    kiyo "Sure, love. MC, you’re her friend, right? Talk some sense into her."
+    kiyo "Sure, love. [MC], you’re her friend, right? Talk some sense into her."
     play sound "page turn.mp3" volume 0.5
 
     menu:
@@ -1787,7 +1789,7 @@ label blue2:
     show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
     play sound "page turn.mp3" volume 0.5
 
-    setsuko "Yes… You’re right. I just have to keep pushing forward! Thank you, girls. [she clearly wants to go in for a hug but stops herself]"
+    setsuko "Yes… You’re right. I just have to keep pushing forward! Thank you, girls. *she clearly wants to go in for a hug but stops herself*"
     play sound "page turn.mp3" volume 0.5
 
     menu:
@@ -1807,7 +1809,7 @@ label blue2:
             $ hug_setsuko = False
 
     if hug_setsuko:
-        "[Kiyo embraces Setsuko and gives her a kiss on the cheek. From offscreen, a producer calls everyone to set.]"
+        "*Kiyo embraces Setsuko and gives her a kiss on the cheek. From offscreen, a producer calls everyone to set.*"
         play sound "page turn.mp3" volume 0.5
         kiyo "Well, let’s go show them what these three women are made of."
         play sound "page turn.mp3" volume 0.5
