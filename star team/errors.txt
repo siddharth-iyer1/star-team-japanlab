@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1345: is not terminated with a newline. (Check strings and parenthesis.)
-                show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score
+File "game/script.rpy", line 1498: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    MC "(thinking) Setsuko’s work is done, but mine is just starting. It’s time for me to prepare for my scene."
+    ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Tue Nov 19 16:56:03 2024
+Wed Nov 20 12:39:13 2024

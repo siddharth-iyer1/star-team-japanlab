@@ -2,7 +2,7 @@ init python:
     import csv
     import random
 
-    movie_data_fp = "/Users/siddharthiyer/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
+    movie_data_fp = "/Users/justinbanh/Documents/GitHub/star-team-japanlab/star team/game/csv files/Movie DB - prewar movies.csv"
 
     used_movies = []
 
@@ -252,7 +252,7 @@ default relationship_score = 0
 screen countdown:
     timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Hide('countdown'), Jump(timer_jump)])
 
-    bar value time range timer_range xalign 0.5 yalign 0.5 xmaximum 300 at alpha_dissolve
+    bar value time range timer_range xalign 0.5 yalign 0.7 xmaximum 300 at alpha_dissolve
 
 label QTE:
     label QTEmenu:
@@ -268,6 +268,68 @@ label QTE:
     label QTEmenu_slow:
         MC "OH NO I DIDNT RESPONT TO THE QTE IN TIME"
         return
+
+label QTE1:
+    label QTE1menu:
+        $ time = 12.5
+        $ timer_range = 12
+        $ timer_jump = 'QTE1menu_slow'
+        show screen countdown
+
+        menu:
+            "(ENCOURAGE) You need to project your voice! Your character will need to be heard over the background noise – the audience won’t only be hearing you.":
+                hide screen countdown
+                play sound "page turn.mp3" volume 0.5
+                $ setsuko_path = "encourage"
+                $ relationship_score += 1
+                $ trendiness_score += 1
+                python:
+                    p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                    relationship_bar = what_relationship_bar_to_use(relationship_score)
+                show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+                play sound "page turn.mp3" volume 0.5
+                $ renpy.pause(0.5)
+                show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+                setsuko "You’re right. It might be a bit difficult for me, but I’ll try my best!"
+                play sound "page turn.mp3" volume 0.5
+                direct "Action!"
+                play sound "page turn.mp3" volume 0.5
+                setsuko "(shouting) Darling, I made dinner an hour ago, and you still haven’t eaten yet! I work so hard for this family..."
+                play sound "page turn.mp3" volume 0.5
+                direct "Cut! Splendid job, Wada-san! All that noise gave me a splitting headache… which is exactly what I wanted! Good work today."
+                play sound "page turn.mp3" volume 0.5
+                setsuko "(bows) Thank you. I will continue to do my best."
+                play sound "page turn.mp3" volume 0.5
+                jump afterQTE1
+            "(REASSURE) You’ll be alright, don’t worry about it. You don’t want the scene to be too overwhelming.":
+                hide screen countdown
+                jump QTE1menu_slow
+    label QTE1menu_slow:
+            play sound "page turn.mp3" volume 0.5
+            $ setsuko_path = "reassure"
+            $ relationship_score -= 1
+            $ trendiness_score -= 1
+            python:
+                p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+                relationship_bar = what_relationship_bar_to_use(relationship_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations", trendiness_score, westernization_score, nationalism_score)
+            play sound "page turn.mp3" volume 0.5
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            setsuko "Are you sure? Okay, I’ll follow your advice."
+            play sound "page turn.mp3" volume 0.5
+            direct "Action!"
+            play sound "page turn.mp3" volume 0.5
+            setsuko "(softly) Darling, I made dinner an hour ago, and you still haven’t eaten yet! I work so hard for this family..."
+            play sound "page turn.mp3" volume 0.5
+            direct "Cut! Wada-san, I said nagging wife, not passive wife! I could barely even hear you over the rest of the noise. We’ll have to dub over your audio in post-production."
+            play sound "page turn.mp3" volume 0.5
+            setsuko "(bows deeply) I apologize. I’ll try harder next time."
+            play sound "page turn.mp3" volume 0.5
+            direct "We don’t have any room for trying, Wada-san. You will do better."
+            play sound "page turn.mp3" volume 0.5
+            jump afterQTE1
+        
 
 screen streetView():
     zorder 5
@@ -644,8 +706,8 @@ label start:
         "No":
             darkMC "Hm, perhaps another time then."
             return
-        "QTE":
-            jump QTE
+        "SKIP TO CHAPTER 2":
+            jump start2
 
     darkMC "I hope my story will be an interesting enough exchange..."
     play sound "page turn.mp3" volume 0.5
@@ -1370,6 +1432,7 @@ label green1:
     jump CH1QTE1
 
 label CH1QTE1:
+    scene studio bg
     prod "Alright, everybody, get on set! Filming starts in five minutes!"
     play sound "page turn.mp3" volume 0.5
     direct "I expect everyone to bring their best performances today! We have no room for error, and I won’t tolerate any mistakes."
@@ -1383,6 +1446,8 @@ label CH1QTE1:
     setsuko "I’m not sure… I’m still not used to talkies. I can never tell if I’m speaking too quiet or too loud, or if my voice is too high pitched. You don’t think my voice sounds strange, do you? You’re the expert, after all."
     play sound "page turn.mp3" volume 0.5
 
+    jump QTE1menu
+    """
     menu:
         "(ENCOURAGE) You need to project your voice! Your character will need to be heard over the background noise – the audience won’t only be hearing you.":
             play sound "page turn.mp3" volume 0.5
@@ -1408,7 +1473,6 @@ label CH1QTE1:
             play sound "page turn.mp3" volume 0.5
             $ renpy.pause(0.5)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-
     if setsuko_path == "encourage":
         setsuko "You’re right. It might be a bit difficult for me, but I’ll try my best!"
         play sound "page turn.mp3" volume 0.5
@@ -1432,8 +1496,9 @@ label CH1QTE1:
         setsuko "(bows deeply) I apologize. I’ll try harder next time."
         play sound "page turn.mp3" volume 0.5
         direct "We don’t have any room for trying, Wada-san. You will do better."
-        play sound "page turn.mp3" volume 0.5
+        play sound "page turn.mp3" volume 0.5 """
 
+label afterQTE1:
     MC "(thinking) Setsuko’s work is done, but mine is just starting. It’s time for me to prepare for my scene."
     play sound "page turn.mp3" volume 0.5
 
@@ -1538,6 +1603,7 @@ label CH1QTE1:
     jump CH1QTE2
 
 label CH1QTE2:
+    scene office bg
     prod "Your reputation is growing, MC. I’ve even heard your name on the streets and in town – you’ve attracted some dedicated fans."
     play sound "page turn.mp3" volume 0.5
 
@@ -1625,7 +1691,7 @@ label CH1QTE2:
     prod "Shooting starts next week – start looking over your lines. You’ve got some experience on your side, not to mention that handful of fans. Still, stay alert and do your best. We’re proud of you, MC. I’m proud of you."
     play sound "page turn.mp3" volume 0.5
 
-    scene bg_set with fade
+    scene studio bg with fade
 
     setsuko "But sometimes I feel like they’re right. Maybe I wasn’t meant for a career like this…"
     play sound "page turn.mp3" volume 0.5
@@ -1688,9 +1754,9 @@ label CH1QTE2:
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             jump green2
         "I don’t really know…":
-            pass
+            jump QTE2
 
-    return
+    
 
 label blue2:
     MC "Look at Tōshiro – he was in that one really awful movie with Midori, from school. You talked about it yourself. He’s still doing just fine. Didn’t he just announce a new production?"
@@ -1760,7 +1826,7 @@ label blue2:
     else:
         setsuko "I don’t want to offend anyone."
         play sound "page turn.mp3" volume 0.5
-        kiyo "I’m not telling you to go and flash a thigh or anything! There’s a line between audacious and intriguing. No one wants to see a little wife holed up and taking orders from her man anymore. We want women who are exciting, inspiring, maybe a little naughty when no one’s looking. [she nudges Setsuko] Enough to make your boy back home blush, but not shame your mother and father."
+        kiyo "I’m not telling you to go and flash a thigh or anything! There’s a line between audacious and intriguing. No one wants to see a little wife holed up and taking orders from her man anymore. We want women who are exciting, inspiring, maybe a little naughty when no one’s looking. (she nudges Setsuko) Enough to make your boy back home blush, but not shame your mother and father."
         play sound "page turn.mp3" volume 0.5
 
     MC "It’s at least worth a try, isn’t it?"
@@ -1814,7 +1880,7 @@ label blue2:
         kiyo "Well, let’s go show them what these three women are made of."
         play sound "page turn.mp3" volume 0.5
     else:
-        "[From offscreen, a producer calls everyone to set.]"
+        "(From offscreen, a producer calls everyone to set.)"
         play sound "page turn.mp3" volume 0.5
         kiyo "Well, let’s go show them what these three women are made of."
         play sound "page turn.mp3" volume 0.5
@@ -1822,6 +1888,7 @@ label blue2:
     jump QTE2
 
 label green2:
+    scene studio bg
     kiyo "“Not so bad” – how inspirational."
 
     setsuko "Do you hate marriage, Kiyo?"
@@ -1903,6 +1970,7 @@ label green2:
 
     jump QTE2
 label QTE2:
+
     MC "(thinking) I can’t believe I’m the lead actress in this movie! There’s no room for error – my reputation could be on the line if I don’t perform well."
 
     toshiro "(Tōshiro approaches from behind and places his hand on MC’s shoulder. MC jumps.)"
@@ -1929,7 +1997,7 @@ label QTE2:
 
     MC "Thank you, sir, I won’t."
 
-    "(mcName and the other actors go to their positions on set.)"
+    "([mcName] and the other actors go to their positions on set.)"
 
     direct "Action!"
 
@@ -1944,7 +2012,7 @@ label QTE2:
             $ mc_choice = "reference"
 
     if mc_choice == "mimic":
-        "([mcname] stands with her thumb out in a hitchhiker’s gesture. Then, she stretches out her leg and raises the hem of her skirt over her calf. The director raises an eyebrow. Filming ceases.)"
+        "([mcName] stands with her thumb out in a hitchhiker’s gesture. Then, she stretches out her leg and raises the hem of her skirt over her calf. The director raises an eyebrow. Filming ceases.)"
 
         direct "Cut!"
 
@@ -2023,7 +2091,7 @@ label oldscene:
 
     older_actor "Besides, I find it quite interesting! It’s not like we could talk like this to our parents when we were young… (chuckles) I have to admit I’m a little jealous."
 
-    prod "Remember, MC-san, we want this scene to shock the viewers… but it can’t be too shocking, alright?"
+    prod "Remember, [mcName]-san, we want this scene to shock the viewers… but it can’t be too shocking, alright?"
 
     MC "I’ll keep that in mind."
 
@@ -2381,7 +2449,7 @@ label setsuko_conversation:
 
 
 label kiyo_conversation:
-    kiyo "MC! How have you been, darling?"
+    kiyo "[mcName]! How have you been, darling?"
 
     menu:
         "(The best I’ve ever been!)":
@@ -2659,7 +2727,7 @@ label QTE3:
 
         MC "I hope they’ll receive it well…"
 
-    return
+    jump CH1FINALE
 
 
 label CH1FINALE:
