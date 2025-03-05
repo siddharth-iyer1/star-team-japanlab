@@ -1,28 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1673, in script
-    if chosen_movie == "movie1":
-  File "game/script.rpy", line 1673, in <module>
-    if chosen_movie == "movie1":
-NameError: name 'chosen_movie' is not defined
+  File "game/script.rpy", line 791, in script
+    python:
+  File "game/script.rpy", line 792, in <module>
+    movie_choices = get_two_movies_of_type("trendiness")
+  File "game/script.rpy", line 70, in get_two_movies_of_type
+    with open(movie_data_fp, 'r') as file:
+TypeError: expected str, bytes or os.PathLike object, not StringIO
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1673, in script
-    if chosen_movie == "movie1":
-  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 1843, in execute
-    if renpy.python.py_eval(condition):
-  File "/Applications/renpy-8.3.2-sdk/renpy/python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "/Applications/renpy-8.3.2-sdk/renpy/python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 1673, in <module>
-    if chosen_movie == "movie1":
-NameError: name 'chosen_movie' is not defined
+  File "game/script.rpy", line 791, in script
+    python:
+  File "/Applications/renpy-8.3.2-sdk/renpy/ast.py", line 821, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Applications/renpy-8.3.2-sdk/renpy/python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 792, in <module>
+    movie_choices = get_two_movies_of_type("trendiness")
+  File "game/script.rpy", line 70, in get_two_movies_of_type
+    with open(movie_data_fp, 'r') as file:
+TypeError: expected str, bytes or os.PathLike object, not StringIO
 
-macOS-14.0-arm64-arm-64bit arm64
+macOS-14.1-arm64-arm-64bit arm64
 Ren'Py 8.3.2.24090902
 star team 1.0
-Thu Feb 27 16:02:54 2025
+Sat Mar  1 22:06:42 2025

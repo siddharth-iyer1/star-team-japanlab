@@ -147,7 +147,7 @@ label CH2prod:
     MCWar "Hello…"
     play sound "page turn.mp3" volume 0.5
 
-    setsukoWar "MCWar! Finally, please try to talk some sense into Kiyo – I’m scared she’s going to get herself into even more trouble."
+    setsukoWar "[mcName]! Finally, please try to talk some sense into Kiyo – I’m scared she’s going to get herself into even more trouble."
     play sound "page turn.mp3" volume 0.5
 
     MCWar "What kind of trouble?"
@@ -174,7 +174,7 @@ label CH2prod:
     kiyoWar "Oh, it’s not the men I worry about. It’s those mothers happily waving their sons off to go die – like they’re never weeping at the shrines or lying awake terrified!"
     play sound "page turn.mp3" volume 0.5
 
-    setsukoWar "What a horrible thing to talk about! MCWar, don’t you agree?"
+    setsukoWar "What a horrible thing to talk about! [mcName], don’t you agree?"
     play sound "page turn.mp3" volume 0.5
 
     menu:
@@ -264,7 +264,7 @@ label CH2prod:
         MCWar "Look at Kazuo. He’s never quite gotten the kind of recognition as Tōshiro, but I’d say he works twice as hard."
         play sound "page turn.mp3" volume 0.5
 
-        kiyoWar "Yes, MCWar. Look at Kazuo. He’s not exactly leading man material, is he?"
+        kiyoWar "Yes, [mcName]. Look at Kazuo. He’s not exactly leading man material, is he?"
         play sound "page turn.mp3" volume 0.5
 
         setsukoWar "Now that’s just cruel!"
@@ -334,7 +334,7 @@ label CH2prod:
     jump producer_discussion
 
 label producer_discussion:
-    prod "MCWar, great, you’re here. I wanted to discuss something with you. Have a seat."
+    prod "[mcName], great, you’re here. I wanted to discuss something with you. Have a seat."
     play sound "page turn.mp3" volume 0.5
 
     menu:
@@ -363,7 +363,7 @@ label producer_discussion:
             MCWar "Yes, but I miss the old kinds of films. Nowadays, things have gotten so extreme, haven’t they? It makes me wonder what a moral film even is."
             play sound "page turn.mp3" volume 0.5
 
-            prod "A film that doesn’t disrupt the public peace, MCWar."
+            prod "A film that doesn’t disrupt the public peace, [mcName]."
             play sound "page turn.mp3" volume 0.5
 
             MCWar "Even if that means lying?"
@@ -375,7 +375,7 @@ label producer_discussion:
             MCWar "You look scared."
             play sound "page turn.mp3" volume 0.5
 
-            prod "I’m not– MCWar, you’re on thin ice. Do you want to end up like Yamaguchi? Or like Tachibana?"
+            prod "I’m not– [mcName], you’re on thin ice. Do you want to end up like Yamaguchi? Or like Tachibana?"
             play sound "page turn.mp3" volume 0.5
 
             MCWar "…What do you mean?"
