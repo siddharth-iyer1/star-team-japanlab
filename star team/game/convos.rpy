@@ -1,4 +1,6 @@
 label kazuo_conversation:
+    stop music
+    play sound "crowd-ambience.mp3" loop volume 0.5
     kazuo "[mcName]! It’s nice to see you. How are things?"
     play sound "page turn.mp3" volume 0.5
     menu:
@@ -63,6 +65,9 @@ label kazuo_conversation:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
     kazuo "Yeah. That’s putting it simply, I guess. (he grimaces) They need someone more domineering, you know? Someone who really puts out that go-getter, leader air. Like Tōshiro! He’s been really on the rise lately, not that he was ever not popular but… He makes all us guys look plainstandard when he’s on screen. Kinda like you, with the ladies."
     play sound "page turn.mp3" volume 0.5
     MC "Every hero needs a friend, don’t they?"
@@ -102,6 +107,9 @@ label kazuo_conversation:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
     if mc_global_news == "yes":
         kazuo "Then, have you heard about what’s going on in Manchuria? I don’t know a lot, but the whole thing seems–"
         play sound "page turn.mp3" volume 0.5
@@ -118,6 +126,8 @@ label kazuo_conversation:
     jump talktuah
 
 label toshiro_conversation:
+    stop music
+    play sound "crowd-ambience.mp3" loop volume 0.5
     toshiro "Well, if it isn’t the little starlet herself. How’re you, MC?"
     play sound "page turn.mp3" volume 0.5
     menu:
@@ -180,6 +190,9 @@ label toshiro_conversation:
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
     if mc_tosh_soldier_movie == "violent":
         MC "But won’t that be violent?"
         play sound "page turn.mp3" volume 0.5
@@ -204,6 +217,9 @@ label toshiro_conversation:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
                 show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+        $ renpy.pause(0.5)
+        show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
         toshiro "Course, if I’m called to battle, I’ll serve. But it’d be a waste. Just like sitting me behind some desk – can you imagine that? What a sad life."
         play sound "page turn.mp3" volume 0.5
@@ -244,6 +260,8 @@ label toshiro_conversation:
 
 
 label setsuko_conversation:
+    stop music
+    play sound "crowd-ambience.mp3" loop volume 0.5
     setsuko "MC! Oh, thank goodness, a friendly face." 
     play sound "page turn.mp3" volume 0.5
     setsuko "(she gives MC a kiss on the cheek) How are you? It’s been too long since we’ve met!"
@@ -392,6 +410,8 @@ label setsuko_conversation:
 
 
 label kiyo_conversation:
+    stop music
+    play sound "crowd-ambience.mp3" loop volume 0.5
     kiyo "[mcName]! How have you been, darling?"
     play sound "page turn.mp3" volume 0.5
     menu:
@@ -409,6 +429,9 @@ label kiyo_conversation:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     if mc_kiyo_greeting == "best":
         MC "The best I’ve ever been!"
@@ -498,6 +521,9 @@ label kiyo_conversation:
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         "(What if I want to do something different?)":
             $ mc_kiyo_opinion = "new"
+
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     if mc_kiyo_opinion == "different":
         MC "Your new films have been… different."

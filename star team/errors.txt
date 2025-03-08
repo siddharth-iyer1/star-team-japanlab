@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 6: unexpected indent
-        csv_data = """movieRoleId,title,description,country,language,genre,role,type,di
-        ^
+File "game/convos.rpy", line 224: Line is indented, but the preceding show screen statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    toshiro "Course, if I’m called to battle, I’ll serve. But it’d be a waste. Just like sitting me behind some desk – can you imagine that? What a sad life."
+    ^
+
+File "game/convos.rpy", line 226: expected statement.
+    elif mc_tosh_soldier_movie == "admirable":
+                               ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Sat Mar  1 22:06:09 2025
+Sat Mar  8 16:50:58 2025
