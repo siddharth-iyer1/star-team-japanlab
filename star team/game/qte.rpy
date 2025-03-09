@@ -231,7 +231,7 @@ label QTE5:
                 python:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
-                show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+                show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 $ renpy.pause(0.5)
                 show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 "(The actors go to their places.)"
@@ -293,7 +293,7 @@ label QTE6:
                 python:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
-                show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+                show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 $ renpy.pause(0.5)
                 show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 MC "(calmly) Father, I know you care about me… but this is my life, not yours. I’ll make you proud if you give me the opportunity to – I’m old enough to make my own decisions."
@@ -312,7 +312,9 @@ label QTE6:
                 play sound "page turn.mp3" volume 0.5
                 MC "(bows) Thank you."
                 play sound "page turn.mp3" volume 0.5
-                jump explore3           
+                stop music
+                play music "minato chanson.mp3" loop
+                jump explore3
             "(BE ASSERTIVE) My character has no reservations about speaking her mind – if she doesn’t like her parents, she needs to show it!":
                 hide screen countdown
                 jump QTE6menu_slow
@@ -323,7 +325,7 @@ label QTE6:
         python:
             p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
             relationship_bar = what_relationship_bar_to_use(relationship_score)
-        show screen score_display("Purple Empty Idle.png", "Red Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+        show screen score_display("Green Flash.png", "Red Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         $ renpy.pause(0.5)
         show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         MC "(angrily) You have no place to tell me who I should love, father! You were never there for me when I was a child! I shouldn’t even call you my father…"
@@ -342,6 +344,8 @@ label QTE6:
         play sound "page turn.mp3" volume 0.5
         MC "Oh…"
         play sound "page turn.mp3" volume 0.5
+        stop music
+        play music "minato chanson.mp3" loop
         jump explore3
 
 label QTE7:
@@ -508,7 +512,7 @@ label QTE9:
                 python:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
-                show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+                show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 $ renpy.pause(0.5)
                 show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
                 MC "(angrily) Sister, don’t you understand?! In our world, the only thing we can do is submit to men, but we will never be rewarded for it. Look at us! You’re practically broke, and I nearly had my life taken from me. All we do is suffer. Why must geisha even exist?"
@@ -530,7 +534,6 @@ label QTE9:
         python:
             p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
             relationship_bar = what_relationship_bar_to_use(relationship_score)
-        show screen score_display("Purple Empty Idle.png", "Red Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         $ renpy.pause(0.5)
         show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         MC "(sadly) Sister… don’t you understand? In our world, the only thing we can do is submit to men… but we will never be rewarded for it. Look at us. You’re practically broke, and I nearly had my life taken from me. All we do is suffer… why must geisha even exist?"

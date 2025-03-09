@@ -592,7 +592,7 @@ screen end_panel():
 
     # Close button
     textbutton "Close":
-        action MainMenu()
+        action Hide("end_panel")
         xalign 0.5
         yalign 0.92  # Moved up slightly
         background "#FFFFFF30"
@@ -611,9 +611,6 @@ label start:
 
     darkMC "Who am I?"
     play sound "page turn.mp3" volume 0.5
-
-    python:
-
 
     darkMC "That’s an interesting question, I suppose."
     play sound "page turn.mp3" volume 0.5
@@ -873,13 +870,13 @@ label start:
         movie2_description = movie_choices[1].description
         movie2_role = movie_choices[1].role
 
-        movie1 = {
+        movie2 = {
             "name": movie1_title,
             "description": movie1_description,
             "role": movie1_role,
         }
 
-        movie2 = {
+        movie1 = {
             "name": movie2_title,
             "description": movie2_description,
             "role": movie2_role,
@@ -887,8 +884,7 @@ label start:
 
     call screen movie_role_choice(movie1, movie2)
 
-    if chosen_movie == "movie1":
-        play sound "click.mp3" volume 1.5
+    if chosen_movie == "movie2":
         "You have chosen the role in [movie1['name']]."
         $ trendiness_score -= 1
         python:
@@ -896,8 +892,7 @@ label start:
             relationship_bar = what_relationship_bar_to_use(relationship_score)
         show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
-    elif chosen_movie == "movie2":
-        play sound "click.mp3" volume 1.5
+    elif chosen_movie == "movie1":
         "You have chosen the role in [movie2['name']]."
         $ trendiness_score += 1
         python:
@@ -1760,7 +1755,6 @@ label green2:
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         "I don’t think it’s something to be fixed.":
             $ setsuko_advice = "fix"
 
@@ -1777,14 +1771,12 @@ label green2:
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)            
         "Keep being as you are. You got this role, after all.":
             $ mother_advice = "stay"
             $ relationship_score +=1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
     show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
@@ -1939,9 +1931,9 @@ label producer_scene:
     prod "You’ve done quite well in your last few films. I truly think you’re on your way to something great, [mcName]. You should be very proud."
     play sound "page turn.mp3" volume 0.5
     menu:
-        "(How much longer until I’m on one of those fancy magazine covers?)":
+        "How much longer until I’m on one of those fancy magazine covers?":
             $ mc_response = "magazine"
-        "(Oh, you flatter me too much. Though I do hope good things are coming…!)":
+        "Oh, you flatter me too much. Though I do hope good things are coming…!":
             $ mc_response = "humble"
 
     if mc_response == "magazine":
@@ -2021,7 +2013,7 @@ label talktuah:
         "Talk to Kazuo":
             stop music
             play sound "crowd-ambience.mp3" loop volume 0.5
-            jump kazuo_conversation    
+            jump kazuo_conversation
         "Talk to Tōshiro":
             stop music
             play sound "crowd-ambience.mp3" loop volume 0.5
@@ -2113,6 +2105,7 @@ label next:
     jump QTE9
 
 label CH1FINALE:
+    play music "crowd-ambience.mp3" loop volume 0.5
     manager "And that’s a wrap, thank you everybody."
     play sound "page turn.mp3" volume 0.5
     crew "Thank you!"
@@ -2120,22 +2113,22 @@ label CH1FINALE:
     prod "Well done, [mcName]. Truly, one of your best performances – I doubt you’ll ever be a side character again once this one shows."
     play sound "page turn.mp3" volume 0.5
     menu:
-        "(I’d better not!)":
+        "I’d better not!":
             $ mc_wrap_response = "confident"
             $ trendiness_score += 1
             $ relationship_score -= 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-        "(I’ll be happy with anything I can do.)":
+            show screen score_display("Green Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+        "I’ll be happy with anything I can do.":
             $ mc_wrap_response = "grateful"
             $ trendiness_score -= 1
             $ relationship_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Red Flash.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
     show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
@@ -2153,16 +2146,16 @@ label CH1FINALE:
     prod "Of course, go ahead."
     play sound "page turn.mp3" volume 0.5
     menu:
-        "(Have things seemed rather on-edge lately? In the West?)":
+        "Have things seemed rather on-edge lately? In the West?":
             $ mc_question = "on_edge"
             $ westernization_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-        "(Are there any major projects you’re working on?)":
+            show screen score_display("Purple Empty Idle.png", "Green Flash.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+        "Are there any major projects you’re working on?":
             $ mc_question = "projects"
-        "(Am I doing enough?)":
+        "Am I doing enough?":
             $ mc_question = "enough"
 
     $ renpy.pause(0.5)
@@ -2202,9 +2195,9 @@ label CH1FINALE:
         prod "Have you been speaking with Kiyo?"
         play sound "page turn.mp3" volume 0.5
         menu:
-            "(A bit.)":
+            "A bit.":
                 $ mc_kiyo_conversation = "kiyo"
-            "(More with Setsuko. She seems to be struggling.)":
+            "More with Setsuko. She seems to be struggling.":
                 $ mc_kiyo_conversation = "setsuko"
 
         if mc_kiyo_conversation == "kiyo":
@@ -2239,4 +2232,5 @@ label CH1FINALE:
         relationship_bar = what_relationship_bar_to_use(relationship_score)
 
     show screen end_panel
-    return
+    MC "Until the next time!"
+

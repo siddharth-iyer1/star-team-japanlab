@@ -4,13 +4,12 @@ label kazuo_conversation:
     kazuo "[mcName]! It’s nice to see you. How are things?"
     play sound "page turn.mp3" volume 0.5
     menu:
-        "(I didn’t think we’d end up seeing each other again. But I’m well.)":
+        "I didn’t think we’d end up seeing each other again. But I’m well.":
             $ mc_kazuo_greeting = "again"
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-        "(It has been a while, hasn’t it? I’m doing nicely.)":
+        "It has been a while, hasn’t it? I’m doing nicely.":
             $ mc_kazuo_greeting = "while"
 
     if mc_kazuo_greeting == "again":
@@ -37,33 +36,31 @@ label kazuo_conversation:
     play sound "page turn.mp3" volume 0.5
 
     menu:
-        "(Really? Why?)":
+        "Really? Why?":
             $ mc_kazuo_office_question = "why"
-        "(Business is that bad?)":
+        "Business is that bad?":
             $ mc_kazuo_office_question = "business"
 
     kazuo "Things haven’t been bad, but they have been a little um… stagnant. Directors seem to be moving away from the kind of films that need a guy like me."
     play sound "page turn.mp3" volume 0.5
     MC "A guy like you?"
     play sound "page turn.mp3" volume 0.5
-    kazuo "You know… Sorta…" 
+    kazuo "You know… Sorta…"
     play sound "page turn.mp3" volume 0.5
 
     menu:
-        "(Boring?)":
+        "Boring?":
             $ mc_kazuo_type = "boring"
             $ relationship_score -= 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-        "(Nice?)":
+        "Nice?":
             $ mc_kazuo_type = "nice"
             $ relationship_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
     show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
@@ -91,21 +88,21 @@ label kazuo_conversation:
     kazuo "Do you read the global news, much?"
     play sound "page turn.mp3" volume 0.5
     menu:
-        "(Of course, I need to know what’s happening.)":
+        "Of course, I need to know what’s happening.":
             $ mc_global_news = "yes"
             $ westernization_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-        "(I’d much rather read Osaka Shimbun.)":
+        "I’d much rather read Osaka Shimbun.":
             $ mc_global_news = "local"
             $ westernization_score -= 1
             $ nationalism_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+            show screen score_display("Purple Empty Idle.png", "Red Flash.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     $ renpy.pause(0.5)
     show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
@@ -310,20 +307,18 @@ label setsuko_conversation:
         play sound "page turn.mp3" volume 0.5
 
         menu:
-            "(It’s not for everyone.)":
+            "It’s not for everyone.":
                 $ mc_setsuko_reassurance = "realist"
                 $ relationship_score -= 1
                 python:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
-                show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
-            "(Your time will come!)":
+            "Your time will come!":
                 $ mc_setsuko_reassurance = "optimist"
                 $ relationship_score += 1
                 python:
                     p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                     relationship_bar = what_relationship_bar_to_use(relationship_score)
-                show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
         if mc_setsuko_reassurance == "realist":
             MC "It’s not for everyone."
@@ -350,14 +345,12 @@ label setsuko_conversation:
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
         "(This might be your moment!)":
             $ mc_setsuko_future = "hope"
             $ relationship_score += 1
             python:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
-            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
     if mc_setsuko_future == "caution":
         MC "I wouldn’t get my hopes up."

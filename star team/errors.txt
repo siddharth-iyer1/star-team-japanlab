@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 574: keyword argument 'xanchor' is incompatible with 'xalign'.
-    xanchor 0.5
-           ^
-
-File "game/script.rpy", line 575: keyword argument 'yanchor' is incompatible with 'yalign'.
-    yanchor 0.5
+File "game/script.rpy", line 615: python block expects a non-empty block.
+    python:
            ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Sat Mar  8 22:27:59 2025
+Sun Mar  9 11:24:55 2025
