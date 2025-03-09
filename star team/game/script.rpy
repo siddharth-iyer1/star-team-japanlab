@@ -501,6 +501,105 @@ screen relationship_bar(relationship_image):
 
         add relationship_image zoom 0.3
 
+screen end_panel():
+    modal True
+    zorder 200
+
+    # Background
+    add "starpower_background.png":
+        align (0.5, 0.5)
+        zoom 1.2  # Slightly larger background
+
+    frame:
+        background None
+        xalign 0.5
+        yalign 0.5
+        xpadding 80
+        ypadding 60
+
+        vbox:
+            spacing 40
+            xalign 0.5
+            yalign 0.5
+
+            # Title
+            text "Final Scores" size 70 color "#FFFFFF" xalign 0.5 bold True
+
+            # Main content row
+            hbox:
+                spacing 80  # Increased horizontal spacing
+                xalign 0.5
+
+                # Trendiness Column
+                vbox:
+                    spacing 15
+                    text "Trendiness" size 35 color "#FFFFFF" xalign 0.5
+                    add p_star:
+                        zoom 0.55  # Slightly larger stars
+                        xalign 0.5
+                    text str(trendiness_score) size 30 color "#FFFFFF" xalign 0.5
+                    text "Were you outspoken, true to your heart, and with the times?":
+                        size 32
+                        color "#FFFFFFDD"
+                        xalign 0.5
+                        xmaximum 300
+                        text_align 0.5
+
+                # Westernization Column
+                vbox:
+                    spacing 15
+                    text "Westernization" size 35 color "#FFFFFF" xalign 0.5
+                    add b_star:
+                        zoom 0.55
+                        xalign 0.5
+                    text str(westernization_score) size 30 color "#FFFFFF" xalign 0.5
+                    text "Did the introduction of Western influences change your style?":
+                        size 32
+                        color "#FFFFFFDD"
+                        xalign 0.5
+                        xmaximum 300
+                        text_align 0.5
+
+                # Nationalism Column
+                vbox:
+                    spacing 15
+                    text "Nationalism" size 35 color "#FFFFFF" xalign 0.5
+                    add g_star:
+                        zoom 0.55
+                        xalign 0.5
+                    text str(nationalism_score) size 30 color "#FFFFFF" xalign 0.5
+                    text "During troubling times, did you stand by your country?":
+                        size 32
+                        color "#FFFFFFDD"
+                        xalign 0.5
+                        xmaximum 300
+                        text_align 0.5
+
+                # Industry Relations Column
+                vbox:
+                    spacing 15
+                    text "Industry Relations" size 35 color "#FFFFFF" xalign 0.5
+                    add relationship_bar:
+                        zoom 0.38  # Scaled down
+                        xalign 0.5
+                    text str(relationship_score) + "/15" size 30 color "#FFFFFF" xalign 0.5
+                    text "With so much on your plate, how strong were your relationships?":
+                        size 32
+                        color "#FFFFFFDD"
+                        xalign 0.5
+                        xmaximum 300
+                        text_align 0.5
+
+    # Close button
+    textbutton "Close":
+        action MainMenu()
+        xalign 0.5
+        yalign 0.92  # Moved up slightly
+        background "#FFFFFF30"
+        padding (40, 12)
+        hover_background "#FFFFFF50"
+        text_size 28
+
 label start:
     python:
         p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
@@ -512,6 +611,9 @@ label start:
 
     darkMC "Who am I?"
     play sound "page turn.mp3" volume 0.5
+
+    python:
+
 
     darkMC "That’s an interesting question, I suppose."
     play sound "page turn.mp3" volume 0.5
@@ -1067,6 +1169,9 @@ label officeOne:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+            $ renpy.pause(0.5)
+            show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
             toshiro "Um… if you want–"
             play sound "page turn.mp3" volume 0.5
             kiyo "How cute! Maybe I’ll tag along, we can make a night of it. But we ladies might have to do some shopping first. Your dress…"
@@ -1421,6 +1526,10 @@ label CH1PT2:
             relationship_bar = what_relationship_bar_to_use(relationship_score)
         show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
 
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+
     prod "Shooting starts next week – start looking over your lines. You’ve got some experience on your side, not to mention that handful of fans. Still, stay alert and do your best. We’re proud of you, MC. I’m proud of you."
     play sound "page turn.mp3" volume 0.5
 
@@ -1607,6 +1716,10 @@ label blue2:
             play sound "page turn.mp3" volume 0.5
             $ hug_setsuko = False
 
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+
     if hug_setsuko:
         "*Kiyo embraces Setsuko and gives her a kiss on the cheek. From offscreen, a producer calls everyone to set.*"
         play sound "page turn.mp3" volume 0.5
@@ -1672,6 +1785,11 @@ label green2:
                 p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
                 relationship_bar = what_relationship_bar_to_use(relationship_score)
             show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Flash.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+    $ renpy.pause(0.5)
+    show screen score_display("Purple Empty Idle.png", "Blue Empty Idle.png", "Green Empty Idle.png", "industry_relations_idle", trendiness_score, westernization_score, nationalism_score)
+
+
     if mother_advice == "meet":
         kiyo "I’m sure he’s lovely. But after all this, you’ll just settle down? Just give up?"
         play sound "page turn.mp3" volume 0.5
@@ -2115,4 +2233,10 @@ label CH1FINALE:
     play sound "page turn.mp3" volume 0.5
     MC "(internal) Don’t lose sight of who I am… But, who am I?"
     play sound "page turn.mp3" volume 0.5
+
+    python:
+        p_star, b_star, g_star = what_star_sprites_to_use(trendiness_score, westernization_score, nationalism_score)
+        relationship_bar = what_relationship_bar_to_use(relationship_score)
+
+    show screen end_panel
     return
