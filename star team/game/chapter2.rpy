@@ -759,4 +759,205 @@ label producer_discussion:
     MCWar "(internal) And just like that, our little group had changed forever. And maybe I had, too. Maybe I really needed to decide who I was. Or maybe I needed to keep it hidden, and hope the world changed instead."
     play sound "page turn.mp3" volume 0.5
 
+label young_actor_scene:
+
+    scene studio bg
+
+    young_male_actor "(nervously) This is my first real movie role… I have everything memorized, but now that we’re actually on set, I can’t help feeling like I’m just going to forget everything."
+    play sound "page turn.mp3" volume 0.5
+
+    toshiroWar "Relax, kid. The more you think about it, the more worried you’ll get."
+    play sound "page turn.mp3" volume 0.5
+
+    MCWar "As much as I hate to agree with him, he has a point. You’re here for a reason – you passed your audition, so clearly you can do it, and the director thinks you’re the one for the role."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "Are you sure? I don’t know… maybe I’m not brave enough."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "(pats him on the back) Being brave is my job."
+    play sound "page turn.mp3" volume 0.5
+    prod "Does everyone have their lines memorized?"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "Mine are ready, it’s just… I don’t quite know how to say them."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "What’s the problem? I’m not in this scene, but I don’t mind helping out a bit before filming starts."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "She’s here to watch me, of course."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Quiet, you."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "Well, my character wants to be a pilot, right? He wants to show those pesky Americans who’s boss."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Right…"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "So, what should I do? How enthusiastic should I be?"
+    play sound "page turn.mp3" volume 0.5
+    menu:
+        "(BE SOMBER) War is a pretty difficult topic, so it’s best to approach it as seriously as possible.":
+            play sound "page turn.mp3" volume 0.5
+            jump young_actor_somber
+        "(BE LIVELY) Amp up the enthusiasm! Young men should be excited to support the Emperor’s cause.":
+            play sound "page turn.mp3" volume 0.5
+            jump young_actor_lively
+
+label young_actor_somber:
+
+    young_male_actor "(bowing head) …I see your point. I wouldn’t want to seem like I’m making a joke out of it – people are dying, after all."
+    play sound "page turn.mp3" volume 0.5
+
+    prod "Is everyone ready?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Yes, sir. I’ll be waiting off set."
+    play sound "page turn.mp3" volume 0.5
+    direct "Places, everyone! Action!"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "You’ve been acting unusually quiet lately, cousin… Is something troubling you?"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(quietly) Do you promise not to tell my mother?"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "Of course – she’s not my mother."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "It’s just… All the other boys in school are talking about it. The war, what’s at stake. The fight against the United States."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "That arrogant, sorry excuse for a nation? Surely you’ve been paying attention to what’s on the radio – we just beat them to a pulp, and in their own territory!"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "That’s the thing. I don’t just want to wait idly and watch the war unfold… I want to do something."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "What, you mean you want to join the effort? Become a soldier?"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "No… I want to be a pilot. And I’ll die for the Emperor if I have to."
+    play sound "page turn.mp3" volume 0.5
+    direct "Cut!"
+    play sound "page turn.mp3" volume 0.5
+    prod "Good job, young man. A little nervous, sure, but you did well."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(bows) Thank you, sir."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "(pats him on the back) Not too bad, kid."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(turns to MCWar) Thanks for the help, by the way."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Of course – but you did all the hard work."
+    play sound "page turn.mp3" volume 0.5
+label young_actor_lively:
+
+    young_male_actor "You think so? Okay, I’ll try… I hope it won’t be too over the top."
+    play sound "page turn.mp3" volume 0.5
+    prod "Is everyone ready?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Yes, sir. I’ll be waiting off set."
+    play sound "page turn.mp3" volume 0.5
+    direct "Places, everyone! Action!"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "You’ve been acting unusually quiet lately, cousin… Is something troubling you?"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(nervously) Do you… do you promise not to tell my mother?"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "Of course – she’s not my mother."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "It’s just… All the other boys in school are talking about it – the war, what’s at stake. (clenches fist) The fight against the United States…"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "(laughs) That arrogant, sorry excuse for a nation? Surely you’ve been paying attention to what’s on the radio – we just beat them to a pulp, and in their own territory!"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "That’s the thing! I don’t just want to wait idly and watch the war unfold – I want to do something!"
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "What, you mean you want to join the war effort? Become a soldier?"
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "No… I want to be a pilot – and I’ll die for the Emperor if I have to!"
+    play sound "page turn.mp3" volume 0.5
+    direct "Cut!"
+    play sound "page turn.mp3" volume 0.5
+    prod "Great job, young man! I can really feel your conviction – I’m certain your enthusiasm will be received well."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(bows) Thank you, sir."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "(pats him on the back) Not too bad, kid."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "(turns to MCWar) Thanks for the help, by the way."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Of course – but you did all the hard work."
+    play sound "page turn.mp3" volume 0.5
+    return
+
+label traditional_house_set:
+
+    MCWar "I know I’m playing a mother, but this… (ruffles apron) admittedly isn’t what I’m used to."
+    play sound "page turn.mp3" volume 0.5
+    prod "I know it’s a departure from your usual roles, but I’m confident you’ll be able to pull it off."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Remind me, how old am I supposed to be again?"
+    play sound "page turn.mp3" volume 0.5
+    prod "Mid-to-late thirties? You’ll be just old enough to have a son who could feasibly become a soldier."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "Sheesh, MCWar-chan… You’ll have to do a lot of work to make that believable."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "(rolls eyes) I’m sure it won’t be a problem – I can handle a good challenge, even if it means playing a more matronly character."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "Wait… you won’t be playing my mother, right? I’m older than you!"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "If you had paid better attention to your script, you would’ve known by now that I’m playing the mother of your cousin."
+    play sound "page turn.mp3" volume 0.5
+    young_male_actor "Still… It's kind of weird, isn’t it? You’re barely older than I am."
+    play sound "page turn.mp3" volume 0.5
+    toshiroWar "Good thing neither of us are in this next scene."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Quiet, you two. Now… I know I’ll be reading letters with my character’s daughters here, does anyone have any suggestions for how I should? Maybe…"
+    play sound "page turn.mp3" volume 0.5
+    menu:
+        "(BE PASSIVE) I should follow the 'good wife, wise mother' mantra and keep it cool – I shouldn’t show too much emotion here.":
+            play sound "page turn.mp3" volume 0.5
+            jump passive_mother
+        "(BE STRONG) I know how my own mother raised me, and I’m sure following her lead wouldn’t hurt.":
+            play sound "page turn.mp3" volume 0.5
+            jump strong_mother
+
+label passive_mother:
+
+    toshiroWar "I mean, how else are you supposed to act?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Well, I don’t know, my own mother–"
+    play sound "page turn.mp3" volume 0.5
+    prod "Sorry to interrupt, but it’s time we started shooting. The girls are done preparing – are your lines ready?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Yes, sir."
+    play sound "page turn.mp3" volume 0.5
+    prod "Good."
+    play sound "page turn.mp3" volume 0.5
+    direct "Action!"
+    play sound "page turn.mp3" volume 0.5
+    young_actress_1 "Mother, look! The letters from Tadaaki arrived!"
+    play sound "page turn.mp3" volume 0.5
+    young_actress_2 "Can we please open them?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Alright, girls, calm down. Let’s not get too excited… Of course, I have missed your brother, too. I’ll open the letters, dear."
+    play sound "page turn.mp3" volume 0.5
+    young_actress_1 "(hands them over) Here you are."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Thank you. (tentatively opens a letter) Let’s see…"
+    play sound "page turn.mp3" volume 0.5
+    young_actress_2 "What is it, mother? What did he say?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "…"
+    play sound "page turn.mp3" volume 0.5
+    return
+
+label strong_mother:
+
+    toshiroWar "…I can certainly see that."
+    play sound "page turn.mp3" volume 0.5
+    MCWar "I’ll take that as a compliment."
+    play sound "page turn.mp3" volume 0.5
+    prod "Sorry to interrupt, but it’s time we started shooting. The girls are done preparing – are your lines ready?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Yes, sir."
+    play sound "page turn.mp3" volume 0.5
+    prod "Good."
+    play sound "page turn.mp3" volume 0.5
+    direct "Action!"
+    play sound "page turn.mp3" volume 0.5
+    young_actress_1 "Mother, look! The letters from Tadaaki arrived!"
+    play sound "page turn.mp3" volume 0.5
+    young_actress_2 "Can we please open them?"
+    play sound "page turn.mp3" volume 0.5
+    MCWar "Alright, girls, calm down! Let’s not get too excited… (sighs) Of course, I have missed your brother, too."
+    play sound "page turn.mp3" volume 0.5
     return
